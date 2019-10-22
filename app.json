@@ -21,8 +21,6 @@
 		"name": "Peter Hansson",
 		"email": "homey@husdata.se"
 	},
-	
-	
   
 	"discovery": {
 		"H60": {
@@ -46,6 +44,163 @@
 		}
 	},
   
+	"capabilities": {
+			"cap_0001": {
+				"type": "number",
+				"title": {
+					"en": "Radiator return"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			
+			},
+			"cap_0002": {
+				"type": "number",
+				"title": {
+					"en": "Radiator forward"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			},
+			"cap_0005": {
+				"type": "number",
+				"title": {
+					"en": "Brine in"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			},
+			"cap_0006": {
+				"type": "number",
+				"title": {
+					"en": "Brine out"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			},
+			"cap_0009": {
+				"type": "number",
+				"title": {
+					"en": "Warm water"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			},
+			"cap_0007": {
+				"type": "number",
+				"title": {
+					"en": "Outdoor"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+				
+			},
+			"cap_1A04": {
+				"type": "number",
+				"title": {
+					"en": "Compressor"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": ""
+				},
+			    "uiComponent": "sensor",
+				"icon": "/assets/iconCompressor.svg"
+			},
+			"cap_1A07": {
+				"type": "number",
+				"title": {
+					"en": "Switch valve"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": ""
+				},
+			   	"uiComponent": "sensor",
+				"icon": "/assets/iconSwitchvalve.svg"
+
+			},
+			"cap_1A20": {
+				"type": "number",
+				"title": {
+					"en": "Alarm"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": ""
+				},
+			   	"uiComponent": "sensor",
+				"icon": "/assets/iconAlarm.svg"
+
+			},
+			"cap_3104": {
+				"type": "number",
+				"title": {
+					"en": "Additional heater"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "%"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconAddheat.svg"
+			
+			},
+			"cap_0204": {
+				"type": "number",
+				"title": {
+					"en": "Room temp"
+				},
+				"uiComponent": "slider",
+				"getable": true,
+				"setable": true,
+				"units": {
+					"en": "C"
+				},
+				 "target_temperature": {
+					"min": 16,
+					"max": 31
+				}
+				
+				
+			}
+       
+    },
+	
 	"drivers": [
 			{
 				"id": "H60",
@@ -59,7 +214,19 @@
 				},
 				"class": "socket",
 				"capabilities": [
-					"measure_temperature"
+				    "cap_0001",
+					"cap_0002",
+					"cap_0005",
+					"cap_0006",
+					"cap_0009",
+					"cap_0007",
+					"cap_1A04",
+					"cap_1A07",
+					"cap_1A20",
+					"cap_3104",
+					"cap_0204"
+				
+					
 				],
 				"pair": [
 					{
@@ -94,7 +261,7 @@
 							{
 								"id": "address",
 								"type": "text",
-								"value": "194.4.4.230",
+								"value": "0.0.0.0",
 								"label": {
 									"en": "IP Address"
 								}
@@ -131,5 +298,77 @@
 				}
 			]
 		}
-    ]  
+    ],  
+	
+	
+    "flow": {
+       "triggers": [
+			{
+			"id": "Brine_in_low",
+			"title": {
+					"en": "If Brine in is below -6 C"
+			},
+			"args": [
+				{
+						"name": "H60",
+						"type": "device",
+						"filter": "driver_id=H60"
+						
+					
+				}
+			]
+			} 
+		],
+		"conditions": [
+			{
+			"id": "Compressor running",
+			"title": {
+					"en": "Compressor !{{is|isn't}} on"
+				}
+			},
+			{
+			"id": "raining_in",
+			"title": {
+					"en": "It's going to rain in..."
+			},
+			"titleFormatted": {
+					"en": "It !{{is|isn't}} going to rain in [[when]]"
+			},
+			"args": [
+				{
+				"name": "when",
+				"type": "dropdown",
+				"values": [
+					{
+					"id": "5",
+					"label": {
+						"en": "5 minutes"
+					}
+				},
+				{
+					"id": "10",
+					"label": {
+					"en": "10 minutes"
+				}
+				},
+				{
+					"id": "15",
+					"label": {
+					"en": "15 minutes"
+				}
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "stop_raining",
+      "title": {
+        "en": "Make it stop raining. Haha."
+      }
+    }
+  ]
+ }
 }

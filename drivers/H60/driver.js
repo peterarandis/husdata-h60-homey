@@ -6,7 +6,7 @@ const util = require('/lib/util.js');
 class H60Driver extends Homey.Driver {
 
   onPair(socket) {
-	  this.log("driver-OnPair")
+	//this.log("driver-OnPair")
 
 	const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
@@ -19,7 +19,9 @@ class H60Driver extends Homey.Driver {
        this.log("list_devices " + discoveryResult.address + " " + discoveryResult.id);
 		return {
           name: 'H60 ['+ discoveryResult.address +']',
-          data: {
+		  //name: 'Heat Pump H60',
+          device: discoveryResult.address, // ta bort?
+		  data: {
             id: discoveryResult.id,
           }
         };
@@ -28,9 +30,10 @@ class H60Driver extends Homey.Driver {
     });
 
     socket.on('list_devices_selection', (data, callback) => { // Lists deiscovereed decices
-	  this.log("list_devices_selection")
+	  
       callback();
       selectedDeviceId = data[0].data.id;
+	  this.log("list_devices_selection:" + selectedDeviceId)
     });
 
     /*socket.on('login', (data, callback) => {
@@ -65,27 +68,36 @@ class H60Driver extends Homey.Driver {
 	*/
 
     socket.on('get_device', (data, callback) => {
-	  this.log("get_device")
+	  
 	  const discoveryResult = discoveryResults[selectedDeviceId];
-	  this.log(discoveryResult.address)
-      result => {
-		  deviceArray = {
-			name: 'H60 ['+ discoveryResult.address +']',
+	  this.log("get_device ");
+	  
+	  
+		 var deviceArray = {
+			//name: 'H60 ['+ discoveryResult.address +']',
+			name: '194.4.4.230',
 			data: {
 				id: discoveryResult.id,
 				},
 			settings: {
-				address  : discoveryResult.address,
+				//address  : discoveryResult.address, // IP Adress
+				address  : '194.4.4.230', // IP Adress
 				polling  : 5
 				},
 			store: {
-              type: result.type,
-              outputs: result.num_outputs
-            }
-	      }	
-	  } 
-	
-      callback(false, deviceArray);
+              type: 1,
+              outputs: 1
+                }	
+		 }	
+		 
+		//this.setSettings('address') = discoveryResult.address;
+		 setSettings("{address  : '194.4.4.230'}");
+		  //callback(false, deviceArray);
+		//this.setSettings(deviceArray);
+        
+		
+	  
+
     });
 
   }

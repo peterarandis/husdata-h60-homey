@@ -19,6 +19,10 @@ class H60Device extends Homey.Device {
       }
     });
    */	
+     //this.setSettings("{address  : '194.4.4.230'}"); // Works
+     // this.log("address: " + this.getSetting('address'));   
+   
+   
   }
 
   onDeleted() {
@@ -32,25 +36,34 @@ class H60Device extends Homey.Device {
     this.log("pollDevice " + this.getSetting('address'));
     this.pollingInterval = setInterval(() => {
       
+	  //this.log("fetch: " + 'http://'+ this.getSetting('address') + '/api/alldata')
 	  util.sendCommand('/api/alldata', this.getSetting('address'))
 	      .then(result => {
-          //let temperature = result.['0001']; //Gives error: SyntaxError: Unexpected token [
-		  
-		  let temperature = 1; /// For test
-		  
-		  // capability measure_temperature
-          if (temperature != this.getCapabilityValue('measure_temperature')) {
-            this.setCapabilityValue('measure_temperature', temperature);
-		  }
-		  
-		    // capability onoff  (This gives no errors)
-          /*if (temperature != this.getCapabilityValue('onoff')) {
-            this.setCapabilityValue('onoff', temperature);
-          }
-		  */
-		  
-          this.log("pollDevice result= " + temperature);  // Debuglog
           
+		  var cap = [];
+		  var v = [];
+		  var last=9;
+		  v[0] = result.X0006;  cap[0] = 'cap_0001' ; // Radiator return temp 
+		  v[1] = result.X0002;  cap[1] = 'cap_0002' ; // Radiator forward temp
+		  v[2] = result.X0005;  cap[2] = 'cap_0005' ; // Brine In
+		  v[3] = result.X0006;  cap[3] = 'cap_0006' ; // Brine Out
+		  v[4] = result.X0003;  cap[4] = 'cap_0007' ; // Outdoor temp
+		  v[5] = result.X0009;  cap[5] = 'cap_0009' ; // Warm water temp
+		  v[6] = result.X3104;  cap[6] = 'cap_3104' ; // Add heat status %
+		  v[7] = result.X1A04;  cap[7] = 'cap_1A04' ; // Compressor status
+		  v[8] = result.X1A07;  cap[8] = 'cap_1A07' ; // Switch valve status
+		  v[9] = result.X1A20;  cap[9] = 'cap_1A20' ; // Sum alarm
+		  
+		  
+		  
+		  for (var i=0;i<last+1;i++) {if (v[i] != 0 && cap[i].substring(4,5) =='0') v[i] = v[i]  / 10;}
+		  
+		  for (var i=0;i<last+1;i++) {
+			if (v[i] != this.getCapabilityValue(cap[i])) 
+			      { this.setCapabilityValue(cap[i], v[i]);  }
+		  }
+		    
+			  		  
 		  })
         .catch(error => {
           this.log(error);
