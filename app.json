@@ -36,7 +36,7 @@
 							"field": "host",
 							"match": {
 								"type": "regex",
-								"value": "^H60"
+								"value": "^h60"
 							}
 						}
 					]
@@ -236,14 +236,7 @@
 						"singular": true
 						},
 					"navigation": {
-						"next": "add_my_devices" 
-						}
-					},
-					{
-						"id": "add_my_devices",
-						"template": "add_devices",
-						"options": {
-							"logo": "../../../assets/husdata-logo.png"
+						"next": "add_device" 
 						}
 					},
 					{

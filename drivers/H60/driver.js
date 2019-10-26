@@ -6,99 +6,50 @@ const util = require('/lib/util.js');
 class H60Driver extends Homey.Driver {
 
   onPair(socket) {
-	//this.log("driver-OnPair")
-
+	this.log("Pairing started...")
 	const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
     let selectedDeviceId;
-    let deviceArray = {};
+    let devicesArray = {};
+	let deviceArray = {};
 
     socket.on('list_devices', (data, callback) => {
-      
-	  const devices = Object.values(discoveryResults).map(discoveryResult => {
-       this.log("list_devices " + discoveryResult.address + " " + discoveryResult.id);
-		return {
-          name: 'H60 ['+ discoveryResult.address +']',
-		  //name: 'Heat Pump H60',
-          device: discoveryResult.address, // ta bort?
-		  data: {
-            id: discoveryResult.id,
-          }
-        };
-      });
-      callback(null, devices);
-    });
-
-    socket.on('list_devices_selection', (data, callback) => { // Lists deiscovereed decices
-	  
-      callback();
-      selectedDeviceId = data[0].data.id;
-	  this.log("list_devices_selection:" + selectedDeviceId)
-    });
-
-    /*socket.on('login', (data, callback) => {
-      const discoveryResult = discoveryResults[selectedDeviceId];
-      if(!discoveryResult) return callback(new Error('Something went wrong'));
-
-      util.sendCommand('/shelly', discoveryResult.address, data.username, data.password)
-        .then(result => {
-          var password = data.password;
-          deviceArray = {
+      const devices = Object.values(discoveryResults).map(discoveryResult => {
+         this.log("Found device: " + discoveryResult.address + " " + discoveryResult.id);
+	     // push discovered device to temporary array with all discovered devices
+		 devicesArray[discoveryResult.id]={
             name: 'H60 ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
             settings: {
-              address  : discoveryResult.address,
-              username : data.username,
-              password : data.password,
-              polling  : 5
-            },
-            store: {
-              type: result.type,
-              outputs: result.num_outputs
+              address  : discoveryResult.address
             }
-          }
-          callback(null, true);
-        })
-        .catch(error => {
-          callback(error, false);
-        })
+          };
+
+			return {
+				name: 'H60 ['+ discoveryResult.address +']',
+				data: {
+					id: discoveryResult.id,
+					}
+			};
+      });
+      callback(null, devices);
     });
-	*/
+
+    socket.on('list_devices_selection', (data, callback) => { // Lists deiscovereed decices
+	  callback();
+      selectedDeviceId = data[0].data.id;
+	  this.log("Selected device: " + selectedDeviceId)
+	   // push the selected device to a temporary array which can be used for pairing
+      deviceArray= devicesArray[selectedDeviceId];
+    });
+    
 
     socket.on('get_device', (data, callback) => {
-	  
-	  const discoveryResult = discoveryResults[selectedDeviceId];
-	  this.log("get_device ");
-	  
-	  
-		 var deviceArray = {
-			//name: 'H60 ['+ discoveryResult.address +']',
-			name: '194.4.4.230',
-			data: {
-				id: discoveryResult.id,
-				},
-			settings: {
-				//address  : discoveryResult.address, // IP Adress
-				address  : '194.4.4.230', // IP Adress
-				polling  : 5
-				},
-			store: {
-              type: 1,
-              outputs: 1
-                }	
-		 }	
-		 
-		//this.setSettings('address') = discoveryResult.address;
-		 setSettings("{address  : '194.4.4.230'}");
-		  //callback(false, deviceArray);
-		//this.setSettings(deviceArray);
-        
-		
-	  
-
-    });
+	  callback(false, deviceArray);
+      this.log("get_device done ");  
+	});
 
   }
 

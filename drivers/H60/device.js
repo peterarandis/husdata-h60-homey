@@ -9,21 +9,8 @@ class H60Device extends Homey.Device {
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
     this.setAvailable();
-   this.log("onInit");
-    // LISTENERS FOR UPDATING CAPABILITIES
-   /* this.registerCapabilityListener('onoff', (value, opts) => {
-      if (value) {
-        return util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else {
-        return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      }
-    });
-   */	
-     //this.setSettings("{address  : '194.4.4.230'}"); // Works
-     // this.log("address: " + this.getSetting('address'));   
-   
-   
-  }
+    this.log("Polliing - address: " + this.getSetting('address'));   
+    }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
@@ -37,17 +24,17 @@ class H60Device extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       
 	  //this.log("fetch: " + 'http://'+ this.getSetting('address') + '/api/alldata')
-	  util.sendCommand('/api/alldata', this.getSetting('address'))
+	  util.sendCommand('/api/homey', this.getSetting('address'))
 	      .then(result => {
           
 		  var cap = [];
 		  var v = [];
 		  var last=9;
-		  v[0] = result.X0006;  cap[0] = 'cap_0001' ; // Radiator return temp 
+		  v[0] = result.X0001;  cap[0] = 'cap_0001' ; // Radiator return temp 
 		  v[1] = result.X0002;  cap[1] = 'cap_0002' ; // Radiator forward temp
 		  v[2] = result.X0005;  cap[2] = 'cap_0005' ; // Brine In
 		  v[3] = result.X0006;  cap[3] = 'cap_0006' ; // Brine Out
-		  v[4] = result.X0003;  cap[4] = 'cap_0007' ; // Outdoor temp
+		  v[4] = result.X0007;  cap[4] = 'cap_0007' ; // Outdoor temp
 		  v[5] = result.X0009;  cap[5] = 'cap_0009' ; // Warm water temp
 		  v[6] = result.X3104;  cap[6] = 'cap_3104' ; // Add heat status %
 		  v[7] = result.X1A04;  cap[7] = 'cap_1A04' ; // Compressor status
@@ -56,7 +43,10 @@ class H60Device extends Homey.Device {
 		  
 		  
 		  
-		  for (var i=0;i<last+1;i++) {if (v[i] != 0 && cap[i].substring(4,5) =='0') v[i] = v[i]  / 10;}
+		  for (var i=0;i<last+1;i++) {
+			     if(v[i]>60000) v[i]=v[i]-65536; // Negative
+				 if (v[i] != 0 && (cap[i].substring(4,5) =='0' || cap[i].substring(4,5) =='3')) 	 v[i] = v[i]  / 10;	 // Temp and % devide by 10
+		    }  
 		  
 		  for (var i=0;i<last+1;i++) {
 			if (v[i] != this.getCapabilityValue(cap[i])) 
