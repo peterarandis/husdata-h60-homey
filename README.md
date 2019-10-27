@@ -3,8 +3,8 @@
 Athom Homey app for Husdata H60 heat pump gateway.
 
 Husdata.se product H60 is a WiFi gateway that fits many Groundsource and Liquid/Air heatpumps.
-It support heat pumps from as IVT, Bosch, Nefit, Carrier, NIBE, Thermia and more and give you a very flexible gateway towards home automation.
-The gatway has built in web portal and support protocols: MQTT, Modbus TCP and Web API/Json.
+It support heat pumps from as IVT, Bosch, Nefit, Carrier, NIBE, Thermia and others giving a very flexible gateway towards home automation.
+The gatway has built in web portal and are supporting the protocols: MQTT, Modbus TCP and Web API/Json.
 
 
 This app gives you the following functions.

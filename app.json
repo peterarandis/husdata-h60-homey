@@ -19,8 +19,21 @@
 	},
 	"author": {
 		"name": "Peter Hansson",
-		"email": "homey@husdata.se"
+		"email": "homey@husdata.se",
+		"website": "https://husdata.se/"
 	},
+	"contributors" : {
+    "developers" : [
+      {
+        "name": "Peter Hansson",
+		"email": "homey@husdata.se"
+	  },
+      {
+	  	"name": "Jelger Haanstra",
+		"email": "homey@solidewebservices.com"
+	  }     
+    ]
+  },
   	"discovery": {
 		"H60": {
 				"type": "mdns-sd",
@@ -256,17 +269,19 @@
 					"HEAT_CARRIER_RETURN_TEMP",	"HEAT_CARRIER_FORWARD_TEMP",
 					"BRINE_IN_TEMP",			"BRINE_OUT_TEMP",
 					"COMPRESSOR_STATE",			"SWITCH_VALVE_STATE",
-							
+					
 					"target_temperature"
 								
 					
 				],
 				"capabilitiesOptions": {
-						"target_temperature": {
-						"title": {
-							"en": "Indoor temperature"
-			    		}
-					}
+						"target_temperature":  {
+							"title": {
+								"en": "Indoor temperature"
+							}
+						}
+						
+					
         },
 				"pair": [
 					{

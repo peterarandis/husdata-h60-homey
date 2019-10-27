@@ -79,7 +79,7 @@ class H60Device extends Homey.Device {
 	
 	    
     // Register capabilities setting
-	this.registerMultipleCapabilityListener([ 'target_temperature' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
+	this.registerMultipleCapabilityListener([ 'target_temperature.indoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
 	//this.registerMultipleCapabilityListener([ 'target_temperature.outdoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
 	
 	// register flow triggers
