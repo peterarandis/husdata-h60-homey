@@ -7,28 +7,7 @@ class Husdata extends Homey.App {
 	
 	onInit() {
 		this.log('Init Husdata app...');
-	/*	
-    let brineInLowTrigger = new Homey.FlowCardTrigger('Brine_in_low');
-		brineInLowTrigger
-		.register()
-		.trigger()
-		.catch( this.error )
-		.then( this.log )
-	*/
-	// Init
-    /*
-	new Homey.FlowCardAction('Brine_in_low')
-      .register()
-	  
-      .registerRunListener((args, state) => {
-        if (args.switch === '1') {
-          //return util.sendCommand('/relay/0?turn=on&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        } else {
-          //return util.sendCommand('/relay/0?turn=off&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        }
-      })
 
-	*/
 	}
 	
 }

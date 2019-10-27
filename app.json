@@ -41,11 +41,56 @@
 						}
 					]
 				]
+		},
+		"H60-00": {
+				"type": "mdns-sd",
+				"mdns-sd": {
+						"name": "http",
+						"protocol": "tcp"
+						},
+				"id": "{{host}}",
+				"conditions": [
+					[
+						{
+							"field": "host",
+							"match": {
+								"type": "regex",
+								"value": "^h60"
+							}
+						}
+					]
+				]
 		}
 	},
   
 	"capabilities": {
-			"cap_0001": {
+			"HEAT_CARRIER_FORWARD_TEMP": {  
+				"type": "number",
+				"title": {
+					"en": "Heat forward"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			},
+			"HEAT_CARRIER_RETURN_TEMP": {  
+				"type": "number",
+				"title": {
+					"en": "Heat return"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+			},			
+			"RADIATOR_RETURN_TEMP": {  
 				"type": "number",
 				"title": {
 					"en": "Radiator return"
@@ -59,7 +104,7 @@
 				"icon": "/assets/iconTemp.svg"
 			
 			},
-			"cap_0002": {
+			"RADIATOR_FORWARD_TEMP": { 
 				"type": "number",
 				"title": {
 					"en": "Radiator forward"
@@ -72,7 +117,7 @@
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
 			},
-			"cap_0005": {
+			"BRINE_IN_TEMP": { 
 				"type": "number",
 				"title": {
 					"en": "Brine in"
@@ -85,7 +130,7 @@
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
 			},
-			"cap_0006": {
+			"BRINE_OUT_TEMP": { 
 				"type": "number",
 				"title": {
 					"en": "Brine out"
@@ -98,7 +143,7 @@
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
 			},
-			"cap_0009": {
+			"WARM_WATER_TEMP": {  
 				"type": "number",
 				"title": {
 					"en": "Warm water"
@@ -111,7 +156,7 @@
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
 			},
-			"cap_0007": {
+			"OUTDOOR_TEMP": {
 				"type": "number",
 				"title": {
 					"en": "Outdoor"
@@ -125,7 +170,21 @@
 				"icon": "/assets/iconTemp.svg"
 				
 			},
-			"cap_1A04": {
+			"INDOOR_TEMP": {
+				"type": "number",
+				"title": {
+					"en": "Indoor"
+				},
+				"getable": true,
+				"setable": false,
+				"units": {
+					"en": "C"
+				},
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
+				
+			},
+			"COMPRESSOR_STATE": {  
 				"type": "number",
 				"title": {
 					"en": "Compressor"
@@ -138,7 +197,7 @@
 			    "uiComponent": "sensor",
 				"icon": "/assets/iconCompressor.svg"
 			},
-			"cap_1A07": {
+			"SWITCH_VALVE_STATE": {  
 				"type": "number",
 				"title": {
 					"en": "Switch valve"
@@ -152,7 +211,7 @@
 				"icon": "/assets/iconSwitchvalve.svg"
 
 			},
-			"cap_1A20": {
+			"SUM_ALARM_STATE": {  
 				"type": "number",
 				"title": {
 					"en": "Alarm"
@@ -166,7 +225,7 @@
 				"icon": "/assets/iconAlarm.svg"
 
 			},
-			"cap_3104": {
+			"ADDITIONAL_HEATER_POWER": {  
 				"type": "number",
 				"title": {
 					"en": "Additional heater"
@@ -180,21 +239,18 @@
 				"icon": "/assets/iconAddheat.svg"
 			
 			},
-			"cap_0204": {
+			"ROOM_SET_TEMP": {   
 				"type": "number",
 				"title": {
-					"en": "Room temp"
+					"en": "Room target"
 				},
-				"uiComponent": "slider",
 				"getable": true,
 				"setable": true,
 				"units": {
 					"en": "C"
 				},
-				 "target_temperature": {
-					"min": 16,
-					"max": 31
-				}
+				"uiComponent": "sensor",
+				"icon": "/assets/iconTemp.svg"
 				
 				
 			}
@@ -202,8 +258,7 @@
     },
 	
 	"drivers": [
-			{
-				"id": "H60",
+		{		"id": "H60",
 				"discovery": "H60",
 				"name": {
 					"en": "H60"
@@ -214,20 +269,29 @@
 				},
 				"class": "socket",
 				"capabilities": [
-				    "cap_0001",
-					"cap_0002",
-					"cap_0005",
-					"cap_0006",
-					"cap_0009",
-					"cap_0007",
-					"cap_1A04",
-					"cap_1A07",
-					"cap_1A20",
-					"cap_3104",
-					"cap_0204"
-				
+				    "HEAT_CARRIER_RETURN_TEMP",
+					"RADIATOR_FORWARD_TEMP",
+					"BRINE_IN_TEMP",
+					"BRINE_OUT_TEMP",
+					"WARM_WATER_TEMP",
+					"OUTDOOR_TEMP",
+					"INDOOR_TEMP",
+					"COMPRESSOR_STATE",
+					"SWITCH_VALVE_STATE",
+					"SUM_ALARM_STATE",
+					"ADDITIONAL_HEATER_POWER",
+					"ROOM_SET_TEMP",
+					"target_temperature"
+								
 					
 				],
+				"capabilitiesOptions": {
+						"target_temperature": {
+						"title": {
+							"en": "Indoor temperature"
+			    		}
+					}
+        },
 				"pair": [
 					{
 					"id": "list_devices",
@@ -259,22 +323,7 @@
 									"en": "IP Address"
 								}
 							},
-							{
-								"id": "username",
-								"type": "text",
-								"value": "",
-								"label": {
-									"en": "Username"
-								}
-							},
-							{	
-								"id": "password",
-								"type": "password",
-								"value": "",
-								"label": {
-									"en": "Password"
-								}
-							},
+							
 							{	
 								"id": "polling",
 								"type": "number",
@@ -285,8 +334,97 @@
 								},
 							"label": {
 								"en": "Polling Frequency"
+								}
 							}
+							
+							
+						
+						
+					]
+				}
+			]
+		},
+		{		"id": "H60-00",
+				"discovery": "H60-00",
+				"name": {
+					"en": "H60-00"
+				},
+				"images": {
+					"large": "drivers/H60/assets/images/large.jpg",
+					"small": "drivers/H60/assets/images/small.jpg"
+				},
+				"class": "socket",
+				"capabilities": [
+				    "RADIATOR_RETURN_TEMP",
+					"HEAT_CARRIER_FORWARD_TEMP",
+					"BRINE_IN_TEMP",
+					"BRINE_OUT_TEMP",
+					"WARM_WATER_TEMP",
+					"OUTDOOR_TEMP",
+					"COMPRESSOR_STATE",
+					"SWITCH_VALVE_STATE",
+					"SUM_ALARM_STATE",
+					"ADDITIONAL_HEATER_POWER",
+					"ROOM_SET_TEMP",
+					"target_temperature"
+								
+					
+				],
+				"capabilitiesOptions": {
+						"target_temperature": {
+						"title": {
+							"en": "Indoor temperature"
+			    		}
+					}
+        },
+				"pair": [
+					{
+					"id": "list_devices",
+					"template": "list_devices",
+					"options": {
+						"singular": true
+						},
+					"navigation": {
+						"next": "add_device" 
 						}
+					},
+					{
+						"id": "add_device"
+					}
+				],
+	  
+				"settings": [
+					{
+						"type": "group",
+						"label": {
+							"en": "H60 settings"
+						},
+						"children": [
+							{
+								"id": "address",
+								"type": "text",
+								"value": "0.0.0.0",
+								"label": {
+									"en": "IP Address"
+								}
+							},
+							
+							{	
+								"id": "polling",
+								"type": "number",
+								"value": 5,
+								"attr": {
+									"min": 5,
+									"max": 3600
+								},
+							"label": {
+								"en": "Polling Frequency"
+								}
+							}
+							
+							
+						
+						
 					]
 				}
 			]
@@ -296,21 +434,94 @@
 	
     "flow": {
        "triggers": [
+			
+
+        {
+  				"id": "outdoor_temp_changed",
+  				"title": {
+  					"en": "Outdoor temperature changed"
+  				},
+				"tokens": [
+					{
+					"name": "temperature",
+					"type": "number",
+					"title": {
+						"en": "Temperature"
+					},
+					"example": {
+					"en": "5"
+                      }
+					}
+				],
+				"args": [
+  					{
+  					"name": "device",
+  					"type": "device",
+  					"placeholder": {
+  						"en": "Select device"
+					},
+					"filter": "driver_id=H60"
+  					}
+  				]
+  			},
 			{
-			"id": "Brine_in_low",
-			"title": {
-					"en": "If Brine in is below -6 C"
-			},
-			"args": [
-				{
-						"name": "H60",
-						"type": "device",
-						"filter": "driver_id=H60"
-						
-					
-				}
-			]
-			} 
+			"id": "indoor_temp_changed",
+  				"title": {
+  					"en": "Indoor temperature changed"
+  				},
+				"tokens": [
+					{
+					"name": "temperature",
+					"type": "number",
+					"title": {
+						"en": "Temperature"
+					},
+					"example": {
+					"en": "5"
+                      }
+					}
+				],
+				"args": [
+  					{
+  					"name": "device",
+  					"type": "device",
+  					"placeholder": {
+  						"en": "Select device"
+					},
+					"filter": "driver_id=H60"
+  					}
+  				]
+  			},
+			{
+  				"id": "additional_heat_changed",
+  				"title": {
+  					"en": "Additional heat changed"
+  				},
+				"tokens": [
+					{
+					"name": "power",
+					"type": "number",
+					"title": {
+						"en": "Power"
+					},
+					"example": {
+					"en": "5"
+                      }
+					}
+				],
+				"args": [
+  					{
+  					"name": "device",
+  					"type": "device",
+  					"placeholder": {
+  						"en": "Select device"
+					},
+					"filter": "driver_id=H60"
+  					}
+  				]
+  			}
+
+			
 		],
 		"conditions": [
 			{
