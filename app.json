@@ -21,8 +21,7 @@
 		"name": "Peter Hansson",
 		"email": "homey@husdata.se"
 	},
-  
-	"discovery": {
+  	"discovery": {
 		"H60": {
 				"type": "mdns-sd",
 				"mdns-sd": {
@@ -41,29 +40,10 @@
 						}
 					]
 				]
-		},
-		"H60-00": {
-				"type": "mdns-sd",
-				"mdns-sd": {
-						"name": "http",
-						"protocol": "tcp"
-						},
-				"id": "{{host}}",
-				"conditions": [
-					[
-						{
-							"field": "host",
-							"match": {
-								"type": "regex",
-								"value": "^h60"
-							}
-						}
-					]
-				]
 		}
+		
 	},
-  
-	"capabilities": {
+  	"capabilities": {
 			"HEAT_CARRIER_FORWARD_TEMP": {  
 				"type": "number",
 				"title": {
@@ -269,103 +249,14 @@
 				},
 				"class": "socket",
 				"capabilities": [
-				    "HEAT_CARRIER_RETURN_TEMP",
-					"RADIATOR_FORWARD_TEMP",
-					"BRINE_IN_TEMP",
-					"BRINE_OUT_TEMP",
-					"WARM_WATER_TEMP",
-					"OUTDOOR_TEMP",
-					"INDOOR_TEMP",
-					"COMPRESSOR_STATE",
-					"SWITCH_VALVE_STATE",
-					"SUM_ALARM_STATE",
-					"ADDITIONAL_HEATER_POWER",
-					"ROOM_SET_TEMP",
-					"target_temperature"
-								
-					
-				],
-				"capabilitiesOptions": {
-						"target_temperature": {
-						"title": {
-							"en": "Indoor temperature"
-			    		}
-					}
-        },
-				"pair": [
-					{
-					"id": "list_devices",
-					"template": "list_devices",
-					"options": {
-						"singular": true
-						},
-					"navigation": {
-						"next": "add_device" 
-						}
-					},
-					{
-						"id": "add_device"
-					}
-				],
-	  
-				"settings": [
-					{
-						"type": "group",
-						"label": {
-							"en": "H60 settings"
-						},
-						"children": [
-							{
-								"id": "address",
-								"type": "text",
-								"value": "0.0.0.0",
-								"label": {
-									"en": "IP Address"
-								}
-							},
+				    "INDOOR_TEMP",				"ROOM_SET_TEMP",
+					"OUTDOOR_TEMP",				"WARM_WATER_TEMP",
+					"SUM_ALARM_STATE",			"ADDITIONAL_HEATER_POWER",
+					"RADIATOR_FORWARD_TEMP", 	"RADIATOR_RETURN_TEMP",
+					"HEAT_CARRIER_RETURN_TEMP",	"HEAT_CARRIER_FORWARD_TEMP",
+					"BRINE_IN_TEMP",			"BRINE_OUT_TEMP",
+					"COMPRESSOR_STATE",			"SWITCH_VALVE_STATE",
 							
-							{	
-								"id": "polling",
-								"type": "number",
-								"value": 5,
-								"attr": {
-									"min": 5,
-									"max": 3600
-								},
-							"label": {
-								"en": "Polling Frequency"
-								}
-							}
-							
-							
-						
-						
-					]
-				}
-			]
-		},
-		{		"id": "H60-00",
-				"discovery": "H60-00",
-				"name": {
-					"en": "H60-00"
-				},
-				"images": {
-					"large": "drivers/H60/assets/images/large.jpg",
-					"small": "drivers/H60/assets/images/small.jpg"
-				},
-				"class": "socket",
-				"capabilities": [
-				    "RADIATOR_RETURN_TEMP",
-					"HEAT_CARRIER_FORWARD_TEMP",
-					"BRINE_IN_TEMP",
-					"BRINE_OUT_TEMP",
-					"WARM_WATER_TEMP",
-					"OUTDOOR_TEMP",
-					"COMPRESSOR_STATE",
-					"SWITCH_VALVE_STATE",
-					"SUM_ALARM_STATE",
-					"ADDITIONAL_HEATER_POWER",
-					"ROOM_SET_TEMP",
 					"target_temperature"
 								
 					
@@ -429,6 +320,7 @@
 				}
 			]
 		}
+
     ],  
 	
 	
@@ -475,6 +367,90 @@
 					"type": "number",
 					"title": {
 						"en": "Temperature"
+					},
+					"example": {
+					"en": "5"
+                      }
+					}
+				],
+				"args": [
+  					{
+  					"name": "device",
+  					"type": "device",
+  					"placeholder": {
+  						"en": "Select device"
+					},
+					"filter": "driver_id=H60"
+  					}
+  				]
+  			},
+			{
+			"id": "warm_water_temp_changed",
+  				"title": {
+  					"en": "Warm water temperature changed"
+  				},
+				"tokens": [
+					{
+					"name": "temperature",
+					"type": "number",
+					"title": {
+						"en": "Temperature"
+					},
+					"example": {
+					"en": "5"
+                      }
+					}
+				],
+				"args": [
+  					{
+  					"name": "device",
+  					"type": "device",
+  					"placeholder": {
+  						"en": "Select device"
+					},
+					"filter": "driver_id=H60"
+  					}
+  				]
+  			},
+			{
+			"id": "alarm_state_changed",
+  				"title": {
+  					"en": "Pump alarm state changed"
+  				},
+				"tokens": [
+					{
+					"name": "state",
+					"type": "number",
+					"title": {
+						"en": "Alarm state"
+					},
+					"example": {
+					"en": "5"
+                      }
+					}
+				],
+				"args": [
+  					{
+  					"name": "device",
+  					"type": "device",
+  					"placeholder": {
+  						"en": "Select device"
+					},
+					"filter": "driver_id=H60"
+  					}
+  				]
+  			},
+						{
+			"id": "switch_valve_state_changed",
+  				"title": {
+  					"en": "Switch valve state changed"
+  				},
+				"tokens": [
+					{
+					"name": "state",
+					"type": "number",
+					"title": {
+						"en": "Switch valve state"
 					},
 					"example": {
 					"en": "5"
