@@ -44,7 +44,7 @@ let cap_00 =[["INDOOR_TEMP"],					["0008"],
 		  		  		  
 		  ]
 
-		  // REGO 2000
+// REGO 2000
 let cap_10 =[["INDOOR_TEMP"],					["0008"],
 			 ["ROOM_SET_TEMP"],					["0203"],
 			 ["OUTDOOR_TEMP"],					["0007"], 
@@ -79,7 +79,7 @@ class H60Device extends Homey.Device {
 	
 	    
     // Register capabilities setting
-	this.registerMultipleCapabilityListener([ 'target_temperature.indoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
+	this.registerMultipleCapabilityListener([ 'target_temperature' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
 	//this.registerMultipleCapabilityListener([ 'target_temperature.outdoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
 	
 	// register flow triggers
@@ -94,8 +94,7 @@ class H60Device extends Homey.Device {
   onDeleted() {
     clearInterval(this.pollingInterval);
   }
-
-  // HELPER FUNCTIONS
+  
   pollDevice(interval) {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
@@ -108,9 +107,9 @@ class H60Device extends Homey.Device {
 		  .then(result => {
 					this.H1_Ver = result.status.H1ver; // Read H1 Version from H60 status request JSON string
 					this.H60_Cable = this.H1_Ver.substring(0,2); // Cable type
-					if (this.H60_Cable == "30")	this.cap=cap_30;
-					else if (this.H60_Cable == "10")  this.cap=cap_10;
-					else  this.cap=cap_00;
+					if      (this.H60_Cable == "30")	this.cap=cap_30;
+					else if (this.H60_Cable == "10")    this.cap=cap_10;
+					else                                this.cap=cap_00;
 					
 					this.log('H60 H1 ver: ' + this.H1_Ver + " cable=" + this.H60_Cable);
       	})
@@ -167,7 +166,7 @@ class H60Device extends Homey.Device {
   }
 
   async onSetTargetTemperature(data, opts) {
-    //let value = data[Capabilities.TARGET_TEMP];
+    
 	let value = data['target_temperature'];
     this.log('setting target temperature to', value);
     value = value * 10;
@@ -182,27 +181,7 @@ class H60Device extends Homey.Device {
           this.setUnavailable(Homey.__('Unreachable'));
           this.pingDevice();
         })
-		
-    // Retrieve current target temperature from backend.
-    /*let status = await this.client.status();
-    let currentValue = formatValue(status[ status['user mode'] === 'manual' ? 'temp manual setpoint' : 'temp setpoint' ]);
-
-    if (currentValue === value) {
-      this.log('(value matches current, not updating)');
-      // Check if capability value matches.
-      if (this.getCapabilityValue(Capabilities.TARGET_TEMP) !== value) {
-        await this.setValue(Capabilities.TARGET_TEMP, value);
-      }
-      return true;
-    }
-
-    return this.client.setTemperature(value).then(s => {
-      this.log('...status:', s.status);
-      if (s.status === 'ok') {
-        return this.setValue(Capabilities.TARGET_TEMP, value);
-      }
-    });
-*/	
+	   
   }
   
   

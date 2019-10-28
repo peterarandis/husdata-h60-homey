@@ -6,12 +6,13 @@
 	"name": {
 		"en": "Husdata"
 	},
-	"description": {
-		"en": "Husdata heat pump gateway"
+	"tags": {
+		"en": ["H60","heatpump","heat pump","greenline","compress","enviline","diplomat"]
 	},
-	"category": [
-		"climate"
-	],
+	"description": {
+		"en": "Husdata heat pump gateways"
+	},
+	"category": ["climate","appliances"],
 	"permissions": [],
 		"images": {
 		"large": "/assets/images/large.png",
@@ -254,7 +255,7 @@
 		{		"id": "H60",
 				"discovery": "H60",
 				"name": {
-					"en": "H60"
+					"en": "H60 heat pump gateway"
 				},
 				"images": {
 					"large": "drivers/H60/assets/images/large.jpg",
