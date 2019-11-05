@@ -17,7 +17,7 @@ let cap_30 =[["INDOOR_TEMP"],					["0008"],
 			 ["BRINE_IN_TEMP"],					["0005"],
 			 ["BRINE_OUT_TEMP"],				["0006"], 
 			 ["ADDITIONAL_HEATER_POWER"],		["3104"],
-			 ["COMPRESSOR_STATE"],				["1A04"],
+			 ["COMPRESSOR_STATE"],				["1A01"],
 			 ["SWITCH_VALVE_STATE"],			["1A07"], 
 			 ["SUM_ALARM_STATE"],				["1A20"],
 			 
@@ -37,7 +37,7 @@ let cap_00 =[["INDOOR_TEMP"],					["0008"],
 			 ["BRINE_IN_TEMP"],					["0005"],
 			 ["BRINE_OUT_TEMP"],				["0006"], 
 			 ["ADDITIONAL_HEATER_POWER"],		["3104"],
-			 ["COMPRESSOR_STATE"],				["1A04"],
+			 ["COMPRESSOR_STATE"],				["1A01"],
 			 ["SWITCH_VALVE_STATE"],			["1A07"], 
 			 ["SUM_ALARM_STATE"],				["1A20"],
 			 ["eof"],["eof"]
@@ -55,13 +55,29 @@ let cap_10 =[["INDOOR_TEMP"],					["0008"],
 			 ["BRINE_IN_TEMP"],					["0005"],
 			 ["BRINE_OUT_TEMP"],				["0006"], 
 			 ["ADDITIONAL_HEATER_POWER"],		["3104"],
-			 ["COMPRESSOR_STATE"],				["1A04"],
+			 ["COMPRESSOR_STATE"],				["1A01"],
 			 ["SWITCH_VALVE_STATE"],			["1A07"], 
 			 ["SUM_ALARM_STATE"],				["1A20"],
 			 ["eof"],["eof"]
 		  		  		  
 		  ]
-
+//NIBE EB100
+let cap_40 =[["INDOOR_TEMP"],					["0008"],
+			 ["ROOM_SET_TEMP"],					["0203"],
+			 ["OUTDOOR_TEMP"],					["0007"], 
+			 ["WARM_WATER_TEMP"],				["0009"],
+			 ["RADIATOR_FORWARD_TEMP"],			["0002"],
+			 ["HEAT_CARRIER_RETURN_TEMP"], 		["0003"],
+			 ["HEAT_CARRIER_FORWARD_TEMP"],		["0004"],
+			 ["BRINE_IN_TEMP"],					["0005"],
+			 ["BRINE_OUT_TEMP"],				["0006"], 
+			 ["ADDITIONAL_HEATER_POWER"],		["3104"],
+			 ["COMPRESSOR_STATE"],				["1A01"],
+			 ["SWITCH_VALVE_STATE"],			["1A07"], 
+			 ["SUM_ALARM_STATE"],				["2A20"],
+			 ["eof"],["eof"]
+		  		  		  
+		  ]
 
   
 											 
@@ -109,6 +125,7 @@ class H60Device extends Homey.Device {
 					this.H60_Cable = this.H1_Ver.substring(0,2); // Cable type
 					if      (this.H60_Cable == "30")	this.cap=cap_30;
 					else if (this.H60_Cable == "10")    this.cap=cap_10;
+					else if (this.H60_Cable == "40")    this.cap=cap_40;
 					else                                this.cap=cap_00;
 					
 					this.log('H60 H1 ver: ' + this.H1_Ver + " cable=" + this.H60_Cable);
@@ -121,7 +138,7 @@ class H60Device extends Homey.Device {
 	  util.sendCommand('/api/homey', this.getSetting('address'))
 	    .then(result => {
 			
-			var v ;
+			var v=0 ;
 			var j=0;
 							
 			while(this.cap[j] != "eof")
@@ -129,7 +146,8 @@ class H60Device extends Homey.Device {
 				v = result['X' + this.cap[j+1]]; // Set new value from H60 Json response
 				
 				if (v > 60000) v=v-65536; // Recalc if Negative
-				if (v != 0 && String(this.cap[j+1]).substring(0,1) =='0') v = v  / 10;  // Devide by 10 if TEMP or %
+				var d = String(this.cap[j+1]).substring(0,1) // Extract value type (temp, %, kw, status, etc-)
+				if (v != 0 && (d=='0' || d=='3' || d=='9')) v = v  / 10;  // Devide by 10 if TEMP , % or kW
 			
 				if (v != this.getCapabilityValue(this.cap[j]))  // Has value changed
 			    { 
@@ -137,16 +155,17 @@ class H60Device extends Homey.Device {
 			        this.log("set:" + this.H60_Cable + "  " + this.cap[j] + " = " + v);   
 				
 					
-				if(this.cap[j] == 'OUTDOOR_TEMP') 			{Homey.ManagerFlow.getCard('trigger', 'outdoor_temp_changed').trigger(this, {temperature: v}, {})  }
-				if(this.cap[j] == 'INDOOR_TEMP') 			{Homey.ManagerFlow.getCard('trigger', 'indoor_temp_changed').trigger(this, {temperature: v}, {})  }
-				if(this.cap[j] == 'WARM_WATER_TEMP') 		{Homey.ManagerFlow.getCard('trigger', 'warm_water_temp_changed').trigger(this, {temperature: v}, {})  }
-				if(this.cap[j] == 'ALARM_STATE') 			{Homey.ManagerFlow.getCard('trigger', 'alarm_state_changed').trigger(this, {temperature: v}, {})  }
-				if(this.cap[j] == 'ADDITIONAL_HEATER_POWER') {Homey.ManagerFlow.getCard('trigger', 'additional_heat_changed').trigger(this, {power: v}, {})  }	
-				if(this.cap[j] == 'SWITCH_VALVE_STATE') 		{Homey.ManagerFlow.getCard('trigger', 'switch_valve_state_changed').trigger(this, {power: v}, {})  }	
+				if(this.cap[j] == 'OUTDOOR_TEMP') 			{Homey.ManagerFlow.getCard('trigger', 'outdoor_temp_changed')      .trigger(this, {outdoor_temp_changed: v}, {})  }
+				if(this.cap[j] == 'INDOOR_TEMP') 			{Homey.ManagerFlow.getCard('trigger', 'indoor_temp_changed')       .trigger(this, {indoor_temp_changed: v}, {})  }
+				if(this.cap[j] == 'WARM_WATER_TEMP') 		{Homey.ManagerFlow.getCard('trigger', 'warm_water_temp_changed')   .trigger(this, {warm_water_temp_changed: v}, {})  }
+				if(this.cap[j] == 'SUM_ALARM_STATE') 		{Homey.ManagerFlow.getCard('trigger', 'alarm_state_changed')       .trigger(this, {alarm_state_changed: v}, {})  }
+				if(this.cap[j] == 'ADDITIONAL_HEATER_POWER'){Homey.ManagerFlow.getCard('trigger', 'additional_heat_changed')   .trigger(this, {additional_heat_changed: v}, {})  }	
+				if(this.cap[j] == 'SWITCH_VALVE_STATE') 	{Homey.ManagerFlow.getCard('trigger', 'switch_valve_state_changed').trigger(this, {switch_valve_state_changed: v},{})  }	
+				
 				if(this.cap[j] == 'ROOM_SET_TEMP') 	    	{this.setCapabilityValue('target_temperature', v); } // termostat		
 			    }
 				
-				j=j+2; 
+				j=j+2; // Next value / index
 		  
 			}
 		

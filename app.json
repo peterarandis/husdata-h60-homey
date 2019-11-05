@@ -255,7 +255,7 @@
 		{		"id": "H60",
 				"discovery": "H60",
 				"name": {
-					"en": "H60 heat pump gateway"
+					"en": "H60"
 				},
 				"images": {
 					"large": "drivers/H60/assets/images/large.jpg",
@@ -351,7 +351,7 @@
   				},
 				"tokens": [
 					{
-					"name": "temperature",
+					"name": "outdoor_temp_changed",
 					"type": "number",
 					"title": {
 						"en": "Temperature"
@@ -379,7 +379,7 @@
   				},
 				"tokens": [
 					{
-					"name": "temperature",
+					"name": "indoor_temp_changed",
 					"type": "number",
 					"title": {
 						"en": "Temperature"
@@ -407,7 +407,7 @@
   				},
 				"tokens": [
 					{
-					"name": "temperature",
+					"name": "warm_water_temp_changed",
 					"type": "number",
 					"title": {
 						"en": "Temperature"
@@ -435,7 +435,7 @@
   				},
 				"tokens": [
 					{
-					"name": "state",
+					"name": "alarm_state_changed",
 					"type": "number",
 					"title": {
 						"en": "Alarm state"
@@ -463,7 +463,7 @@
   				},
 				"tokens": [
 					{
-					"name": "state",
+					"name": "switch_valve_state_changed",
 					"type": "number",
 					"title": {
 						"en": "Switch valve state"
@@ -491,7 +491,7 @@
   				},
 				"tokens": [
 					{
-					"name": "power",
+					"name": "additional_heat_changed",
 					"type": "number",
 					"title": {
 						"en": "Power"
@@ -514,57 +514,8 @@
   			}
 
 			
-		],
-		"conditions": [
-			{
-			"id": "Compressor running",
-			"title": {
-					"en": "Compressor !{{is|isn't}} on"
-				}
-			},
-			{
-			"id": "raining_in",
-			"title": {
-					"en": "It's going to rain in..."
-			},
-			"titleFormatted": {
-					"en": "It !{{is|isn't}} going to rain in [[when]]"
-			},
-			"args": [
-				{
-				"name": "when",
-				"type": "dropdown",
-				"values": [
-					{
-					"id": "5",
-					"label": {
-						"en": "5 minutes"
-					}
-				},
-				{
-					"id": "10",
-					"label": {
-					"en": "10 minutes"
-				}
-				},
-				{
-					"id": "15",
-					"label": {
-					"en": "15 minutes"
-				}
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "actions": [
-    {
-      "id": "stop_raining",
-      "title": {
-        "en": "Make it stop raining. Haha."
-      }
-    }
-  ]
+		]
+
+
  }
 }
