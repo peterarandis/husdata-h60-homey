@@ -1,6 +1,6 @@
 {
 	"id": "se.husdata",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"compatibility": ">=2.5.0",
 	"sdk": 2,
 	"name": {
@@ -10,7 +10,9 @@
 		"en": ["H60","heatpump","heat pump","greenline","compress","enviline","diplomat"]
 	},
 	"description": {
-		"en": "Husdata heat pump gateways"
+		"en": "Husdata heat pump gateways",
+		"nl": "Husdata warmtepompgateways",
+		"sv": "Husdata värmkepumpgateways"
 	},
 	"category": ["climate","appliances"],
 	"permissions": [],
@@ -61,12 +63,15 @@
 			"HEAT_CARRIER_FORWARD_TEMP": {  
 				"type": "number",
 				"title": {
-					"en": "Heat forward"
+					"en": "Heat forward",
+					"nl": "warmte uit",
+					"sv": "Värme ut"
 				},
 				"getable": true,
 				"setable": false,
 				"units": {
 					"en": "C"
+					
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -74,7 +79,9 @@
 			"HEAT_CARRIER_RETURN_TEMP": {  
 				"type": "number",
 				"title": {
-					"en": "Heat return"
+					"en": "Heat return",
+					"nl": "Warmte in",
+					"sv": "Värme in"
 				},
 				"getable": true,
 				"setable": false,
@@ -87,7 +94,9 @@
 			"RADIATOR_RETURN_TEMP": {  
 				"type": "number",
 				"title": {
-					"en": "Radiator return"
+					"en": "Radiator return",
+					"nl": "Radiator retour",
+					"sv": "Radiator retur"					
 				},
 				"getable": true,
 				"setable": false,
@@ -101,7 +110,9 @@
 			"RADIATOR_FORWARD_TEMP": { 
 				"type": "number",
 				"title": {
-					"en": "Radiator forward"
+					"en": "Radiator forward",
+					"nl": "Radiator vooruit",
+					"sv": "Radiator fram"					
 				},
 				"getable": true,
 				"setable": false,
@@ -114,7 +125,9 @@
 			"BRINE_IN_TEMP": { 
 				"type": "number",
 				"title": {
-					"en": "Brine in"
+					"en": "Brine in",
+					"nl": "Brine ein",
+					"sv": "Brine in"
 				},
 				"getable": true,
 				"setable": false,
@@ -127,7 +140,9 @@
 			"BRINE_OUT_TEMP": { 
 				"type": "number",
 				"title": {
-					"en": "Brine out"
+					"en": "Brine out",
+					"nl": "Brine uit",
+					"sv": "Brine ut"
 				},
 				"getable": true,
 				"setable": false,
@@ -140,7 +155,9 @@
 			"WARM_WATER_TEMP": {  
 				"type": "number",
 				"title": {
-					"en": "Warm water"
+					"en": "Warm water",
+					"nl": "Warm water",
+					"sv": "Varmvatten"
 				},
 				"getable": true,
 				"setable": false,
@@ -153,7 +170,9 @@
 			"OUTDOOR_TEMP": {
 				"type": "number",
 				"title": {
-					"en": "Outdoor"
+					"en": "Outdoor",
+					"nl": "Buitenshuis",
+					"sv": "Utomhus"
 				},
 				"getable": true,
 				"setable": false,
@@ -167,7 +186,9 @@
 			"INDOOR_TEMP": {
 				"type": "number",
 				"title": {
-					"en": "Indoor"
+					"en": "Indoor",
+					"nl": "Binnen",
+					"sv": "Innomhus"
 				},
 				"getable": true,
 				"setable": false,
@@ -181,7 +202,9 @@
 			"COMPRESSOR_STATE": {  
 				"type": "number",
 				"title": {
-					"en": "Compressor"
+					"en": "Compressor",
+					"nl": "Compressor",
+					"sv": "Kompressor"
 				},
 				"getable": true,
 				"setable": false,
@@ -194,7 +217,9 @@
 			"SWITCH_VALVE_STATE": {  
 				"type": "number",
 				"title": {
-					"en": "Switch valve"
+					"en": "Switch valve",
+					"nl" :"schakelaar klep",
+					"sv" :"Växelventil"
 				},
 				"getable": true,
 				"setable": false,
@@ -208,7 +233,9 @@
 			"SUM_ALARM_STATE": {  
 				"type": "number",
 				"title": {
-					"en": "Alarm"
+					"en": "Alarm",
+					"nl": "Alarm",
+					"sv": "Alarm"
 				},
 				"getable": true,
 				"setable": false,
@@ -222,7 +249,9 @@
 			"ADDITIONAL_HEATER_POWER": {  
 				"type": "number",
 				"title": {
-					"en": "Additional heater"
+					"en": "Additional heater",
+					"nl": "Extra verwarming",
+					"sv": "Tillskott"
 				},
 				"getable": true,
 				"setable": false,
@@ -236,7 +265,9 @@
 			"ROOM_SET_TEMP": {   
 				"type": "number",
 				"title": {
-					"en": "Room target"
+					"en": "Room target",
+					"nl": "ingestelde temperatuur",
+					"sv": "Inställd temp"
 				},
 				"getable": true,
 				"setable": true,
@@ -347,14 +378,18 @@
         {
   				"id": "outdoor_temp_changed",
   				"title": {
-  					"en": "Outdoor temperature changed"
+  					"en": "Outdoor temperature changed",
+					"nl": "Buitentemperatuur veranderd",
+					"sv": "Utomhustemp ändrad"
   				},
 				"tokens": [
 					{
 					"name": "outdoor_temp_changed",
 					"type": "number",
 					"title": {
-						"en": "Temperature"
+						"en": "Temperature",
+						"nl": "Temperatuur",
+						"sv": "Temperatur"
 					},
 					"example": {
 					"en": "5"
@@ -375,14 +410,18 @@
 			{
 			"id": "indoor_temp_changed",
   				"title": {
-  					"en": "Indoor temperature changed"
+  					"en": "Indoor temperature changed",
+					"nl": "Indorrt temperatuur veranderd",
+					"sv": "Inomhustemp ändrad"
   				},
 				"tokens": [
 					{
 					"name": "indoor_temp_changed",
 					"type": "number",
 					"title": {
-						"en": "Temperature"
+						"en": "Temperature",
+						"nl": "Temperatuur",
+						"sv": "Temperatur"
 					},
 					"example": {
 					"en": "5"
@@ -403,14 +442,18 @@
 			{
 			"id": "warm_water_temp_changed",
   				"title": {
-  					"en": "Warm water temperature changed"
+  					"en": "Warm water temperature changed",
+					"nl": "Warm water temperatuur veranderd",
+					"sv": "Varmvattentemp förändrad"
   				},
 				"tokens": [
 					{
 					"name": "warm_water_temp_changed",
 					"type": "number",
 					"title": {
-						"en": "Temperature"
+						"en": "Temperature",
+						"nl": "Temperatuur",
+						"sv": "Temperatur"
 					},
 					"example": {
 					"en": "5"
@@ -431,14 +474,18 @@
 			{
 			"id": "alarm_state_changed",
   				"title": {
-  					"en": "Pump alarm state changed"
+  					"en": "Pump alarm state changed",
+					"nl": "Pomp alarm status gewijzigd",
+					"sv": "Pump alarm status ändrad"
   				},
 				"tokens": [
 					{
 					"name": "alarm_state_changed",
 					"type": "number",
 					"title": {
-						"en": "Alarm state"
+						"en": "Alarm state",
+						"nl": "Alarm state",
+						"sv": "Alarm status"
 					},
 					"example": {
 					"en": "5"
@@ -459,7 +506,9 @@
 						{
 			"id": "switch_valve_state_changed",
   				"title": {
-  					"en": "Switch valve state changed"
+  					"en": "Switch valve state changed",
+					"nl": "Klepstatus gewijzigd",
+					"sv": "Växelventil läge ändrad"
   				},
 				"tokens": [
 					{
@@ -478,7 +527,9 @@
   					"name": "device",
   					"type": "device",
   					"placeholder": {
-  						"en": "Select device"
+  						"en": "Select device",
+						"nl": "Select device",
+						"sv": "Välj enhet"
 					},
 					"filter": "driver_id=H60"
   					}
@@ -487,14 +538,18 @@
 			{
   				"id": "additional_heat_changed",
   				"title": {
-  					"en": "Additional heat changed"
+  					"en": "Additional heat changed",
+					"nl" :"Extra verwarming gewijzigd",
+					"sv" :"Tillskottstatus ändrad"
   				},
 				"tokens": [
 					{
 					"name": "additional_heat_changed",
 					"type": "number",
 					"title": {
-						"en": "Power"
+						"en": "Power",
+						"nl": "Effect",
+						"sv": "Effekt"
 					},
 					"example": {
 					"en": "5"
