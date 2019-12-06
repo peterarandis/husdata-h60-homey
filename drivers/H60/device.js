@@ -146,6 +146,7 @@ class H60Device extends Homey.Device {
 				v = result['X' + this.cap[j+1]]; // Set new value from H60 Json response
 				
 				if (v > 60000) v=v-65536; // Recalc if Negative
+				if (v==32758) v=0; //Sensor not installet EB100
 				var d = String(this.cap[j+1]).substring(0,1) // Extract value type (temp, %, kw, status, etc-)
 				if (v != 0 && (d=='0' || d=='3' || d=='9')) v = v  / 10;  // Devide by 10 if TEMP , % or kW
 			
