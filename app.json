@@ -1,18 +1,18 @@
 {
 	"id": "se.husdata",
-	"version": "1.0.1",
+	"version": "1.0.5",
 	"compatibility": ">=2.5.0",
 	"sdk": 2,
 	"name": {
 		"en": "Husdata"
 	},
 	"tags": {
-		"en": ["H60","heatpump","heat pump","greenline","compress","enviline","diplomat"]
+		"en": ["H60","husdata","heatpump","heat pump","greenline","compress","enviline","diplomat","ivt","bosch","thermia"]
 	},
 	"description": {
-		"en": "Husdata heat pump gateways",
-		"nl": "Husdata warmtepompgateways",
-		"sv": "Husdata värmkepumpgateways"
+		"en": "Husdata Heat pump gateways",
+		"nl": "Husdata Warmtepompgateways",
+		"sv": "Husdata Värmepumpgateways"
 	},
 	"category": ["climate","appliances"],
 	"permissions": [],
@@ -30,11 +30,8 @@
       {
         "name": "Peter Hansson",
 		"email": "homey@husdata.se"
-	  },
-      {
-	  	"name": "Jelger Haanstra",
-		"email": "homey@solidewebservices.com"
-	  }     
+	  }
+       
     ]
   },
   	"discovery": {
@@ -54,7 +51,21 @@
 								"value": "^h60"
 							}
 						}
+					],
+					
+					[
+						{
+							"field": "host",
+							"match": {
+								"type": "regex",
+								"value": "^asus"
+							}
+						}
+										
 					]
+					
+					
+					
 				]
 		}
 		
@@ -69,6 +80,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 					
@@ -85,6 +97,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -100,6 +113,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -116,6 +130,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -131,6 +146,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -146,6 +162,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -161,6 +178,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -176,6 +194,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -192,6 +211,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "C"
 				},
@@ -208,6 +228,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": ""
 				},
@@ -223,6 +244,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": ""
 				},
@@ -255,6 +277,7 @@
 				},
 				"getable": true,
 				"setable": false,
+				"insights": true,
 				"units": {
 					"en": "%"
 				},
@@ -309,7 +332,9 @@
 				"capabilitiesOptions": {
 						"target_temperature":  {
 							"title": {
-								"en": "Indoor temperature"
+								"en": "Indoor temperature setting",
+								"nl": "Binnentemperatuur instelling",
+								"sv": "Inställd innetemp"
 							}
 						}
 						

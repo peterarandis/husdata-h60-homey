@@ -14,12 +14,12 @@ class H60Driver extends Homey.Driver {
 	let deviceArray = {};
 
     socket.on('list_devices', (data, callback) => {
-      const devices = Object.values(discoveryResults).map(discoveryResult => {
+		const devices = Object.values(discoveryResults).map(discoveryResult => {
          this.log("Found device: " + discoveryResult.address + " " + discoveryResult.id);
 	     // push discovered device to temporary array with all discovered devices
 		 devicesArray[discoveryResult.id]={
             name: 'H60 ['+ discoveryResult.address +']',
-            data: {
+			data: {
               id: discoveryResult.id,
             },
             settings: {
@@ -32,7 +32,7 @@ class H60Driver extends Homey.Driver {
 				data: {
 					id: discoveryResult.id,
 					}
-			};
+			};			
       });
       callback(null, devices);
     });
