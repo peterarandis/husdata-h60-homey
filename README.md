@@ -11,6 +11,7 @@ Including features:
 - Display heat pump system temperatures, status and operating modes
 - Adjust heating settings
 - Build flows using triggers for temperatures and statuses
+- Logging of heatpump sensors and operations to Insights graphing for analysis
 
 Flows using heat pump data can be very usable
 For example, Trig notifications if...
