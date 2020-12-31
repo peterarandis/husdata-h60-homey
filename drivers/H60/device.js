@@ -29,7 +29,7 @@ let cap_30 =[["INDOOR_TEMP"],					["0008"],
 let cap_00 =[["INDOOR_TEMP"],					["0008"],
 			 ["ROOM_SET_TEMP"],					["0203"],
 			 ["OUTDOOR_TEMP"],					["0007"], 
-			 ["WARM_WATER_TEMP"],				["0009"],
+			 ["WARM_WATER_TEMP"],				["0009"], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
 			 ["RADIATOR_RETURN_TEMP"],			["0001"],
 			 ["RADIATOR_FORWARD_TEMP"],			["0002"],
 			 ["HEAT_CARRIER_RETURN_TEMP"], 		["0003"],
@@ -105,6 +105,9 @@ class H60Device extends Homey.Device {
 	new Homey.FlowCardTriggerDevice('alarm_state_changed').register();    
 	new Homey.FlowCardTriggerDevice('switch_valve_state_changed').register();    
 	new Homey.FlowCardTriggerDevice('additional_heat_changed').register();
+	
+	
+	
     }
 
   onDeleted() {
@@ -150,6 +153,15 @@ class H60Device extends Homey.Device {
 				var d = String(this.cap[j+1]).substring(0,1) // Extract value type (temp, %, kw, status, etc-)
 				if (v != 0 && (d=='0' || d=='3' || d=='9')) v = v  / 10;  // Devide by 10 if TEMP , % or kW
 			
+				
+				if(this.cap[j] == 'WARM_WATER_TEMP' && v == -48.3) // Special for Rego600 that can have internal GT3 tank or External GT3x
+				  { 
+			       cap_00[7] = "000A"; // Reset variable on position 7
+				   v=0; // Not to show -48.3 at startup
+				   this.log("Switched from reading GT3 to GT3x for Rego600");
+				  }
+				
+				
 				if (v != this.getCapabilityValue(this.cap[j]))  // Has value changed
 			    { 
 			        this.setCapabilityValue(String(this.cap[j]), v);  // Set in app

@@ -1,6 +1,6 @@
 {
 	"id": "se.husdata",
-	"version": "1.0.5",
+	"version": "1.0.7",
 	"compatibility": ">=2.5.0",
 	"sdk": 2,
 	"name": {
@@ -238,9 +238,9 @@
 			"SWITCH_VALVE_STATE": {  
 				"type": "number",
 				"title": {
-					"en": "Switch valve",
-					"nl" :"schakelaar klep",
-					"sv" :"Växelventil"
+					"en": "Heating/Hot water",
+					"nl" :"Vervamen/Warm water",
+					"sv" :"Värmer/Varmvatten"
 				},
 				"getable": true,
 				"setable": false,
