@@ -82,7 +82,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 					
 				},
 				"uiComponent": "sensor",
@@ -99,7 +99,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -115,7 +115,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -132,7 +132,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -148,7 +148,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -164,7 +164,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -180,7 +180,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -196,7 +196,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -213,7 +213,7 @@
 				"setable": false,
 				"insights": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
@@ -295,7 +295,7 @@
 				"getable": true,
 				"setable": true,
 				"units": {
-					"en": "C"
+					"en": "°C"
 				},
 				"uiComponent": "sensor",
 				"icon": "/assets/iconTemp.svg"
