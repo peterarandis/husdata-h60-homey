@@ -21,9 +21,9 @@ For example, Trig notifications if...
 - Delta between Brine IN and OUT is to high
 - Warm water temp is going too low (over-used, long shower)
 
- 
+
 This application is generic for all heatpumps so some sensors/status may output "-" if not valid for your particular model. App supports English, Dutch and Swedish .
- 
+
 Husdata.se
 Peter Hansson
 info@husdata.se
