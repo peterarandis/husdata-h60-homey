@@ -110,117 +110,121 @@ class H60Device extends Homey.Device {
     // this.registerMultipleCapabilityListener([ 'target_temperature.outdoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
 
     // register flow triggers
-    new Homey.FlowCardTriggerDevice('outdoor_temp_changed').register();
-    new Homey.FlowCardTriggerDevice('indoor_temp_changed').register();
-    new Homey.FlowCardTriggerDevice('warm_water_temp_changed').register();
-    new Homey.FlowCardTriggerDevice('alarm_state_changed').register();
-    new Homey.FlowCardTriggerDevice('switch_valve_state_changed').register();
-    new Homey.FlowCardTriggerDevice('additional_heat_changed').register();
+    // new Homey.FlowCardTriggerDevice('outdoor_temp_changed').register();
+    // new Homey.FlowCardTriggerDevice('indoor_temp_changed').register();
+    // new Homey.FlowCardTriggerDevice('warm_water_temp_changed').register();
+    // new Homey.FlowCardTriggerDevice('alarm_state_changed').register();
+    // new Homey.FlowCardTriggerDevice('switch_valve_state_changed').register();
+    // new Homey.FlowCardTriggerDevice('additional_heat_changed').register();
+
+    // this.homey.flow.getCard
   }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
   }
 
+  async poll() {
+    const address = this.getSetting('address');
+
+    if (!this.H60_Cable) {
+      const result = await util.sendCommand('/status', address);
+      // this.log('RESULT', result);
+      this.H1_Ver = result.status.H1ver; // Read H1 Version from H60 status request JSON string
+      this.H60_Cable = this.H1_Ver.substring(0, 2); // Cable type
+      if (this.H60_Cable == '30') this.cap = cap_30;
+      else if (this.H60_Cable == '10') this.cap = cap_10;
+      else if (this.H60_Cable == '40') this.cap = cap_40;
+      else this.cap = cap_00;
+
+      this.log(`H60 H1 ver: ${this.H1_Ver} cable=${this.H60_Cable}`);
+      return;
+    }
+
+    try {
+      this.log(`pollDevice ${address} hp type: ${this.H60_Cable}`);
+      const result = await util.sendCommand('/api/homey', address);
+      // this.log('RESULT', result);
+      let v = 0;
+      let j = 0;
+
+      while (this.cap[j] != 'eof') {
+        v = result[`X${this.cap[j + 1]}`]; // Set new value from H60 Json response
+
+        if (v > 60000) v -= 65536; // Recalc if Negative
+        if (v == 32758) v = 0; // Sensor not installet EB100
+        const d = String(this.cap[j + 1]).substring(0, 1); // Extract value type (temp, %, kw, status, etc-)
+        if (v != 0 && (d == '0' || d == '3' || d == '9')) v /= 10; // Devide by 10 if TEMP , % or kW
+
+        if (this.cap[j] == 'WARM_WATER_TEMP' && v == -48.3) {
+          // Special for Rego600 that can have internal GT3 tank or External GT3x
+          cap_00[7] = '000A'; // Reset variable on position 7
+          v = 0; // Not to show -48.3 at startup
+          this.log('Switched from reading GT3 to GT3x for Rego600');
+        }
+
+        if (v != this.getCapabilityValue(this.cap[j])) {
+          // Has value changed
+          this.setCapabilityValue(String(this.cap[j]), v); // Set in app
+          this.log(`set:${this.H60_Cable}  ${this.cap[j]} = ${v}`);
+
+          if (this.cap[j] == 'OUTDOOR_TEMP') {
+            Homey.ManagerFlow.getCard(
+              'trigger',
+              'outdoor_temp_changed',
+            ).trigger(this, { outdoor_temp_changed: v }, {});
+          }
+          if (this.cap[j] == 'INDOOR_TEMP') {
+            Homey.ManagerFlow.getCard(
+              'trigger',
+              'indoor_temp_changed',
+            ).trigger(this, { indoor_temp_changed: v }, {});
+          }
+          if (this.cap[j] == 'WARM_WATER_TEMP') {
+            Homey.ManagerFlow.getCard(
+              'trigger',
+              'warm_water_temp_changed',
+            ).trigger(this, { warm_water_temp_changed: v }, {});
+          }
+          if (this.cap[j] == 'SUM_ALARM_STATE') {
+            Homey.ManagerFlow.getCard(
+              'trigger',
+              'alarm_state_changed',
+            ).trigger(this, { alarm_state_changed: v }, {});
+          }
+          if (this.cap[j] == 'ADDITIONAL_HEATER_POWER') {
+            Homey.ManagerFlow.getCard(
+              'trigger',
+              'additional_heat_changed',
+            ).trigger(this, { additional_heat_changed: v }, {});
+          }
+          if (this.cap[j] == 'SWITCH_VALVE_STATE') {
+            Homey.ManagerFlow.getCard(
+              'trigger',
+              'switch_valve_state_changed',
+            ).trigger(this, { switch_valve_state_changed: v }, {});
+          }
+
+          if (this.cap[j] == 'ROOM_SET_TEMP') {
+            this.setCapabilityValue('target_temperature', v);
+          } // termostat
+        }
+
+        j += 2; // Next value / index
+      }
+    } catch (error) {
+      this.log(error);
+      this.setUnavailable(Homey.__('Unreachable'));
+      this.pingDevice();
+    }
+  }
+
   pollDevice(interval) {
+    this.log('pollDevice', interval);
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
-
-    this.pollingInterval = setInterval(() => {
-      if (this.H60_Cable == '') {
-        util
-          .sendCommand('/status', this.getSetting('address')) // H60 Status request
-          .then((result) => {
-            this.H1_Ver = result.status.H1ver; // Read H1 Version from H60 status request JSON string
-            this.H60_Cable = this.H1_Ver.substring(0, 2); // Cable type
-            if (this.H60_Cable == '30') this.cap = cap_30;
-            else if (this.H60_Cable == '10') this.cap = cap_10;
-            else if (this.H60_Cable == '40') this.cap = cap_40;
-            else this.cap = cap_00;
-
-            this.log(`H60 H1 ver: ${this.H1_Ver} cable=${this.H60_Cable}`);
-          });
-      } else {
-        // this.log("pollDevice " + this.getSetting('address') + " hp type: " + H60_Cable );
-        util
-          .sendCommand('/api/homey', this.getSetting('address'))
-          .then((result) => {
-            let v = 0;
-            let j = 0;
-
-            while (this.cap[j] != 'eof') {
-              v = result[`X${this.cap[j + 1]}`]; // Set new value from H60 Json response
-
-              if (v > 60000) v -= 65536; // Recalc if Negative
-              if (v == 32758) v = 0; // Sensor not installet EB100
-              const d = String(this.cap[j + 1]).substring(0, 1); // Extract value type (temp, %, kw, status, etc-)
-              if (v != 0 && (d == '0' || d == '3' || d == '9')) v /= 10; // Devide by 10 if TEMP , % or kW
-
-              if (this.cap[j] == 'WARM_WATER_TEMP' && v == -48.3) {
-                // Special for Rego600 that can have internal GT3 tank or External GT3x
-                cap_00[7] = '000A'; // Reset variable on position 7
-                v = 0; // Not to show -48.3 at startup
-                this.log('Switched from reading GT3 to GT3x for Rego600');
-              }
-
-              if (v != this.getCapabilityValue(this.cap[j])) {
-                // Has value changed
-                this.setCapabilityValue(String(this.cap[j]), v); // Set in app
-                this.log(`set:${this.H60_Cable}  ${this.cap[j]} = ${v}`);
-
-                if (this.cap[j] == 'OUTDOOR_TEMP') {
-                  Homey.ManagerFlow.getCard(
-                    'trigger',
-                    'outdoor_temp_changed',
-                  ).trigger(this, { outdoor_temp_changed: v }, {});
-                }
-                if (this.cap[j] == 'INDOOR_TEMP') {
-                  Homey.ManagerFlow.getCard(
-                    'trigger',
-                    'indoor_temp_changed',
-                  ).trigger(this, { indoor_temp_changed: v }, {});
-                }
-                if (this.cap[j] == 'WARM_WATER_TEMP') {
-                  Homey.ManagerFlow.getCard(
-                    'trigger',
-                    'warm_water_temp_changed',
-                  ).trigger(this, { warm_water_temp_changed: v }, {});
-                }
-                if (this.cap[j] == 'SUM_ALARM_STATE') {
-                  Homey.ManagerFlow.getCard(
-                    'trigger',
-                    'alarm_state_changed',
-                  ).trigger(this, { alarm_state_changed: v }, {});
-                }
-                if (this.cap[j] == 'ADDITIONAL_HEATER_POWER') {
-                  Homey.ManagerFlow.getCard(
-                    'trigger',
-                    'additional_heat_changed',
-                  ).trigger(this, { additional_heat_changed: v }, {});
-                }
-                if (this.cap[j] == 'SWITCH_VALVE_STATE') {
-                  Homey.ManagerFlow.getCard(
-                    'trigger',
-                    'switch_valve_state_changed',
-                  ).trigger(this, { switch_valve_state_changed: v }, {});
-                }
-
-                if (this.cap[j] == 'ROOM_SET_TEMP') {
-                  this.setCapabilityValue('target_temperature', v);
-                } // termostat
-              }
-
-              j += 2; // Next value / index
-            }
-          })
-
-          .catch((error) => {
-            this.log(error);
-            this.setUnavailable(Homey.__('Unreachable'));
-            this.pingDevice();
-          });
-      }
-    }, 1000 * interval);
+    this.pollingInterval = this.homey.setInterval(() => this.poll(), 1000 * interval);
+    this.poll();
   }
 
   async onSetTargetTemperature(data, opts) {
