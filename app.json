@@ -49,6 +49,202 @@
       }
     ]
   },
+  "flow": {
+    "triggers": [
+      {
+        "id": "additional_heat_changed",
+        "title": {
+          "en": "Additional heat changed",
+          "nl": "Extra verwarming gewijzigd",
+          "sv": "Tillskottstatus ändrad"
+        },
+        "tokens": [
+          {
+            "name": "additional_heat_changed",
+            "type": "number",
+            "title": {
+              "en": "Power",
+              "nl": "Effect",
+              "sv": "Effekt"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "alarm_state_changed",
+        "title": {
+          "en": "Pump alarm state changed",
+          "nl": "Pomp alarm status gewijzigd",
+          "sv": "Pump alarm status ändrad"
+        },
+        "tokens": [
+          {
+            "name": "alarm_state_changed",
+            "type": "number",
+            "title": {
+              "en": "Alarm state",
+              "nl": "Alarm state",
+              "sv": "Alarm status"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "indoor_temp_changed",
+        "title": {
+          "en": "Indoor temperature changed",
+          "nl": "Indorrt temperatuur veranderd",
+          "sv": "Inomhustemp ändrad"
+        },
+        "tokens": [
+          {
+            "name": "indoor_temp_changed",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur",
+              "sv": "Temperatur"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "outdoor_temp_changed",
+        "title": {
+          "en": "Outdoor temperature changed",
+          "nl": "Buitentemperatuur veranderd",
+          "sv": "Utomhustemp ändrad"
+        },
+        "tokens": [
+          {
+            "name": "outdoor_temp_changed",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur",
+              "sv": "Temperatur"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "switch_valve_state_changed",
+        "title": {
+          "en": "Switch valve state changed",
+          "nl": "Klepstatus gewijzigd",
+          "sv": "Växelventil läge ändrad"
+        },
+        "tokens": [
+          {
+            "name": "switch_valve_state_changed",
+            "type": "number",
+            "title": {
+              "en": "Switch valve state"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device",
+              "nl": "Select device",
+              "sv": "Välj enhet"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "warm_water_temp_changed",
+        "title": {
+          "en": "Warm water temperature changed",
+          "nl": "Warm water temperatuur veranderd",
+          "sv": "Varmvattentemp förändrad"
+        },
+        "tokens": [
+          {
+            "name": "warm_water_temp_changed",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur",
+              "sv": "Temperatur"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "id": "H60",

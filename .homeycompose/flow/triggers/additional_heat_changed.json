@@ -1,0 +1,32 @@
+{
+  "id": "additional_heat_changed",
+  "title": {
+    "en": "Additional heat changed",
+    "nl": "Extra verwarming gewijzigd",
+    "sv": "Tillskottstatus ändrad"
+  },
+  "tokens": [
+    {
+      "name": "additional_heat_changed",
+      "type": "number",
+      "title": {
+        "en": "Power",
+        "nl": "Effect",
+        "sv": "Effekt"
+      },
+      "example": {
+        "en": "5"
+      }
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select device"
+      },
+      "filter": "driver_id=H60"
+    }
+  ]
+}

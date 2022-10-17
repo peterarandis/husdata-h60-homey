@@ -108,16 +108,6 @@ class H60Device extends Homey.Device {
       DEBOUNCE_RATE,
     );
     // this.registerMultipleCapabilityListener([ 'target_temperature.outdoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
-
-    // register flow triggers
-    // new Homey.FlowCardTriggerDevice('outdoor_temp_changed').register();
-    // new Homey.FlowCardTriggerDevice('indoor_temp_changed').register();
-    // new Homey.FlowCardTriggerDevice('warm_water_temp_changed').register();
-    // new Homey.FlowCardTriggerDevice('alarm_state_changed').register();
-    // new Homey.FlowCardTriggerDevice('switch_valve_state_changed').register();
-    // new Homey.FlowCardTriggerDevice('additional_heat_changed').register();
-
-    // this.homey.flow.getCard
   }
 
   onDeleted() {
@@ -168,46 +158,53 @@ class H60Device extends Homey.Device {
           this.setCapabilityValue(String(this.cap[j]), v); // Set in app
           this.log(`set:${this.H60_Cable}  ${this.cap[j]} = ${v}`);
 
-          if (this.cap[j] == 'OUTDOOR_TEMP') {
-            Homey.ManagerFlow.getCard(
-              'trigger',
+          if (this.cap[j] === 'OUTDOOR_TEMP') {
+            await this.driver.triggerDeviceFlow(
               'outdoor_temp_changed',
-            ).trigger(this, { outdoor_temp_changed: v }, {});
+              { outdoor_temp_changed: v },
+              this,
+            );
           }
-          if (this.cap[j] == 'INDOOR_TEMP') {
-            Homey.ManagerFlow.getCard(
-              'trigger',
+          if (this.cap[j] === 'INDOOR_TEMP') {
+            await this.driver.triggerDeviceFlow(
               'indoor_temp_changed',
-            ).trigger(this, { indoor_temp_changed: v }, {});
+              { indoor_temp_changed: v },
+              this,
+            );
           }
-          if (this.cap[j] == 'WARM_WATER_TEMP') {
-            Homey.ManagerFlow.getCard(
-              'trigger',
+          if (this.cap[j] === 'WARM_WATER_TEMP') {
+            await this.driver.triggerDeviceFlow(
               'warm_water_temp_changed',
-            ).trigger(this, { warm_water_temp_changed: v }, {});
+              { warm_water_temp_changed: v },
+              this,
+            );
           }
-          if (this.cap[j] == 'SUM_ALARM_STATE') {
-            Homey.ManagerFlow.getCard(
-              'trigger',
+          if (this.cap[j] === 'SUM_ALARM_STATE') {
+            await this.driver.triggerDeviceFlow(
               'alarm_state_changed',
-            ).trigger(this, { alarm_state_changed: v }, {});
+              { alarm_state_changed: v },
+              this,
+            );
           }
-          if (this.cap[j] == 'ADDITIONAL_HEATER_POWER') {
-            Homey.ManagerFlow.getCard(
-              'trigger',
+          if (this.cap[j] === 'ADDITIONAL_HEATER_POWER') {
+            await this.driver.triggerDeviceFlow(
               'additional_heat_changed',
-            ).trigger(this, { additional_heat_changed: v }, {});
+              { additional_heat_changed: v },
+              this,
+            );
           }
-          if (this.cap[j] == 'SWITCH_VALVE_STATE') {
-            Homey.ManagerFlow.getCard(
-              'trigger',
+          if (this.cap[j] === 'SWITCH_VALVE_STATE') {
+            await this.driver.triggerDeviceFlow(
               'switch_valve_state_changed',
-            ).trigger(this, { switch_valve_state_changed: v }, {});
+              { switch_valve_state_changed: v },
+              this,
+            );
           }
 
-          if (this.cap[j] == 'ROOM_SET_TEMP') {
+          // Thermostat
+          if (this.cap[j] === 'ROOM_SET_TEMP') {
             this.setCapabilityValue('target_temperature', v);
-          } // termostat
+          }
         }
 
         j += 2; // Next value / index
