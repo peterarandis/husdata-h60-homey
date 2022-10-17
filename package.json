@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "homey": "^2.30.3"
+  },
+  "dependencies": {
+    "node-fetch": "^3.2.10"
+  }
+}
