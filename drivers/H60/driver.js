@@ -4,7 +4,7 @@ const Homey = require('homey');
 
 class H60Driver extends Homey.Driver {
 
-  onPair(socket) {
+  async onPair(session) {
     this.log('Pairing started...');
     const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
@@ -12,7 +12,7 @@ class H60Driver extends Homey.Driver {
     const devicesArray = {};
     let deviceArray = {};
 
-    socket.on('list_devices', (data, callback) => {
+    session.setHandler('list_devices', (data) => {
       const devices = Object.values(discoveryResults).map((discoveryResult) => {
         this.log(`Found device: ${discoveryResult.address} ${discoveryResult.id}`);
         // push discovered device to temporary array with all discovered devices
@@ -33,20 +33,20 @@ class H60Driver extends Homey.Driver {
           },
         };
       });
-      callback(null, devices);
+      return devices;
     });
 
-    socket.on('list_devices_selection', (data, callback) => { // Lists discovered devices
-      callback();
+    // Lists discovered devices
+    session.setHandler('list_devices_selection', (data) => {
       selectedDeviceId = data[0].data.id;
       this.log(`Selected device: ${selectedDeviceId}`);
       // push the selected device to a temporary array which can be used for pairing
       deviceArray = devicesArray[selectedDeviceId];
     });
 
-    socket.on('get_device', (data, callback) => {
-      callback(false, deviceArray);
+    session.setHandler('get_device', () => {
       this.log('get_device done ');
+      return deviceArray;
     });
   }
 

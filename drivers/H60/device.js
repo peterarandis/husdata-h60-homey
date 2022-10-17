@@ -142,7 +142,7 @@ class H60Device extends Homey.Device {
     }
 
     try {
-      this.log(`pollDevice ${address} hp type: ${this.H60_Cable}`);
+      // this.log(`pollDevice ${address} hp type: ${this.H60_Cable}`);
       const result = await util.sendCommand('/api/homey', address);
       // this.log('RESULT', result);
       let v = 0;
