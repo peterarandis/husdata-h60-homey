@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Alarm",
+    "nl": "Alarm",
+    "sv": "Alarm"
+  },
+  "getable": true,
+  "setable": false,
+  "units": {
+    "en": ""
+  },
+     "uiComponent": "sensor",
+  "icon": "/assets/iconAlarm.svg"
+
+}

@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Room target",
+    "nl": "ingestelde temperatuur",
+    "sv": "Inställd temp"
+  },
+  "getable": true,
+  "setable": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

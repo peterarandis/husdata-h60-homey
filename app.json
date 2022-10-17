@@ -1,601 +1,391 @@
 {
-	"id": "se.husdata",
-	"version": "1.0.7",
-	"compatibility": ">=5.0.0",
-	"sdk": 3,
-	"name": {
-		"en": "Husdata"
-	},
-	"tags": {
-		"en": ["H60","husdata","heatpump","heat pump","greenline","compress","enviline","diplomat","ivt","bosch","thermia"]
-	},
-	"description": {
-		"en": "Husdata Heat pump gateways",
-		"nl": "Husdata Warmtepompgateways",
-		"sv": "Husdata Värmepumpgateways"
-	},
-	"category": ["climate","appliances"],
-	"permissions": [],
-		"images": {
-		"large": "/assets/images/large.png",
-		"small": "/assets/images/small.png"
-	},
-	"author": {
-		"name": "Peter Hansson",
-		"email": "homey@husdata.se",
-		"website": "https://husdata.se/"
-	},
-	"contributors" : {
-    "developers" : [
-      {
-        "name": "Peter Hansson",
-		"email": "homey@husdata.se"
-	  }
-       
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "se.husdata.fg",
+  "version": "1.0.7",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Husdata"
+  },
+  "tags": {
+    "en": [
+      "H60",
+      "husdata",
+      "heatpump",
+      "heat pump",
+      "greenline",
+      "compress",
+      "enviline",
+      "diplomat",
+      "ivt",
+      "bosch",
+      "thermia"
     ]
   },
-  	"discovery": {
-		"H60": {
-				"type": "mdns-sd",
-				"mdns-sd": {
-						"name": "http",
-						"protocol": "tcp"
-						},
-				"id": "{{host}}",
-				"conditions": [
-					[
-						{
-							"field": "host",
-							"match": {
-								"type": "regex",
-								"value": "^h60"
-							}
-						}
-					],
-					
-					[
-						{
-							"field": "host",
-							"match": {
-								"type": "regex",
-								"value": "^asus"
-							}
-						}
-										
-					]
-					
-					
-					
-				]
-		}
-		
-	},
-  	"capabilities": {
-			"HEAT_CARRIER_FORWARD_TEMP": {  
-				"type": "number",
-				"title": {
-					"en": "Heat forward",
-					"nl": "warmte uit",
-					"sv": "Värme ut"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-					
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			},
-			"HEAT_CARRIER_RETURN_TEMP": {  
-				"type": "number",
-				"title": {
-					"en": "Heat return",
-					"nl": "Warmte in",
-					"sv": "Värme in"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			},			
-			"RADIATOR_RETURN_TEMP": {  
-				"type": "number",
-				"title": {
-					"en": "Radiator return",
-					"nl": "Radiator retour",
-					"sv": "Radiator retur"					
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			
-			},
-			"RADIATOR_FORWARD_TEMP": { 
-				"type": "number",
-				"title": {
-					"en": "Radiator forward",
-					"nl": "Radiator vooruit",
-					"sv": "Radiator fram"					
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			},
-			"BRINE_IN_TEMP": { 
-				"type": "number",
-				"title": {
-					"en": "Brine in",
-					"nl": "Brine ein",
-					"sv": "Brine in"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			},
-			"BRINE_OUT_TEMP": { 
-				"type": "number",
-				"title": {
-					"en": "Brine out",
-					"nl": "Brine uit",
-					"sv": "Brine ut"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			},
-			"WARM_WATER_TEMP": {  
-				"type": "number",
-				"title": {
-					"en": "Warm water",
-					"nl": "Warm water",
-					"sv": "Varmvatten"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-			},
-			"OUTDOOR_TEMP": {
-				"type": "number",
-				"title": {
-					"en": "Outdoor",
-					"nl": "Buitenshuis",
-					"sv": "Utomhus"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-				
-			},
-			"INDOOR_TEMP": {
-				"type": "number",
-				"title": {
-					"en": "Indoor",
-					"nl": "Binnen",
-					"sv": "Inomhus"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-				
-			},
-			"COMPRESSOR_STATE": {  
-				"type": "number",
-				"title": {
-					"en": "Compressor",
-					"nl": "Compressor",
-					"sv": "Kompressor"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": ""
-				},
-			    "uiComponent": "sensor",
-				"icon": "/assets/iconCompressor.svg"
-			},
-			"SWITCH_VALVE_STATE": {  
-				"type": "number",
-				"title": {
-					"en": "Heating/Hot water",
-					"nl" :"Vervamen/Warm water",
-					"sv" :"Värmer/Varmvatten"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": ""
-				},
-			   	"uiComponent": "sensor",
-				"icon": "/assets/iconSwitchvalve.svg"
-
-			},
-			"SUM_ALARM_STATE": {  
-				"type": "number",
-				"title": {
-					"en": "Alarm",
-					"nl": "Alarm",
-					"sv": "Alarm"
-				},
-				"getable": true,
-				"setable": false,
-				"units": {
-					"en": ""
-				},
-			   	"uiComponent": "sensor",
-				"icon": "/assets/iconAlarm.svg"
-
-			},
-			"ADDITIONAL_HEATER_POWER": {  
-				"type": "number",
-				"title": {
-					"en": "Additional heater",
-					"nl": "Extra verwarming",
-					"sv": "Tillskott"
-				},
-				"getable": true,
-				"setable": false,
-				"insights": true,
-				"units": {
-					"en": "%"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconAddheat.svg"
-			
-			},
-			"ROOM_SET_TEMP": {   
-				"type": "number",
-				"title": {
-					"en": "Room target",
-					"nl": "ingestelde temperatuur",
-					"sv": "Inställd temp"
-				},
-				"getable": true,
-				"setable": true,
-				"units": {
-					"en": "C"
-				},
-				"uiComponent": "sensor",
-				"icon": "/assets/iconTemp.svg"
-				
-				
-			}
-       
-    },
-	
-	"drivers": [
-		{		"id": "H60",
-				"discovery": "H60",
-				"name": {
-					"en": "H60"
-				},
-				"images": {
-					"large": "drivers/H60/assets/images/large.jpg",
-					"small": "drivers/H60/assets/images/small.jpg"
-				},
-				"class": "socket",
-				"capabilities": [
-				    "INDOOR_TEMP",				"ROOM_SET_TEMP",
-					"OUTDOOR_TEMP",				"WARM_WATER_TEMP",
-					"SUM_ALARM_STATE",			"ADDITIONAL_HEATER_POWER",
-					"RADIATOR_FORWARD_TEMP", 	"RADIATOR_RETURN_TEMP",
-					"HEAT_CARRIER_RETURN_TEMP",	"HEAT_CARRIER_FORWARD_TEMP",
-					"BRINE_IN_TEMP",			"BRINE_OUT_TEMP",
-					"COMPRESSOR_STATE",			"SWITCH_VALVE_STATE",
-					
-					"target_temperature"
-								
-					
-				],
-				"capabilitiesOptions": {
-						"target_temperature":  {
-							"title": {
-								"en": "Indoor temperature setting",
-								"nl": "Binnentemperatuur instelling",
-								"sv": "Inställd innetemp"
-							}
-						}
-						
-					
-        },
-				"pair": [
-					{
-					"id": "list_devices",
-					"template": "list_devices",
-					"options": {
-						"singular": true
-						},
-					"navigation": {
-						"next": "add_device" 
-						}
-					},
-					{
-						"id": "add_device"
-					}
-				],
-	  
-				"settings": [
-					{
-						"type": "group",
-						"label": {
-							"en": "H60 settings"
-						},
-						"children": [
-							{
-								"id": "address",
-								"type": "text",
-								"value": "0.0.0.0",
-								"label": {
-									"en": "IP Address"
-								}
-							},
-							
-							{	
-								"id": "polling",
-								"type": "number",
-								"value": 5,
-								"attr": {
-									"min": 5,
-									"max": 3600
-								},
-							"label": {
-								"en": "Polling Frequency"
-								}
-							}
-							
-							
-						
-						
-					]
-				}
-			]
-		}
-
-    ],  
-	
-	
-    "flow": {
-       "triggers": [
-			
-
+  "description": {
+    "en": "Husdata Heat pump gateways",
+    "nl": "Husdata Warmtepompgateways",
+    "sv": "Husdata Värmepumpgateways"
+  },
+  "category": [
+    "climate",
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Peter Hansson",
+    "email": "homey@husdata.se",
+    "website": "https://husdata.se/"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Peter Hansson",
+        "email": "homey@husdata.se"
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "id": "H60",
+      "discovery": "H60",
+      "name": {
+        "en": "H60"
+      },
+      "images": {
+        "large": "/drivers/H60/assets/images/large.jpg",
+        "small": "/drivers/H60/assets/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "INDOOR_TEMP",
+        "ROOM_SET_TEMP",
+        "OUTDOOR_TEMP",
+        "WARM_WATER_TEMP",
+        "SUM_ALARM_STATE",
+        "ADDITIONAL_HEATER_POWER",
+        "RADIATOR_FORWARD_TEMP",
+        "RADIATOR_RETURN_TEMP",
+        "HEAT_CARRIER_RETURN_TEMP",
+        "HEAT_CARRIER_FORWARD_TEMP",
+        "BRINE_IN_TEMP",
+        "BRINE_OUT_TEMP",
+        "COMPRESSOR_STATE",
+        "SWITCH_VALVE_STATE",
+        "target_temperature"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "title": {
+            "en": "Indoor temperature setting",
+            "nl": "Binnentemperatuur instelling",
+            "sv": "Inställd innetemp"
+          }
+        }
+      },
+      "pair": [
         {
-  				"id": "outdoor_temp_changed",
-  				"title": {
-  					"en": "Outdoor temperature changed",
-					"nl": "Buitentemperatuur veranderd",
-					"sv": "Utomhustemp ändrad"
-  				},
-				"tokens": [
-					{
-					"name": "outdoor_temp_changed",
-					"type": "number",
-					"title": {
-						"en": "Temperature",
-						"nl": "Temperatuur",
-						"sv": "Temperatur"
-					},
-					"example": {
-					"en": "5"
-                      }
-					}
-				],
-				"args": [
-  					{
-  					"name": "device",
-  					"type": "device",
-  					"placeholder": {
-  						"en": "Select device"
-					},
-					"filter": "driver_id=H60"
-  					}
-  				]
-  			},
-			{
-			"id": "indoor_temp_changed",
-  				"title": {
-  					"en": "Indoor temperature changed",
-					"nl": "Indorrt temperatuur veranderd",
-					"sv": "Inomhustemp ändrad"
-  				},
-				"tokens": [
-					{
-					"name": "indoor_temp_changed",
-					"type": "number",
-					"title": {
-						"en": "Temperature",
-						"nl": "Temperatuur",
-						"sv": "Temperatur"
-					},
-					"example": {
-					"en": "5"
-                      }
-					}
-				],
-				"args": [
-  					{
-  					"name": "device",
-  					"type": "device",
-  					"placeholder": {
-  						"en": "Select device"
-					},
-					"filter": "driver_id=H60"
-  					}
-  				]
-  			},
-			{
-			"id": "warm_water_temp_changed",
-  				"title": {
-  					"en": "Warm water temperature changed",
-					"nl": "Warm water temperatuur veranderd",
-					"sv": "Varmvattentemp förändrad"
-  				},
-				"tokens": [
-					{
-					"name": "warm_water_temp_changed",
-					"type": "number",
-					"title": {
-						"en": "Temperature",
-						"nl": "Temperatuur",
-						"sv": "Temperatur"
-					},
-					"example": {
-					"en": "5"
-                      }
-					}
-				],
-				"args": [
-  					{
-  					"name": "device",
-  					"type": "device",
-  					"placeholder": {
-  						"en": "Select device"
-					},
-					"filter": "driver_id=H60"
-  					}
-  				]
-  			},
-			{
-			"id": "alarm_state_changed",
-  				"title": {
-  					"en": "Pump alarm state changed",
-					"nl": "Pomp alarm status gewijzigd",
-					"sv": "Pump alarm status ändrad"
-  				},
-				"tokens": [
-					{
-					"name": "alarm_state_changed",
-					"type": "number",
-					"title": {
-						"en": "Alarm state",
-						"nl": "Alarm state",
-						"sv": "Alarm status"
-					},
-					"example": {
-					"en": "5"
-                      }
-					}
-				],
-				"args": [
-  					{
-  					"name": "device",
-  					"type": "device",
-  					"placeholder": {
-  						"en": "Select device"
-					},
-					"filter": "driver_id=H60"
-  					}
-  				]
-  			},
-						{
-			"id": "switch_valve_state_changed",
-  				"title": {
-  					"en": "Switch valve state changed",
-					"nl": "Klepstatus gewijzigd",
-					"sv": "Växelventil läge ändrad"
-  				},
-				"tokens": [
-					{
-					"name": "switch_valve_state_changed",
-					"type": "number",
-					"title": {
-						"en": "Switch valve state"
-					},
-					"example": {
-					"en": "5"
-                      }
-					}
-				],
-				"args": [
-  					{
-  					"name": "device",
-  					"type": "device",
-  					"placeholder": {
-  						"en": "Select device",
-						"nl": "Select device",
-						"sv": "Välj enhet"
-					},
-					"filter": "driver_id=H60"
-  					}
-  				]
-  			},
-			{
-  				"id": "additional_heat_changed",
-  				"title": {
-  					"en": "Additional heat changed",
-					"nl" :"Extra verwarming gewijzigd",
-					"sv" :"Tillskottstatus ändrad"
-  				},
-				"tokens": [
-					{
-					"name": "additional_heat_changed",
-					"type": "number",
-					"title": {
-						"en": "Power",
-						"nl": "Effect",
-						"sv": "Effekt"
-					},
-					"example": {
-					"en": "5"
-                      }
-					}
-				],
-				"args": [
-  					{
-  					"name": "device",
-  					"type": "device",
-  					"placeholder": {
-  						"en": "Select device"
-					},
-					"filter": "driver_id=H60"
-  					}
-  				]
-  			}
-
-			
-		]
-
-
- }
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "H60 settings"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "capabilities": {
+    "ADDITIONAL_HEATER_POWER": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater",
+        "nl": "Extra verwarming",
+        "sv": "Tillskott"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconAddheat.svg"
+    },
+    "BRINE_IN_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Brine in",
+        "nl": "Brine ein",
+        "sv": "Brine in"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "BRINE_OUT_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Brine out",
+        "nl": "Brine uit",
+        "sv": "Brine ut"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "COMPRESSOR_STATE": {
+      "type": "number",
+      "title": {
+        "en": "Compressor",
+        "nl": "Compressor",
+        "sv": "Kompressor"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": ""
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconCompressor.svg"
+    },
+    "HEAT_CARRIER_FORWARD_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Heat forward",
+        "nl": "warmte uit",
+        "sv": "Värme ut"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "HEAT_CARRIER_RETURN_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Heat return",
+        "nl": "Warmte in",
+        "sv": "Värme in"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "INDOOR_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Indoor",
+        "nl": "Binnen",
+        "sv": "Inomhus"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "OUTDOOR_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Outdoor",
+        "nl": "Buitenshuis",
+        "sv": "Utomhus"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "RADIATOR_FORWARD_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Radiator forward",
+        "nl": "Radiator vooruit",
+        "sv": "Radiator fram"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "RADIATOR_RETURN_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Radiator return",
+        "nl": "Radiator retour",
+        "sv": "Radiator retur"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "ROOM_SET_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Room target",
+        "nl": "ingestelde temperatuur",
+        "sv": "Inställd temp"
+      },
+      "getable": true,
+      "setable": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "SUM_ALARM_STATE": {
+      "type": "number",
+      "title": {
+        "en": "Alarm",
+        "nl": "Alarm",
+        "sv": "Alarm"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": ""
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconAlarm.svg"
+    },
+    "SWITCH_VALVE_STATE": {
+      "type": "number",
+      "title": {
+        "en": "Heating/Hot water",
+        "nl": "Vervamen/Warm water",
+        "sv": "Värmer/Varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": ""
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconSwitchvalve.svg"
+    },
+    "WARM_WATER_TEMP": {
+      "type": "number",
+      "title": {
+        "en": "Warm water",
+        "nl": "Warm water",
+        "sv": "Varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    }
+  },
+  "discovery": {
+    "H60": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^h60"
+            }
+          }
+        ],
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^asus"
+            }
+          }
+        ]
+      ]
+    }
+  }
 }

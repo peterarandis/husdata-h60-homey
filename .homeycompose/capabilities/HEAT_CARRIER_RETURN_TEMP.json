@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Heat return",
+    "nl": "Warmte in",
+    "sv": "Värme in"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

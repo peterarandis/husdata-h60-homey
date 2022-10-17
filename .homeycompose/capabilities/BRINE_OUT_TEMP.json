@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Brine out",
+    "nl": "Brine uit",
+    "sv": "Brine ut"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

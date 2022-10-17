@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Additional heater",
+    "nl": "Extra verwarming",
+    "sv": "Tillskott"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "%"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconAddheat.svg"
+
+}

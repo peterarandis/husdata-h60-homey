@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Heat forward",
+    "nl": "warmte uit",
+    "sv": "Värme ut"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

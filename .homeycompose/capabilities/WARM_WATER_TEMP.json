@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Warm water",
+    "nl": "Warm water",
+    "sv": "Varmvatten"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

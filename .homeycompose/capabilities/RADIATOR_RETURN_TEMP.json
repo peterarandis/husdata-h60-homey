@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Radiator return",
+    "nl": "Radiator retour",
+    "sv": "Radiator retur"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Brine in",
+    "nl": "Brine ein",
+    "sv": "Brine in"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}

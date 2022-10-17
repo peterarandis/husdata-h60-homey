@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Compressor",
+    "nl": "Compressor",
+    "sv": "Kompressor"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": ""
+  },
+    "uiComponent": "sensor",
+  "icon": "/assets/iconCompressor.svg"
+}

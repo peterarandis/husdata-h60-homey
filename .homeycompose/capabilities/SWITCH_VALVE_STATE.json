@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Heating/Hot water",
+    "nl" :"Vervamen/Warm water",
+    "sv" :"Värmer/Varmvatten"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": ""
+  },
+     "uiComponent": "sensor",
+  "icon": "/assets/iconSwitchvalve.svg"
+
+}
