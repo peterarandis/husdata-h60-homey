@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Supplied energy total",
+    "sv": "Avgiven energi totalt"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "kWh",
+    "sv": "kWh"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconPower.svg"
+}

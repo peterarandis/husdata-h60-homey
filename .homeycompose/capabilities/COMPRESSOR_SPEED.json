@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Compressor speed",
+    "nl": "Compressor speed",
+    "sv": "Kompressor fart"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "%"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconAddheat.svg"
+
+}

@@ -1,17 +1,14 @@
 {
   "type": "number",
   "title": {
-    "en": "Heating/Hot water",
-    "nl" :"Vervamen/Warm water",
-    "sv" :"Värmer/Varmvatten"
+    "en": "Radiators/Hot water",
+    "nl" :"Radiatoren/Heet water",
+    "sv" :"Radiatorer/Varmvatten"
   },
   "getable": true,
   "setable": false,
   "insights": true,
-  "units": {
-    "en": ""
-  },
-     "uiComponent": "sensor",
+  "decimals": 0,
+  "uiComponent": "sensor",
   "icon": "/assets/iconSwitchvalve.svg"
-
 }

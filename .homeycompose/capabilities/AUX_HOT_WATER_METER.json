@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Additional heater hot water",
+    "sv": "Tillskott varmvatten"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "kWh"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconPower.svg"
+}

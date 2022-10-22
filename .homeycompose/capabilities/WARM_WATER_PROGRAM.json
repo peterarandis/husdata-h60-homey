@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Warm water program",
+    "nl": "Warm water program",
+    "sv": "Varmvattenprogram"
+  },
+  "getable": true,
+  "setable": true,
+  "insights": true,
+  "decimals": 0,
+  "min": 0,
+  "max": 5,
+  "step": 1,
+  "icon": "/assets/iconTemp.svg"
+}

@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Output power",
+    "nl": "Uitgangsvermogen",
+    "sv": "Avgiven effekt"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "W"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconAddheat.svg"
+
+}

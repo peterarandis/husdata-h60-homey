@@ -1,16 +1,15 @@
 'use strict';
 
 const Homey = require('homey');
-const util = require('../../lib/util');
+const { sendCommand, getMapKeyByValue } = require('../../lib/util');
 
 const DEBOUNCE_RATE = 500;
 
 // REGO 1000
-// eslint-disable-next-line camelcase
-const cap_30 = [
+const cap30 = [
   /* eslint-disable no-multi-spaces */
   ['INDOOR_TEMP'],                ['0008'],
-  ['ROOM_SET_TEMP'],              ['0203'],
+  ['target_temperature'],         ['0203'],
   ['OUTDOOR_TEMP'],               ['0007'],
   ['WARM_WATER_TEMP'],            ['0009'],
   ['RADIATOR_RETURN_TEMP'],       ['0001'],
@@ -23,16 +22,14 @@ const cap_30 = [
   ['COMPRESSOR_STATE'],           ['1A01'],
   ['SWITCH_VALVE_STATE'],         ['1A07'],
   ['SUM_ALARM_STATE'],            ['1A20'],
-  ['eof'], ['eof'],
   /* eslint-disable no-multi-spaces */
 ];
 
 // REGO 600
-// eslint-disable-next-line camelcase
-const cap_00 = [
+const cap00 = [
   /* eslint-disable no-multi-spaces */
   ['INDOOR_TEMP'],               ['0008'],
-  ['ROOM_SET_TEMP'],             ['0203'],
+  ['target_temperature'],        ['0203'],
   ['OUTDOOR_TEMP'],              ['0007'],
   ['WARM_WATER_TEMP'],           ['0009'], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
   ['RADIATOR_RETURN_TEMP'],      ['0001'],
@@ -45,16 +42,14 @@ const cap_00 = [
   ['COMPRESSOR_STATE'],          ['1A01'],
   ['SWITCH_VALVE_STATE'],        ['1A07'],
   ['SUM_ALARM_STATE'],           ['1A20'],
-  ['eof'], ['eof'],
   /* eslint-disable no-multi-spaces */
 ];
 
 // REGO 2000
-// eslint-disable-next-line camelcase
-const cap_10 = [
+const cap10 = [
   /* eslint-disable no-multi-spaces */
   ['INDOOR_TEMP'],                ['0008'],
-  ['ROOM_SET_TEMP'],              ['0203'],
+  ['target_temperature'],         ['0203'],
   ['OUTDOOR_TEMP'],               ['0007'],
   ['WARM_WATER_TEMP'],            ['0009'],
   ['RADIATOR_FORWARD_TEMP'],      ['0002'],
@@ -66,15 +61,37 @@ const cap_10 = [
   ['COMPRESSOR_STATE'],           ['1A01'],
   ['SWITCH_VALVE_STATE'],         ['1A07'],
   ['SUM_ALARM_STATE'],            ['1A20'],
-  ['eof'], ['eof'],
+  ['WARM_WATER_MID_TEMP'],        ['000A'],
+  ['HEATING_SETPOINT_TEMP'],      ['0107'],
+  ['OUTPUT_POWER'],               ['9108'], // Ex: 4.7 kW
+  ['COMPRESSOR_SPEED'],           ['3108'], // Ex: 53%
+  ['EXTRA_WARM_WATER_STATE'],     ['1231'], // 0 (off), 1 (on)
+  ['WARM_WATER_PROGRAM'],         ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
+  ['EXTERNAL_CONTROL'],           ['2233'], // 0, 1
+  ['EXTERNAL_CONTROL_2'],         ['2234'], // 0, 1
+  ['SUPPLIED_TOTAL_METER'],       ['5C51'],
+  ['SUPPLIED_HEATING_METER'],     ['5C52'],
+  ['SUPPLIED_HOT_WATER_METER'],   ['5C53'],
+  ['COMPRESSOR_TOTAL_METER'],     ['5C54'],
+  ['COMPRESSOR_HEATING_METER'],   ['5C55'],
+  ['COMPRESSOR_HOT_WATER_METER'], ['5C56'],
+  ['AUX_TOTAL_METER'],            ['5C57'],
+  ['AUX_HEATING_METER'],          ['5C58'],
+  ['AUX_HOT_WATER_METER'],        ['5C59'],
+  // ['COMPRESSOR_RUNTIME'],         ['6C60'],
+  // ['COMPRESSOR_STARTS'],          ['2C61'],
   /* eslint-disable no-multi-spaces */
 ];
+
+/**
+ * @typedef {Map<string, string>} CapabilityRegisters
+ */
+
 // NIBE EB100
-// eslint-disable-next-line camelcase
-const cap_40 = [
+const cap40 = [
   /* eslint-disable no-multi-spaces */
   ['INDOOR_TEMP'],                ['0008'],
-  ['ROOM_SET_TEMP'],              ['0203'],
+  ['target_temperature'],         ['0203'],
   ['OUTDOOR_TEMP'],               ['0007'],
   ['WARM_WATER_TEMP'],            ['0009'],
   ['RADIATOR_FORWARD_TEMP'],      ['0002'],
@@ -86,28 +103,116 @@ const cap_40 = [
   ['COMPRESSOR_STATE'],           ['1A01'],
   ['SWITCH_VALVE_STATE'],         ['1A07'],
   ['SUM_ALARM_STATE'],            ['2A20'],
-  ['eof'], ['eof'],
   /* eslint-disable no-multi-spaces */
 ];
 
 class H60Device extends Homey.Device {
 
-  onInit() {
+  async getCableType() {
+    const address = this.getSetting('address');
+    if (!this.H60_Cable) {
+      const result = await sendCommand('/status', address);
+      // this.log('RESULT', result);
+      this.H1_Ver = result.status.H1ver; // Read H1 Version from H60 status request JSON string
+      this.H60_Cable = this.H1_Ver.substring(0, 2); // Cable type
+      if (this.H60_Cable === '30') {
+        this.cap = cap30;
+      } else if (this.H60_Cable === '10') {
+        this.cap = cap10;
+      } else if (this.H60_Cable === '40') {
+        this.cap = cap40;
+      } else {
+        this.cap = cap00;
+      }
+
+      // Construct regular map from the odd array format, old format is deprecated
+      this.cap.forEach((value, index) => {
+        if (index % 2 === 0) {
+          this.capAsMap.set(value[0], this.cap[index + 1][0]);
+        }
+      });
+
+      this.log(`H60 H1 ver: ${this.H1_Ver} cable=${this.H60_Cable}`);
+    }
+  }
+
+  async onInit() {
+    this.blockPollWhileSettingRegister = false;
     const interval = this.getSetting('polling') || 10;
-    this.pollDevice(interval);
-    this.setAvailable();
+
     this.log(`onInit - address: ${this.getSetting('address')}`);
     this.H60_Cable = '';
     this.H1_Ver = '';
     this.cap = '';
+    /**
+     * @type {CapabilityRegisters}
+     */
+    this.capAsMap = new Map();
 
     // Register capabilities setting
     this.registerMultipleCapabilityListener(
-      ['target_temperature'],
-      this.onSetTargetTemperature.bind(this),
+      ['target_temperature', 'EXTERNAL_CONTROL', 'EXTERNAL_CONTROL_2', 'EXTRA_WARM_WATER_STATE', 'WARM_WATER_PROGRAM'],
+      (capabilityValues, capabilityOptions) => {
+        Object.keys(capabilityValues).forEach(async (capabilityName) => {
+          const value = capabilityValues[capabilityName];
+          switch (capabilityName) {
+            case 'target_temperature': {
+              await this.onSetRegister('target_temperature', value * 10);
+              break;
+            }
+            case 'EXTERNAL_CONTROL': {
+              await this.onSetRegister('EXTERNAL_CONTROL', value ? '1' : '0');
+              break;
+            }
+            case 'EXTERNAL_CONTROL_2': {
+              await this.onSetRegister('EXTERNAL_CONTROL_2', value ? '1' : '0');
+              break;
+            }
+            case 'EXTRA_WARM_WATER_STATE': {
+              await this.onSetRegister('EXTRA_WARM_WATER_STATE',  value ? '1' : '0');
+              break;
+            }
+            case 'WARM_WATER_PROGRAM': {
+              await this.onSetRegister('WARM_WATER_PROGRAM', Number(value));
+              break;
+            }
+            default:
+              break;
+          }
+        });
+        this.log('capabilityValues, capabilityOptions', capabilityValues, capabilityOptions);
+      },
       DEBOUNCE_RATE,
     );
-    // this.registerMultipleCapabilityListener([ 'target_temperature.outdoor' ],     this.onSetTargetTemperature.bind(this), DEBOUNCE_RATE);
+
+    await this.getCableType();
+
+    // Add new capabilities for existing devices
+    if (this.capAsMap) {
+      const capabilityNames = Array.from(this.capAsMap.keys());
+      await Promise.all(capabilityNames.map(async (capabilityName) => {
+        try {
+          if (!this.hasCapability(capabilityName)) {
+            await this.addCapability(capabilityName);
+          }
+        } catch (e) {
+          this.log(`Could not add capability "${capabilityName}"`);
+        }
+      }));
+    }
+
+    // Remove deleted capabilities
+    // TODO get all capabilities
+    // If cap is not in this.capAsMap, remove it
+    // ROOM_SET_TEMP was the same value as temperature_target, remove it
+    if (this.hasCapability('ROOM_SET_TEMP')) {
+      try {
+        await this.removeCapability('ROOM_SET_TEMP');
+      } catch (e) {}
+    }
+
+    this.pollDevice(interval);
+    this.setAvailable();
   }
 
   onDeleted() {
@@ -115,101 +220,127 @@ class H60Device extends Homey.Device {
   }
 
   async poll() {
-	  
-//	this.log("START POLL");
     const address = this.getSetting('address');
 
-    try {
     if (!this.H60_Cable) {
-      const result = await util.sendCommand('/status', address);
-      // this.log('RESULT', result);
-      this.H1_Ver = result.status.H1ver; // Read H1 Version from H60 status request JSON string
-      this.H60_Cable = this.H1_Ver.substring(0, 2); // Cable type
-      if (this.H60_Cable == '30') this.cap = cap_30;
-      else if (this.H60_Cable == '10') this.cap = cap_10;
-      else if (this.H60_Cable == '40') this.cap = cap_40;
-      else this.cap = cap_00;
-
-      this.log(`H60 H1 ver: ${this.H1_Ver} cable=${this.H60_Cable}`);
       return;
-    
-	} 
-	
-	} catch (error) {
-	  this.log("POLL CABLE ERROR");
-      //this.log(error);
-      //this.setUnavailable(Homey.__('Unreachable'));
-	  this.setUnavailable();
-      this.pingDevice();
     }
 
-
+    const statusResult = await sendCommand('/status', address);
+    try {
+      const approximatedPower = statusResult.status.powersum;
+      this.setCapabilityValue('measure_power', approximatedPower);
+    } catch (error) {
+      this.log(error);
+      this.setUnavailable(Homey.__('Unreachable'));
+      this.pingDevice();
+      return;
+    }
 
     try {
       // this.log(`pollDevice ${address} hp type: ${this.H60_Cable}`);
-      const result = await util.sendCommand('/api/homey', address);
-      // this.log('RESULT', result);
-      let v = 0;
-      let j = 0;
-	  
+      if (this.blockPollWhileSettingRegister) {
+        return;
+      }
 
-      while (this.cap[j] != 'eof') {
-        v = result[`X${this.cap[j + 1]}`]; // Set new value from H60 Json response
-				
-        if (v > 60000) v -= 65536; // Recalc if Negative
-        if (v == 32758) v = 0; // Sensor not installet EB100
-        const d = String(this.cap[j + 1]).substring(0, 1); // Extract value type (temp, %, kw, status, etc-)
-        if (v != 0 && (d == '0' || d == '3' || d == '9')) v /= 10; // Devide by 10 if TEMP , % or kW
+      const result = await sendCommand('/api/homey', address);
 
-        if (this.cap[j] == 'WARM_WATER_TEMP' && v == -48.3) {
+      if (this.blockPollWhileSettingRegister) {
+        return;
+      }
+
+      // Handle only the values that Husdata gave us
+      const keys = Object.keys(result);
+      keys.forEach(async (key) => {
+        let v = result[key] || 0;
+        const register = key.substring(1); // X1234 -> 1234
+        const capabilityName = getMapKeyByValue(this.capAsMap, register);
+        // Skip values that we don't have Homey capabilities for
+        if (!capabilityName) {
+          return;
+        }
+
+        if (!capabilityName.includes('METER') && v > 60000) {
+          // Recalc if Negative
+          v -= 65536;
+        }
+        if (v == 32758) v = 0; // Sensor not installed EB100
+
+        // Extract value type (temp, %, kw, status, etc-)
+        const d = String(register).substring(0, 1);
+
+        // Divide by 10 if TEMP , % or kW
+        if (v != 0 && (d === '0' || d === '3' || d === '9')) v /= 10;
+
+        if (capabilityName === 'OUTPUT_POWER') {
+          v = Math.round(v * 1000);
+        }
+
+        // if ([''].includes(capabilityName) {
+        //   totalPower +=
+        // }
+
+        if (capabilityName === 'WARM_WATER_TEMP' && v === -48.3) {
           // Special for Rego600 that can have internal GT3 tank or External GT3x
-          cap_00[7] = '000A'; // Reset variable on position 7
+          cap00[7] = '000A'; // Reset variable on position 7
           v = 0; // Not to show -48.3 at startup
           this.log('Switched from reading GT3 to GT3x for Rego600');
         }
 
-        if (v != this.getCapabilityValue(this.cap[j]) && v==v) { // v==v to igonore if v is NaN
-        //if (v != this.getCapabilityValue(this.cap[j]) ) {
-          // Has value changed
-          this.setCapabilityValue(String(this.cap[j]), v); // Set in app 
-          this.log(`set:${this.H60_Cable}  ${this.cap[j]} = ${v}`);
+        // Convert 0/1 to bool
+        if ([
+          'EXTRA_WARM_WATER_STATE',
+          'EXTERNAL_CONTROL',
+          'EXTERNAL_CONTROL_2',
+        ].includes(capabilityName)) {
+          v = v === 1;
+        }
 
-          if (this.cap[j] == 'OUTDOOR_TEMP') {
+        // Convert number to string for enums
+        // No enum capabilities at this time
+
+        if (v != this.getCapabilityValue(capabilityName)) {
+          this.setCapabilityValue(capabilityName, v); // Set in app
+          this.log(`set:${this.H60_Cable}  ${capabilityName} = ${v}`);
+
+          // Trigger When cards that do not follow the recommended naming scheme for auto trigger, on change
+          // TODO use a map between cap name and trigger name, loop over that
+          if (capabilityName === 'OUTDOOR_TEMP') {
             await this.driver.triggerDeviceFlow(
               'outdoor_temp_changed',
               { outdoor_temp_changed: v },
               this,
             );
           }
-          if (this.cap[j] == 'INDOOR_TEMP') {
+          if (capabilityName === 'INDOOR_TEMP') {
             await this.driver.triggerDeviceFlow(
               'indoor_temp_changed',
               { indoor_temp_changed: v },
               this,
             );
           }
-          if (this.cap[j] == 'WARM_WATER_TEMP') {
+          if (capabilityName === 'WARM_WATER_TEMP') {
             await this.driver.triggerDeviceFlow(
               'warm_water_temp_changed',
               { warm_water_temp_changed: v },
               this,
             );
           }
-          if (this.cap[j] == 'SUM_ALARM_STATE') {
+          if (capabilityName === 'SUM_ALARM_STATE') {
             await this.driver.triggerDeviceFlow(
               'alarm_state_changed',
               { alarm_state_changed: v },
               this,
             );
           }
-          if (this.cap[j] == 'ADDITIONAL_HEATER_POWER') {
+          if (capabilityName === 'ADDITIONAL_HEATER_POWER') {
             await this.driver.triggerDeviceFlow(
               'additional_heat_changed',
               { additional_heat_changed: v },
               this,
             );
           }
-          if (this.cap[j] == 'SWITCH_VALVE_STATE') {
+          if (capabilityName === 'SWITCH_VALVE_STATE') {
             await this.driver.triggerDeviceFlow(
               'switch_valve_state_changed',
               { switch_valve_state_changed: v },
@@ -217,19 +348,13 @@ class H60Device extends Homey.Device {
             );
           }
 
-          // Thermostat display update
-          if (this.cap[j] == 'ROOM_SET_TEMP') {
-			  if (v>10 && v<29) this.setCapabilityValue('target_temperature', v);
-          }
+          // OUTPUT_POWER_changed trigger is automatically triggered when capability
+          // value OUTPUT_POWER is set using this.setCapabilityValue due to naming convention.
         }
-
-        j += 2; // Next value / index
-      }
+      });
     } catch (error) {
-	  this.log("POLL DATA ERROR");
-      //this.log(error);
-      //this.setUnavailable(Homey.__('Unreachable'));
-	  this.setUnavailable();
+      this.log('POLL DATA ERROR', error);
+      this.setUnavailable(Homey.__('Unreachable'));
       this.pingDevice();
     }
   }
@@ -242,21 +367,24 @@ class H60Device extends Homey.Device {
     this.poll();
   }
 
-  async onSetTargetTemperature(data, opts) {
-    let value = data['target_temperature'];
-    this.log('setting target temperature to', value);
-    value *= 10;
-    util
-      .sendCommand(`/api/set?idx=0203&val=${value}`, this.getSetting('address'))
-      .then((result) => {
-        this.log(`response H60: ${result.response}`);
-      })
-
-      .catch((error) => {
-        this.log(error);
-        this.setUnavailable(Homey.__('Unreachable'));
-        this.pingDevice();
-      });
+  async onSetRegister(capabilityName, value) {
+    this.blockPollWhileSettingRegister = true;
+    try {
+      const register = this.capAsMap.get(capabilityName);
+      if (!register) {
+        return;
+      }
+      this.log(`Setting ${capabilityName} in register ${register} to ${value}`);
+      const result = await sendCommand(`/api/set?idx=${register}&val=${value}`, this.getSetting('address'));
+      this.log(`response H60: ${result.response}`);
+      // Wait a bit, husdata responds OK immediately but keeps responding with old value for a long unknown time
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+    } catch (error) {
+      this.log(error);
+      this.setUnavailable(Homey.__('Unreachable'));
+      this.pingDevice();
+    }
+    this.blockPollWhileSettingRegister = false;
   }
 
   pingDevice() {
@@ -265,13 +393,12 @@ class H60Device extends Homey.Device {
     this.log(`pingDevice ${this.getSetting('address')}`);
 
     this.pingInterval = setInterval(() => {
-      util
-        .sendCommand(
-          '/status',
-          this.getSetting('address'),
-          this.getSetting('username'),
-          this.getSetting('password'),
-        )
+      sendCommand(
+        '/status',
+        this.getSetting('address'),
+        this.getSetting('username'),
+        this.getSetting('password'),
+      )
         .then((result) => {
           this.setAvailable();
           const interval = this.getSetting('polling') || 5;
@@ -280,7 +407,7 @@ class H60Device extends Homey.Device {
         .catch((error) => {
           this.log(
             'Device is not reachable, pinging every 63 seconds to see if it comes online again.',
-			
+
           );
         });
     }, 63000);

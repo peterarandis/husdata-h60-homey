@@ -1,12 +1,13 @@
 {
   "type": "number",
   "title": {
-    "en": "Room target",
-    "nl": "ingestelde temperatuur",
-    "sv": "Inställd temp"
+    "en": "Warm water mid",
+    "nl": "Warm water mid",
+    "sv": "Varmvatten mitten"
   },
   "getable": true,
-  "setable": true,
+  "setable": false,
+  "insights": true,
   "units": {
     "en": "C"
   },

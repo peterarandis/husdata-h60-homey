@@ -1,0 +1,32 @@
+{
+  "id": "OUTPUT_POWER_changed",
+  "title": {
+    "en": "Output power changed",
+    "nl": "Uitgangsvermogen gewijzigd",
+    "sv": "Avgiven effekt ändrades"
+  },
+  "tokens": [
+    {
+      "name": "OUTPUT_POWER_changed",
+      "type": "number",
+      "title": {
+        "en": "Power",
+        "nl": "Effect",
+        "sv": "Effekt"
+      },
+      "example": {
+        "en": "5"
+      }
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select device"
+      },
+      "filter": "driver_id=H60"
+    }
+  ]
+}

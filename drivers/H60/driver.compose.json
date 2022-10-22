@@ -12,29 +12,13 @@
   "platforms": ["local"],
   "connectivity":["lan"],
   "capabilities": [
-    "INDOOR_TEMP",
-    "ROOM_SET_TEMP",
-    "OUTDOOR_TEMP",
-    "WARM_WATER_TEMP",
-    "SUM_ALARM_STATE",
-    "ADDITIONAL_HEATER_POWER",
-    "RADIATOR_FORWARD_TEMP",
-    "RADIATOR_RETURN_TEMP",
-    "HEAT_CARRIER_RETURN_TEMP",
-    "HEAT_CARRIER_FORWARD_TEMP",
-    "BRINE_IN_TEMP",
-    "BRINE_OUT_TEMP",
-    "COMPRESSOR_STATE",
-    "SWITCH_VALVE_STATE",
-    "target_temperature"
+    "target_temperature",
+    "measure_power",
+    "meter_power"
   ],
   "capabilitiesOptions": {
-    "target_temperature": {
-      "title": {
-        "en": "Indoor temperature setting",
-        "nl": "Binnentemperatuur instelling",
-        "sv": "Inställd innetemp"
-      }
+    "measure_power": {
+      "approximated": true
     }
   },
   "pair": [

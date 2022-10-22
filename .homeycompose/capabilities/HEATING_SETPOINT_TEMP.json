@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Heating setpoint temperature",
+    "nl": "Heating setpoint temperature",
+    "sv": "Beräknad framledning"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+
+}
