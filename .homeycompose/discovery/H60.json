@@ -1,0 +1,28 @@
+{
+  "type": "mdns-sd",
+  "mdns-sd": {
+    "name": "http",
+    "protocol": "tcp"
+  },
+  "id": "{{host}}",
+  "conditions": [
+    [
+      {
+        "field": "host",
+        "match": {
+          "type": "regex",
+          "value": "^h60"
+        }
+      }
+    ],
+    [
+      {
+        "field": "host",
+        "match": {
+          "type": "regex",
+          "value": "^asus"
+        }
+      }
+    ]
+  ]
+}

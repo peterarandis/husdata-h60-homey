@@ -1,0 +1,51 @@
+{
+  "id": "se.husdata",
+  "version": "1.0.7",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Husdata"
+  },
+  "tags": {
+    "en": [
+      "H60",
+      "husdata",
+      "heatpump",
+      "heat pump",
+      "greenline",
+      "compress",
+      "enviline",
+      "diplomat",
+      "ivt",
+      "bosch",
+      "thermia"
+    ]
+  },
+  "description": {
+    "en": "Husdata Heat pump gateways",
+    "nl": "Husdata Warmtepompgateways",
+    "sv": "Husdata Värmepumpgateways"
+  },
+  "category": [
+    "climate",
+    "appliances"
+  ],
+  "permissions": [],
+  "images": {
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  },
+  "author": {
+    "name": "Peter Hansson",
+    "email": "homey@husdata.se",
+    "website": "https://husdata.se/"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Peter Hansson",
+        "email": "homey@husdata.se"
+      }
+    ]
+  }
+}

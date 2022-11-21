@@ -1,0 +1,32 @@
+{
+  "id": "switch_valve_state_changed",
+  "title": {
+    "en": "Switch valve state changed",
+    "nl": "Klepstatus gewijzigd",
+    "sv": "Växelventil läge ändrad"
+  },
+  "tokens": [
+    {
+      "name": "switch_valve_state_changed",
+      "type": "number",
+      "title": {
+        "en": "Switch valve state"
+      },
+      "example": {
+        "en": "5"
+      }
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select device",
+        "nl": "Select device",
+        "sv": "Välj enhet"
+      },
+      "filter": "driver_id=H60"
+    }
+  ]
+}

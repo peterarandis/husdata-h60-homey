@@ -1,0 +1,32 @@
+{
+  "id": "outdoor_temp_changed",
+  "title": {
+    "en": "Outdoor temperature changed",
+    "nl": "Buitentemperatuur veranderd",
+    "sv": "Utomhustemp ändrad"
+  },
+  "tokens": [
+    {
+      "name": "outdoor_temp_changed",
+      "type": "number",
+      "title": {
+        "en": "Temperature",
+        "nl": "Temperatuur",
+        "sv": "Temperatur"
+      },
+      "example": {
+        "en": "5"
+      }
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select device"
+      },
+      "filter": "driver_id=H60"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "athom",
+  "rules": {
+    "eqeqeq": "warn",
+    "camelcase": "warn"
+  }
+}

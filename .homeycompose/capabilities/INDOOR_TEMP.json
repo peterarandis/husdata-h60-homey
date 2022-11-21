@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Indoor",
+    "nl": "Binnen",
+    "sv": "Inomhus"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+
+}

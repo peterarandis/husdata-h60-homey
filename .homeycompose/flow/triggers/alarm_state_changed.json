@@ -1,0 +1,32 @@
+{
+  "id": "alarm_state_changed",
+  "title": {
+    "en": "Pump alarm state changed",
+    "nl": "Pomp alarm status gewijzigd",
+    "sv": "Pump alarm status ändrad"
+  },
+  "tokens": [
+    {
+      "name": "alarm_state_changed",
+      "type": "number",
+      "title": {
+        "en": "Alarm state",
+        "nl": "Alarm state",
+        "sv": "Alarm status"
+      },
+      "example": {
+        "en": "5"
+      }
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select device"
+      },
+      "filter": "driver_id=H60"
+    }
+  ]
+}

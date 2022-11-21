@@ -1,56 +1,86 @@
-"use strict";
+'use strict';
 
 const Homey = require('homey');
-const util = require('/lib/util.js');
 
 class H60Driver extends Homey.Driver {
 
-  onPair(socket) {
-	this.log("Pairing started...")
-	const discoveryStrategy = this.getDiscoveryStrategy();
+  onInit() {
+    this.flowCards = {};
+    this.registerFlows();
+  }
+
+  registerFlows() {
+    this.log('Registering flows');
+
+    // Triggers
+    this.flowCards.outdoor_temp_changed = this.homey.flow.getDeviceTriggerCard('outdoor_temp_changed');
+    this.flowCards.indoor_temp_changed = this.homey.flow.getDeviceTriggerCard('indoor_temp_changed');
+    this.flowCards.warm_water_temp_changed = this.homey.flow.getDeviceTriggerCard('warm_water_temp_changed');
+    this.flowCards.alarm_state_changed = this.homey.flow.getDeviceTriggerCard('alarm_state_changed');
+    this.flowCards.additional_heat_changed = this.homey.flow.getDeviceTriggerCard('additional_heat_changed');
+    this.flowCards.switch_valve_state_changed = this.homey.flow.getDeviceTriggerCard('switch_valve_state_changed');
+  }
+
+  async onPair(session) {
+    this.log('Pairing started...');
+    const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
     let selectedDeviceId;
-    let devicesArray = {};
-	let deviceArray = {};
+    const devicesArray = {};
+    let deviceArray = {};
 
-    socket.on('list_devices', (data, callback) => {
-		const devices = Object.values(discoveryResults).map(discoveryResult => {
-         this.log("Found device: " + discoveryResult.address + " " + discoveryResult.id);
-	     // push discovered device to temporary array with all discovered devices
-		 devicesArray[discoveryResult.id]={
-            name: 'H60 ['+ discoveryResult.address +']',
-			data: {
-              id: discoveryResult.id,
-            },
-            settings: {
-              address  : discoveryResult.address
-            }
-          };
+    session.setHandler('list_devices', (data) => {
+      const devices = Object.values(discoveryResults).map((discoveryResult) => {
+        this.log(`Found device: ${discoveryResult.address} ${discoveryResult.id}`);
+        // push discovered device to temporary array with all discovered devices
+        devicesArray[discoveryResult.id] = {
+          name: `H60 [${discoveryResult.address}]`,
+          data: {
+            id: discoveryResult.id,
+          },
+          settings: {
+            address: discoveryResult.address,
+          },
+        };
 
-			return {
-				name: 'H60 ['+ discoveryResult.address +']',
-				data: {
-					id: discoveryResult.id,
-					}
-			};			
+        return {
+          name: `H60 [${discoveryResult.address}]`,
+          data: {
+            id: discoveryResult.id,
+          },
+        };
       });
-      callback(null, devices);
+      return devices;
     });
 
-    socket.on('list_devices_selection', (data, callback) => { // Lists deiscovereed decices
-	  callback();
+    // Lists discovered devices
+    session.setHandler('list_devices_selection', (data) => {
       selectedDeviceId = data[0].data.id;
-	  this.log("Selected device: " + selectedDeviceId)
-	   // push the selected device to a temporary array which can be used for pairing
-      deviceArray= devicesArray[selectedDeviceId];
+      this.log(`Selected device: ${selectedDeviceId}`);
+      // push the selected device to a temporary array which can be used for pairing
+      deviceArray = devicesArray[selectedDeviceId];
     });
-    
 
-    socket.on('get_device', (data, callback) => {
-	  callback(false, deviceArray);
-      this.log("get_device done ");  
-	});
+    session.setHandler('get_device', () => {
+      this.log('get_device done ');
+      return deviceArray;
+    });
+  }
 
+  /**
+   *
+   * @param {string} flow Name of flow
+   * @param {Object} tokens Object matching trigger tokens
+   * @param {object} device Homey device
+   */
+  async triggerDeviceFlow(flow, tokens, device) {
+    this.log(`[${device.getName()}] Triggering device flow '${flow}' with tokens`, tokens);
+    try {
+      const triggerCard = this.flowCards[flow];
+      await triggerCard.trigger(device, tokens);
+    } catch (e) {
+      this.error(e);
+    }
   }
 
 }

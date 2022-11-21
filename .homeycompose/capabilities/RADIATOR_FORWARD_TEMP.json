@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Radiator forward",
+    "nl": "Radiator vooruit",
+    "sv": "Radiator fram"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "C"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconTemp.svg"
+}
