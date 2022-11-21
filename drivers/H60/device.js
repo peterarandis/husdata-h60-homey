@@ -140,7 +140,7 @@ class H60Device extends Homey.Device {
 
       while (this.cap[j] != 'eof') {
         v = result[`X${this.cap[j + 1]}`]; // Set new value from H60 Json response
-
+				
         if (v > 60000) v -= 65536; // Recalc if Negative
         if (v == 32758) v = 0; // Sensor not installet EB100
         const d = String(this.cap[j + 1]).substring(0, 1); // Extract value type (temp, %, kw, status, etc-)
@@ -153,47 +153,48 @@ class H60Device extends Homey.Device {
           this.log('Switched from reading GT3 to GT3x for Rego600');
         }
 
-        if (v != this.getCapabilityValue(this.cap[j])) {
+        if (v != this.getCapabilityValue(this.cap[j]) && v==v) { // v==v to igonore if v is NaN
+        //if (v != this.getCapabilityValue(this.cap[j]) ) {
           // Has value changed
-          this.setCapabilityValue(String(this.cap[j]), v); // Set in app
+          this.setCapabilityValue(String(this.cap[j]), v); // Set in app 
           this.log(`set:${this.H60_Cable}  ${this.cap[j]} = ${v}`);
 
-          if (this.cap[j] === 'OUTDOOR_TEMP') {
+          if (this.cap[j] == 'OUTDOOR_TEMP') {
             await this.driver.triggerDeviceFlow(
               'outdoor_temp_changed',
               { outdoor_temp_changed: v },
               this,
             );
           }
-          if (this.cap[j] === 'INDOOR_TEMP') {
+          if (this.cap[j] == 'INDOOR_TEMP') {
             await this.driver.triggerDeviceFlow(
               'indoor_temp_changed',
               { indoor_temp_changed: v },
               this,
             );
           }
-          if (this.cap[j] === 'WARM_WATER_TEMP') {
+          if (this.cap[j] == 'WARM_WATER_TEMP') {
             await this.driver.triggerDeviceFlow(
               'warm_water_temp_changed',
               { warm_water_temp_changed: v },
               this,
             );
           }
-          if (this.cap[j] === 'SUM_ALARM_STATE') {
+          if (this.cap[j] == 'SUM_ALARM_STATE') {
             await this.driver.triggerDeviceFlow(
               'alarm_state_changed',
               { alarm_state_changed: v },
               this,
             );
           }
-          if (this.cap[j] === 'ADDITIONAL_HEATER_POWER') {
+          if (this.cap[j] == 'ADDITIONAL_HEATER_POWER') {
             await this.driver.triggerDeviceFlow(
               'additional_heat_changed',
               { additional_heat_changed: v },
               this,
             );
           }
-          if (this.cap[j] === 'SWITCH_VALVE_STATE') {
+          if (this.cap[j] == 'SWITCH_VALVE_STATE') {
             await this.driver.triggerDeviceFlow(
               'switch_valve_state_changed',
               { switch_valve_state_changed: v },
@@ -201,9 +202,9 @@ class H60Device extends Homey.Device {
             );
           }
 
-          // Thermostat
-          if (this.cap[j] === 'ROOM_SET_TEMP') {
-            this.setCapabilityValue('target_temperature', v);
+          // Thermostat display update
+          if (this.cap[j] == 'ROOM_SET_TEMP') {
+			  if (v>10 && v<29) this.setCapabilityValue('target_temperature', v);
           }
         }
 
@@ -211,7 +212,8 @@ class H60Device extends Homey.Device {
       }
     } catch (error) {
       this.log(error);
-      this.setUnavailable(Homey.__('Unreachable'));
+      //this.setUnavailable(Homey.__('Unreachable'));
+	  this.setUnavailable();
       this.pingDevice();
     }
   }
