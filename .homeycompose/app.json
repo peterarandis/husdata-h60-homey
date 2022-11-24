@@ -1,8 +1,11 @@
 {
   "id": "se.husdata",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "compatibility": ">=5.0.0",
+  "platforms": ["local"],
   "sdk": 3,
+  "homepage": "https://husdata.se",
+  "support": "mailto:homey@husdata.se",
   "brandColor": "#576a78",
   "name": {
     "en": "Husdata"

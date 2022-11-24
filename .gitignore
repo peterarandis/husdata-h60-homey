@@ -1,5 +1,7 @@
 node_modules/*
-
+package-lock.json
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
 
 # Added by Homey CLI
 /.homeybuild/

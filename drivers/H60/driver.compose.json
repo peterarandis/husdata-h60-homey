@@ -9,6 +9,8 @@
     "small": "{{driverAssetsPath}}/images/small.jpg"
   },
   "class": "socket",
+  "platforms": ["local"],
+  "connectivity":["lan"],
   "capabilities": [
     "INDOOR_TEMP",
     "ROOM_SET_TEMP",

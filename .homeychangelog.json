@@ -4,5 +4,8 @@
   },
   "1.0.5": {
     "en": "Support for Insights graphing"
+  },
+  "2.0.4": {
+    "en": "SDK 3, Buggfix"
   }
 }

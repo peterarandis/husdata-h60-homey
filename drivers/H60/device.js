@@ -115,8 +115,11 @@ class H60Device extends Homey.Device {
   }
 
   async poll() {
+	  
+//	this.log("START POLL");
     const address = this.getSetting('address');
 
+    try {
     if (!this.H60_Cable) {
       const result = await util.sendCommand('/status', address);
       // this.log('RESULT', result);
@@ -129,7 +132,18 @@ class H60Device extends Homey.Device {
 
       this.log(`H60 H1 ver: ${this.H1_Ver} cable=${this.H60_Cable}`);
       return;
+    
+	} 
+	
+	} catch (error) {
+	  this.log("POLL CABLE ERROR");
+      //this.log(error);
+      //this.setUnavailable(Homey.__('Unreachable'));
+	  this.setUnavailable();
+      this.pingDevice();
     }
+
+
 
     try {
       // this.log(`pollDevice ${address} hp type: ${this.H60_Cable}`);
@@ -137,6 +151,7 @@ class H60Device extends Homey.Device {
       // this.log('RESULT', result);
       let v = 0;
       let j = 0;
+	  
 
       while (this.cap[j] != 'eof') {
         v = result[`X${this.cap[j + 1]}`]; // Set new value from H60 Json response
@@ -211,7 +226,8 @@ class H60Device extends Homey.Device {
         j += 2; // Next value / index
       }
     } catch (error) {
-      this.log(error);
+	  this.log("POLL DATA ERROR");
+      //this.log(error);
       //this.setUnavailable(Homey.__('Unreachable'));
 	  this.setUnavailable();
       this.pingDevice();
@@ -264,6 +280,7 @@ class H60Device extends Homey.Device {
         .catch((error) => {
           this.log(
             'Device is not reachable, pinging every 63 seconds to see if it comes online again.',
+			
           );
         });
     }, 63000);
