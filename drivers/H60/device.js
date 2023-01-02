@@ -8,7 +8,7 @@ const DEBOUNCE_RATE = 500;
 // REGO 1000
 const cap30 = [
   /* eslint-disable no-multi-spaces */
-  ['INDOOR_TEMP'],                ['0008'],
+  ['measure_temperature'],        ['0008'],
   ['target_temperature'],         ['0203'],
   ['OUTDOOR_TEMP'],               ['0007'],
   ['WARM_WATER_TEMP'],            ['0009'],
@@ -28,7 +28,7 @@ const cap30 = [
 // REGO 600
 const cap00 = [
   /* eslint-disable no-multi-spaces */
-  ['INDOOR_TEMP'],               ['0008'],
+  ['measure_temperature'],       ['0008'],
   ['target_temperature'],        ['0203'],
   ['OUTDOOR_TEMP'],              ['0007'],
   ['WARM_WATER_TEMP'],           ['0009'], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
@@ -48,7 +48,7 @@ const cap00 = [
 // REGO 2000
 const cap10 = [
   /* eslint-disable no-multi-spaces */
-  ['INDOOR_TEMP'],                ['0008'],
+  ['measure_temperature'],        ['0008'],
   ['target_temperature'],         ['0203'],
   ['OUTDOOR_TEMP'],               ['0007'],
   ['WARM_WATER_TEMP'],            ['0009'],
@@ -90,7 +90,7 @@ const cap10 = [
 // NIBE EB100
 const cap40 = [
   /* eslint-disable no-multi-spaces */
-  ['INDOOR_TEMP'],                ['0008'],
+  ['measure_temperature'],        ['0008'],
   ['target_temperature'],         ['0203'],
   ['OUTDOOR_TEMP'],               ['0007'],
   ['WARM_WATER_TEMP'],            ['0009'],
@@ -299,6 +299,11 @@ class H60Device extends Homey.Device {
         // Convert number to string for enums
         // No enum capabilities at this time
 
+        // Fake indoor temperature being at target temperature to avoid thermostat in Homey looking weird
+        if (capabilityName === 'measure_temperature' && v === 0) {
+          v = this.getCapabilityValue('target_temperature');
+        }
+
         if (v != this.getCapabilityValue(capabilityName)) {
           this.setCapabilityValue(capabilityName, v); // Set in app
           this.log(`set:${this.H60_Cable}  ${capabilityName} = ${v}`);
@@ -312,7 +317,7 @@ class H60Device extends Homey.Device {
               this,
             );
           }
-          if (capabilityName === 'INDOOR_TEMP') {
+          if (capabilityName === 'measure_temperature') {
             await this.driver.triggerDeviceFlow(
               'indoor_temp_changed',
               { indoor_temp_changed: v },
