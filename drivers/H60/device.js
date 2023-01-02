@@ -69,10 +69,10 @@ const cap10 = [
   ['WARM_WATER_PROGRAM'],         ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
   ['EXTERNAL_CONTROL'],           ['2233'], // 0, 1
   ['EXTERNAL_CONTROL_2'],         ['2234'], // 0, 1
-  ['SUPPLIED_TOTAL_METER'],       ['5C51'],
+  ['SUPPLIED_TOTAL_METER'],       ['5C51'], // Total energy supplied (for heating + hot water)
   ['SUPPLIED_HEATING_METER'],     ['5C52'],
   ['SUPPLIED_HOT_WATER_METER'],   ['5C53'],
-  ['COMPRESSOR_TOTAL_METER'],     ['5C54'],
+  ['meter_power'],                ['5C54'], // Total energy used (for heating + hot water including aux heating)
   ['COMPRESSOR_HEATING_METER'],   ['5C55'],
   ['COMPRESSOR_HOT_WATER_METER'], ['5C56'],
   ['AUX_TOTAL_METER'],            ['5C57'],

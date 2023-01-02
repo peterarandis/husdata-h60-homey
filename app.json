@@ -318,6 +318,12 @@
       "capabilitiesOptions": {
         "measure_power": {
           "approximated": true
+        },
+        "meter_power": {
+          "title": {
+            "en": "Consumed energy total",
+            "sv": "Förbrukad energi totalt"
+          }
         }
       },
       "pair": [
@@ -524,22 +530,6 @@
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconCompressor.svg"
-    },
-    "COMPRESSOR_TOTAL_METER": {
-      "type": "number",
-      "title": {
-        "en": "Consumed energy total",
-        "sv": "Förbrukad energi totalt"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "kWh",
-        "sv": "kWh"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconPower.svg"
     },
     "EXTERNAL_CONTROL": {
       "type": "boolean",
