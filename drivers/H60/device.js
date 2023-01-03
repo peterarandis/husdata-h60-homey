@@ -314,13 +314,6 @@ class H60Device extends Homey.Device {
               this,
             );
           }
-          if (capabilityName === 'measure_temperature') {
-            await this.driver.triggerDeviceFlow(
-              'indoor_temp_changed',
-              { indoor_temp_changed: v },
-              this,
-            );
-          }
           if (capabilityName === 'WARM_WATER_TEMP') {
             await this.driver.triggerDeviceFlow(
               'warm_water_temp_changed',

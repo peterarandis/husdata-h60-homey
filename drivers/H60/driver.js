@@ -14,7 +14,7 @@ class H60Driver extends Homey.Driver {
 
     // Triggers
     this.flowCards.outdoor_temp_changed = this.homey.flow.getDeviceTriggerCard('outdoor_temp_changed');
-    this.flowCards.indoor_temp_changed = this.homey.flow.getDeviceTriggerCard('indoor_temp_changed');
+    // this.flowCards.indoor_temp_changed = this.homey.flow.getDeviceTriggerCard('indoor_temp_changed');
     this.flowCards.warm_water_temp_changed = this.homey.flow.getDeviceTriggerCard('warm_water_temp_changed');
     this.flowCards.alarm_state_changed = this.homey.flow.getDeviceTriggerCard('alarm_state_changed');
     this.flowCards.additional_heat_changed = this.homey.flow.getDeviceTriggerCard('additional_heat_changed');
