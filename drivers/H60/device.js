@@ -201,9 +201,6 @@ class H60Device extends Homey.Device {
       }));
     }
 
-    // Remove deleted capabilities
-    // TODO get all capabilities
-    // If cap is not in this.capAsMap, remove it
     // ROOM_SET_TEMP was the same value as temperature_target, remove it
     if (this.hasCapability('ROOM_SET_TEMP')) {
       try {
@@ -211,7 +208,7 @@ class H60Device extends Homey.Device {
       } catch (e) {}
     }
 
-    this.pollDevice(interval);
+    await this.pollDevice(interval);
     this.setAvailable();
   }
 
@@ -260,7 +257,7 @@ class H60Device extends Homey.Device {
           return;
         }
 
-        if (!capabilityName.includes('METER') && v > 60000) {
+        if (!capabilityName.toLowerCase().includes('meter') && v > 60000) {
           // Recalc if Negative
           v -= 65536;
         }
@@ -364,12 +361,12 @@ class H60Device extends Homey.Device {
     }
   }
 
-  pollDevice(interval) {
+  async pollDevice(interval) {
     this.log('pollDevice', interval);
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
     this.pollingInterval = this.homey.setInterval(() => this.poll(), 1000 * interval);
-    this.poll();
+    await this.poll();
   }
 
   async onSetRegister(capabilityName, value) {
