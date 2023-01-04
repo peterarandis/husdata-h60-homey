@@ -8,76 +8,76 @@ const DEBOUNCE_RATE = 500;
 // REGO 1000
 const cap30 = [
   /* eslint-disable no-multi-spaces */
-  ['measure_temperature'],        ['0008'],
-  ['target_temperature'],         ['0203'],
-  ['OUTDOOR_TEMP'],               ['0007'],
-  ['WARM_WATER_TEMP'],            ['0009'],
-  ['RADIATOR_RETURN_TEMP'],       ['0001'],
-  ['RADIATOR_FORWARD_TEMP'],      ['0002'],
-  ['HEAT_CARRIER_RETURN_TEMP'],   ['0003'],
-  ['HEAT_CARRIER_FORWARD_TEMP'],  ['0004'],
-  ['BRINE_IN_TEMP'],              ['0005'],
-  ['BRINE_OUT_TEMP'],             ['0006'],
-  ['ADDITIONAL_HEATER_POWER'],    ['3104'],
-  ['COMPRESSOR_STATE'],           ['1A01'],
-  ['SWITCH_VALVE_STATE'],         ['1A07'],
-  ['SUM_ALARM_STATE'],            ['1A20'],
+  ['measure_temperature'],         ['0008'],
+  ['target_temperature'],          ['0203'],
+  ['measure_temperature.outdoor'], ['0007'],
+  ['WARM_WATER_TEMP'],             ['0009'],
+  ['RADIATOR_RETURN_TEMP'],        ['0001'],
+  ['RADIATOR_FORWARD_TEMP'],       ['0002'],
+  ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
+  ['HEAT_CARRIER_FORWARD_TEMP'],   ['0004'],
+  ['BRINE_IN_TEMP'],               ['0005'],
+  ['BRINE_OUT_TEMP'],              ['0006'],
+  ['ADDITIONAL_HEATER_POWER'],     ['3104'],
+  ['COMPRESSOR_STATE'],            ['1A01'],
+  ['SWITCH_VALVE_STATE'],          ['1A07'],
+  ['SUM_ALARM_STATE'],             ['1A20'],
   /* eslint-disable no-multi-spaces */
 ];
 
 // REGO 600
 const cap00 = [
   /* eslint-disable no-multi-spaces */
-  ['measure_temperature'],       ['0008'],
-  ['target_temperature'],        ['0203'],
-  ['OUTDOOR_TEMP'],              ['0007'],
-  ['WARM_WATER_TEMP'],           ['0009'], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
-  ['RADIATOR_RETURN_TEMP'],      ['0001'],
-  ['RADIATOR_FORWARD_TEMP'],     ['0002'],
-  ['HEAT_CARRIER_RETURN_TEMP'],  ['0003'],
-  ['HEAT_CARRIER_FORWARD_TEMP'], ['0004'],
-  ['BRINE_IN_TEMP'],             ['0005'],
-  ['BRINE_OUT_TEMP'],            ['0006'],
-  ['ADDITIONAL_HEATER_POWER'],   ['3104'],
-  ['COMPRESSOR_STATE'],          ['1A01'],
-  ['SWITCH_VALVE_STATE'],        ['1A07'],
-  ['SUM_ALARM_STATE'],           ['1A20'],
+  ['measure_temperature'],         ['0008'],
+  ['target_temperature'],          ['0203'],
+  ['measure_temperature.outdoor'], ['0007'],
+  ['WARM_WATER_TEMP'],             ['0009'], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
+  ['RADIATOR_RETURN_TEMP'],        ['0001'],
+  ['RADIATOR_FORWARD_TEMP'],       ['0002'],
+  ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
+  ['HEAT_CARRIER_FORWARD_TEMP'],   ['0004'],
+  ['BRINE_IN_TEMP'],               ['0005'],
+  ['BRINE_OUT_TEMP'],              ['0006'],
+  ['ADDITIONAL_HEATER_POWER'],     ['3104'],
+  ['COMPRESSOR_STATE'],            ['1A01'],
+  ['SWITCH_VALVE_STATE'],          ['1A07'],
+  ['SUM_ALARM_STATE'],             ['1A20'],
   /* eslint-disable no-multi-spaces */
 ];
 
 // REGO 2000
 const cap10 = [
   /* eslint-disable no-multi-spaces */
-  ['measure_temperature'],        ['0008'],
-  ['target_temperature'],         ['0203'],
-  ['OUTDOOR_TEMP'],               ['0007'],
-  ['WARM_WATER_TEMP'],            ['0009'],
-  ['RADIATOR_FORWARD_TEMP'],      ['0002'],
-  ['HEAT_CARRIER_RETURN_TEMP'],   ['0003'],
-  ['HEAT_CARRIER_FORWARD_TEMP'],  ['0004'],
-  ['BRINE_IN_TEMP'],              ['0005'],
-  ['BRINE_OUT_TEMP'],             ['0006'],
-  ['ADDITIONAL_HEATER_POWER'],    ['3104'],
-  ['COMPRESSOR_STATE'],           ['1A01'],
-  ['SWITCH_VALVE_STATE'],         ['1A07'],
-  ['SUM_ALARM_STATE'],            ['1A20'],
-  ['WARM_WATER_MID_TEMP'],        ['000A'],
-  ['HEATING_SETPOINT_TEMP'],      ['0107'],
-  ['OUTPUT_POWER'],               ['9108'], // Ex: 4.7 kW
-  ['COMPRESSOR_SPEED'],           ['3108'], // Ex: 53%
-  ['EXTRA_WARM_WATER_STATE'],     ['1231'], // 0 (off), 1 (on)
-  ['WARM_WATER_PROGRAM'],         ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
-  ['EXTERNAL_CONTROL'],           ['2233'], // 0, 1
-  ['EXTERNAL_CONTROL_2'],         ['2234'], // 0, 1
-  ['SUPPLIED_TOTAL_METER'],       ['5C51'], // Total energy supplied (for heating + hot water)
-  ['SUPPLIED_HEATING_METER'],     ['5C52'],
-  ['SUPPLIED_HOT_WATER_METER'],   ['5C53'],
-  ['meter_power'],                ['5C54'], // Total energy used (for heating + hot water including aux heating)
-  ['COMPRESSOR_HEATING_METER'],   ['5C55'],
-  ['COMPRESSOR_HOT_WATER_METER'], ['5C56'],
-  ['AUX_TOTAL_METER'],            ['5C57'],
-  ['AUX_HEATING_METER'],          ['5C58'],
-  ['AUX_HOT_WATER_METER'],        ['5C59'],
+  ['measure_temperature'],         ['0008'],
+  ['target_temperature'],          ['0203'],
+  ['measure_temperature.outdoor'], ['0007'],
+  ['WARM_WATER_TEMP'],             ['0009'],
+  ['RADIATOR_FORWARD_TEMP'],       ['0002'],
+  ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
+  ['HEAT_CARRIER_FORWARD_TEMP'],   ['0004'],
+  ['BRINE_IN_TEMP'],               ['0005'],
+  ['BRINE_OUT_TEMP'],              ['0006'],
+  ['ADDITIONAL_HEATER_POWER'],     ['3104'],
+  ['COMPRESSOR_STATE'],            ['1A01'],
+  ['SWITCH_VALVE_STATE'],          ['1A07'],
+  ['SUM_ALARM_STATE'],             ['1A20'],
+  ['WARM_WATER_MID_TEMP'],         ['000A'],
+  ['HEATING_SETPOINT_TEMP'],       ['0107'],
+  ['OUTPUT_POWER'],                ['9108'], // Ex: 4.7 kW
+  ['COMPRESSOR_SPEED'],            ['3108'], // Ex: 53%
+  ['EXTRA_WARM_WATER_STATE'],      ['1231'], // 0 (off), 1 (on)
+  ['WARM_WATER_PROGRAM'],          ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
+  ['EXTERNAL_CONTROL'],            ['2233'], // 0, 1
+  ['EXTERNAL_CONTROL_2'],          ['2234'], // 0, 1
+  ['SUPPLIED_TOTAL_METER'],        ['5C51'], // Total energy supplied (for heating + hot water)
+  ['SUPPLIED_HEATING_METER'],      ['5C52'],
+  ['SUPPLIED_HOT_WATER_METER'],    ['5C53'],
+  ['meter_power'],                 ['5C54'], // Total energy used (for heating + hot water including aux heating)
+  ['COMPRESSOR_HEATING_METER'],    ['5C55'],
+  ['COMPRESSOR_HOT_WATER_METER'],  ['5C56'],
+  ['AUX_TOTAL_METER'],             ['5C57'],
+  ['AUX_HEATING_METER'],           ['5C58'],
+  ['AUX_HOT_WATER_METER'],         ['5C59'],
   // ['COMPRESSOR_RUNTIME'],         ['6C60'],
   // ['COMPRESSOR_STARTS'],          ['2C61'],
   /* eslint-disable no-multi-spaces */
@@ -90,19 +90,19 @@ const cap10 = [
 // NIBE EB100
 const cap40 = [
   /* eslint-disable no-multi-spaces */
-  ['measure_temperature'],        ['0008'],
-  ['target_temperature'],         ['0203'],
-  ['OUTDOOR_TEMP'],               ['0007'],
-  ['WARM_WATER_TEMP'],            ['0009'],
-  ['RADIATOR_FORWARD_TEMP'],      ['0002'],
-  ['HEAT_CARRIER_RETURN_TEMP'],   ['0003'],
-  ['HEAT_CARRIER_FORWARD_TEMP'],  ['0004'],
-  ['BRINE_IN_TEMP'],              ['0005'],
-  ['BRINE_OUT_TEMP'],             ['0006'],
-  ['ADDITIONAL_HEATER_POWER'],    ['3104'],
-  ['COMPRESSOR_STATE'],           ['1A01'],
-  ['SWITCH_VALVE_STATE'],         ['1A07'],
-  ['SUM_ALARM_STATE'],            ['2A20'],
+  ['measure_temperature'],         ['0008'],
+  ['target_temperature'],          ['0203'],
+  ['measure_temperature.outdoor'], ['0007'],
+  ['WARM_WATER_TEMP'],             ['0009'],
+  ['RADIATOR_FORWARD_TEMP'],       ['0002'],
+  ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
+  ['HEAT_CARRIER_FORWARD_TEMP'],   ['0004'],
+  ['BRINE_IN_TEMP'],               ['0005'],
+  ['BRINE_OUT_TEMP'],              ['0006'],
+  ['ADDITIONAL_HEATER_POWER'],     ['3104'],
+  ['COMPRESSOR_STATE'],            ['1A01'],
+  ['SWITCH_VALVE_STATE'],          ['1A07'],
+  ['SUM_ALARM_STATE'],             ['2A20'],
   /* eslint-disable no-multi-spaces */
 ];
 
@@ -201,12 +201,30 @@ class H60Device extends Homey.Device {
       }));
     }
 
-    // ROOM_SET_TEMP was the same value as temperature_target, remove it
+    // Remove test capabilities and renamed capabilities
     if (this.hasCapability('ROOM_SET_TEMP')) {
       try {
         await this.removeCapability('ROOM_SET_TEMP');
       } catch (e) {}
     }
+    if (this.hasCapability('INDOOR_TEMP')) {
+      try {
+        await this.removeCapability('INDOOR_TEMP');
+      } catch (e) {}
+    }
+    if (this.hasCapability('OUTDOOR_TEMP')) {
+      try {
+        await this.removeCapability('OUTDOOR_TEMP');
+      } catch (e) {}
+    }
+    if (this.hasCapability('measure_temperature.outside')) {
+      try {
+        await this.removeCapability('measure_temperature.outside');
+      } catch (e) {}
+    }
+
+    const caps = this.getCapabilities();
+    this.log(caps);
 
     await this.pollDevice(interval);
     this.setAvailable();
@@ -273,10 +291,6 @@ class H60Device extends Homey.Device {
           v = Math.round(v * 1000);
         }
 
-        // if ([''].includes(capabilityName) {
-        //   totalPower +=
-        // }
-
         if (capabilityName === 'WARM_WATER_TEMP' && v === -48.3) {
           // Special for Rego600 that can have internal GT3 tank or External GT3x
           cap00[7] = '000A'; // Reset variable on position 7
@@ -306,12 +320,13 @@ class H60Device extends Homey.Device {
           this.setCapabilityValue(capabilityName, v); // Set in app
           this.log(`set:${this.H60_Cable}  ${capabilityName} = ${v}`);
 
-          // Trigger When cards that do not follow the recommended naming scheme for auto trigger, on change
-          // TODO use a map between cap name and trigger name, loop over that
-          if (capabilityName === 'OUTDOOR_TEMP') {
+          // Trigger sub capabilities changed event, since sub caps are not auto triggered by Homey.
+          // Trigger When cards that do not follow the recommended naming scheme for auto trigger
+          // TODO use a map between cap name and trigger name, loop over that instead?
+          if (capabilityName === 'measure_temperature.outdoor') {
             await this.driver.triggerDeviceFlow(
-              'outdoor_temp_changed',
-              { outdoor_temp_changed: v },
+              'measure_temperature_outdoor_changed',
+              { measure_temperature_outdoor_changed: v },
               this,
             );
           }

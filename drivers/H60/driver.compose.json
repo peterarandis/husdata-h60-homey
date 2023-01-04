@@ -15,9 +15,17 @@
     "target_temperature",
     "measure_temperature",
     "measure_power",
-    "meter_power"
+    "meter_power",
+    "measure_temperature.outdoor"
   ],
   "capabilitiesOptions": {
+    "measure_temperature.outdoor": {
+      "title": {
+        "en": "Outdoor",
+        "nl": "Buitenshuis",
+        "sv": "Utomhus"
+      }
+    },
     "measure_power": {
       "approximated": true
     },

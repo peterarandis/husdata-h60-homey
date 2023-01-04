@@ -1,18 +1,18 @@
 {
-  "id": "outdoor_temp_changed",
+  "id": "measure_temperature_outdoor_changed",
   "title": {
     "en": "Outdoor temperature changed",
     "nl": "Buitentemperatuur veranderd",
-    "sv": "Utomhustemp ändrad"
+    "sv": "Utomhustemperatur ändrades"
   },
   "tokens": [
     {
-      "name": "outdoor_temp_changed",
+      "name": "measure_temperature_outdoor_changed",
       "type": "number",
       "title": {
-        "en": "Temperature",
-        "nl": "Temperatuur",
-        "sv": "Temperatur"
+        "en": "Outdoor temperature",
+        "nl": "Buitentemperatuur",
+        "sv": "Utomhustemperatur"
       },
       "example": {
         "en": "5"

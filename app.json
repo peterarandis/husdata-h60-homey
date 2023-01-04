@@ -128,20 +128,20 @@
         ]
       },
       {
-        "id": "outdoor_temp_changed",
+        "id": "measure_temperature_outdoor_changed",
         "title": {
           "en": "Outdoor temperature changed",
           "nl": "Buitentemperatuur veranderd",
-          "sv": "Utomhustemp ändrad"
+          "sv": "Utomhustemperatur ändrades"
         },
         "tokens": [
           {
-            "name": "outdoor_temp_changed",
+            "name": "measure_temperature_outdoor_changed",
             "type": "number",
             "title": {
-              "en": "Temperature",
-              "nl": "Temperatuur",
-              "sv": "Temperatur"
+              "en": "Outdoor temperature",
+              "nl": "Buitentemperatuur",
+              "sv": "Utomhustemperatur"
             },
             "example": {
               "en": "5"
@@ -281,9 +281,17 @@
         "target_temperature",
         "measure_temperature",
         "measure_power",
-        "meter_power"
+        "meter_power",
+        "measure_temperature.outdoor"
       ],
       "capabilitiesOptions": {
+        "measure_temperature.outdoor": {
+          "title": {
+            "en": "Outdoor",
+            "nl": "Buitenshuis",
+            "sv": "Utomhus"
+          }
+        },
         "measure_power": {
           "approximated": true
         },
@@ -573,22 +581,6 @@
         "en": "Heating setpoint temperature",
         "nl": "Heating setpoint temperature",
         "sv": "Börvärde"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "°C"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconTemp.svg"
-    },
-    "OUTDOOR_TEMP": {
-      "type": "number",
-      "title": {
-        "en": "Outdoor",
-        "nl": "Buitenshuis",
-        "sv": "Utomhus"
       },
       "getable": true,
       "setable": false,
