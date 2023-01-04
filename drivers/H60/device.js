@@ -296,9 +296,10 @@ class H60Device extends Homey.Device {
         // Convert number to string for enums
         // No enum capabilities at this time
 
-        // Fake indoor temperature being at target temperature to avoid thermostat in Homey looking weird
+        // If indoor temperature is 0, assume there is no sensor and set the value to null
+        // so that Homey doesn't think it's actually 0 degrees inside.
         if (capabilityName === 'measure_temperature' && v === 0) {
-          v = this.getCapabilityValue('target_temperature');
+          v = null;
         }
 
         if (v != this.getCapabilityValue(capabilityName)) {
