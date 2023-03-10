@@ -284,8 +284,10 @@ class H60Device extends Homey.Device {
         // Extract value type (temp, %, kw, status, etc-)
         const d = String(register).substring(0, 1);
 
-        // Divide by 10 if TEMP , % or kW
-        if (v != 0 && (d === '0' || d === '3' || d === '9')) v /= 10;
+        // Divide by 10 if TEMP , % or kW (or kWh since late 2022 or early 2023)
+        if (capabilityName === 'WARM_WATER_PROGRAM' || d === '0' || d === '3' || d === '5' || d === '9') {
+          v /= 10;
+        }
 
         if (capabilityName === 'OUTPUT_POWER') {
           v = Math.round(v * 1000);
