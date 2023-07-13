@@ -63,7 +63,7 @@ const cap10 = [
   ['SUM_ALARM_STATE'],             ['1A20'],
   ['WARM_WATER_MID_TEMP'],         ['000A'],
   ['HEATING_SETPOINT_TEMP'],       ['0107'],
-  ['OUTPUT_POWER'],                ['9108'], // Ex: 4.7 kW
+  ['OUTPUT_POWER'],                ['9112'], // Ex: 4.7 kW. Used to be register 9108
   ['COMPRESSOR_SPEED'],            ['3108'], // Ex: 53%
   ['EXTRA_WARM_WATER_STATE'],      ['1231'], // 0 (off), 1 (on)
   ['WARM_WATER_PROGRAM'],          ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
