@@ -247,7 +247,7 @@ class H60Device extends Homey.Device {
       this.setCapabilityValue('measure_power', approximatedPower);
     } catch (error) {
       this.log(error);
-      this.setUnavailable(Homey.__('Unreachable'));
+      this.setUnavailable(this.homey.__('Unreachable'));
       this.pingDevice();
       return;
     }
@@ -367,7 +367,7 @@ class H60Device extends Homey.Device {
       });
     } catch (error) {
       this.log('POLL DATA ERROR', error);
-      this.setUnavailable(Homey.__('Unreachable'));
+      this.setUnavailable(this.homey.__('Unreachable'));
       this.pingDevice();
     }
   }
@@ -394,23 +394,21 @@ class H60Device extends Homey.Device {
       await new Promise((resolve) => setTimeout(resolve, 6000));
     } catch (error) {
       this.log(error);
-      this.setUnavailable(Homey.__('Unreachable'));
+      this.setUnavailable(this.homey.__('Unreachable'));
       this.pingDevice();
     }
     this.blockPollWhileSettingRegister = false;
   }
 
   pingDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+    this.homey.clearInterval(this.pollingInterval);
+    this.homey.clearInterval(this.pingInterval);
     this.log(`pingDevice ${this.getSetting('address')}`);
 
     this.pingInterval = setInterval(() => {
       sendCommand(
         '/status',
         this.getSetting('address'),
-        this.getSetting('username'),
-        this.getSetting('password'),
       )
         .then((result) => {
           this.setAvailable();
@@ -420,7 +418,6 @@ class H60Device extends Homey.Device {
         .catch((error) => {
           this.log(
             'Device is not reachable, pinging every 63 seconds to see if it comes online again.',
-
           );
         });
     }, 63000);
