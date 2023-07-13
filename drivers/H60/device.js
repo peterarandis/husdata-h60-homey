@@ -63,7 +63,7 @@ const cap10 = [
   ['SUM_ALARM_STATE'],             ['1A20'],
   ['WARM_WATER_MID_TEMP'],         ['000A'],
   ['HEATING_SETPOINT_TEMP'],       ['0107'],
-  ['OUTPUT_POWER'],                ['9112'], // Ex: 4.7 kW. Used to be register 9108
+  ['measure_output_power'],        ['9112'], // Ex: 4.7 kW. Used to be register 9108
   ['COMPRESSOR_SPEED'],            ['3108'], // Ex: 53%
   ['EXTRA_WARM_WATER_STATE'],      ['1231'], // 0 (off), 1 (on)
   ['WARM_WATER_PROGRAM'],          ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
@@ -294,7 +294,7 @@ class H60Device extends Homey.Device {
           v /= 10;
         }
 
-        if (capabilityName === 'OUTPUT_POWER') {
+        if (capabilityName === 'measure_output_power') {
           v = Math.round(v * 1000);
         }
 
@@ -337,13 +337,6 @@ class H60Device extends Homey.Device {
               this,
             );
           }
-          if (capabilityName === 'measure_warm_water_temp') {
-            await this.driver.triggerDeviceFlow(
-              'warm_water_temp_changed',
-              { warm_water_temp_changed: v },
-              this,
-            );
-          }
           if (capabilityName === 'SUM_ALARM_STATE') {
             await this.driver.triggerDeviceFlow(
               'alarm_state_changed',
@@ -365,9 +358,6 @@ class H60Device extends Homey.Device {
               this,
             );
           }
-
-          // OUTPUT_POWER_changed trigger is automatically triggered when capability
-          // value OUTPUT_POWER is set using this.setCapabilityValue due to naming convention.
         }
       });
     } catch (error) {

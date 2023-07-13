@@ -1,18 +1,18 @@
 {
-  "id": "OUTPUT_POWER_changed",
+  "id": "measure_warm_water_temp_changed",
   "title": {
-    "en": "Output power changed",
-    "nl": "Uitgangsvermogen gewijzigd",
-    "sv": "Avgiven effekt ändrades"
+    "en": "Warm water temperature changed",
+    "nl": "Warm water temperatuur veranderd",
+    "sv": "Varmvattentemp förändrad"
   },
   "tokens": [
     {
-      "name": "OUTPUT_POWER_changed",
+      "name": "measure_warm_water_temp_changed",
       "type": "number",
       "title": {
-        "en": "Power",
-        "nl": "Effect",
-        "sv": "Effekt"
+        "en": "Temperature",
+        "nl": "Temperatuur",
+        "sv": "Temperatur"
       },
       "example": {
         "en": "5"
