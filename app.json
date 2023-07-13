@@ -64,20 +64,20 @@
   "flow": {
     "triggers": [
       {
-        "id": "additional_heat_changed",
+        "id": "alarm_state_changed",
         "title": {
-          "en": "Additional heat changed",
-          "nl": "Extra verwarming gewijzigd",
-          "sv": "Tillskottstatus ändrad"
+          "en": "Pump alarm state changed",
+          "nl": "Pomp alarm status gewijzigd",
+          "sv": "Pump alarm status ändrad"
         },
         "tokens": [
           {
-            "name": "additional_heat_changed",
+            "name": "alarm_state_changed",
             "type": "number",
             "title": {
-              "en": "Power",
-              "nl": "Effect",
-              "sv": "Effekt"
+              "en": "Alarm state",
+              "nl": "Alarm state",
+              "sv": "Alarm status"
             },
             "example": {
               "en": "5"
@@ -96,20 +96,20 @@
         ]
       },
       {
-        "id": "alarm_state_changed",
+        "id": "additional_heat_changed",
         "title": {
-          "en": "Pump alarm state changed",
-          "nl": "Pomp alarm status gewijzigd",
-          "sv": "Pump alarm status ändrad"
+          "en": "Additional heat changed",
+          "nl": "Extra verwarming gewijzigd",
+          "sv": "Tillskottstatus ändrad"
         },
         "tokens": [
           {
-            "name": "alarm_state_changed",
+            "name": "additional_heat_changed",
             "type": "number",
             "title": {
-              "en": "Alarm state",
-              "nl": "Alarm state",
-              "sv": "Alarm status"
+              "en": "Power",
+              "nl": "Effect",
+              "sv": "Effekt"
             },
             "example": {
               "en": "5"
@@ -357,67 +357,6 @@
     }
   ],
   "capabilities": {
-    "ADDITIONAL_HEATER_POWER": {
-      "type": "number",
-      "title": {
-        "en": "Additional heater",
-        "nl": "Extra verwarming",
-        "sv": "Tillskott"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "%"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconAddheat.svg"
-    },
-    "AUX_HEATING_METER": {
-      "type": "number",
-      "title": {
-        "en": "Additional heater heating",
-        "sv": "Tillskott värme"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "kWh"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconPower.svg"
-    },
-    "AUX_HOT_WATER_METER": {
-      "type": "number",
-      "title": {
-        "en": "Additional heater hot water",
-        "sv": "Tillskott varmvatten"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "kWh"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconPower.svg"
-    },
-    "AUX_TOTAL_METER": {
-      "type": "number",
-      "title": {
-        "en": "Additional heater total",
-        "sv": "Tillskott totalt"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "kWh"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconPower.svg"
-    },
     "BRINE_IN_TEMP": {
       "type": "number",
       "title": {
@@ -598,6 +537,22 @@
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
     },
+    "measure_additional_heater_power": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater",
+        "nl": "Extra verwarming",
+        "sv": "Tillskott"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconAddheat.svg"
+    },
     "measure_output_power": {
       "type": "number",
       "title": {
@@ -629,6 +584,51 @@
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
+    },
+    "meter_aux_heating": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater heating",
+        "sv": "Tillskott värme"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_aux_hot_water": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater hot water",
+        "sv": "Tillskott varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_aux_total": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater total",
+        "sv": "Tillskott totalt"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
     },
     "RADIATOR_FORWARD_TEMP": {
       "type": "number",

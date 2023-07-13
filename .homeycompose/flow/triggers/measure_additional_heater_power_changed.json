@@ -1,5 +1,5 @@
 {
-  "id": "additional_heat_changed",
+  "id": "measure_additional_heater_power_changed",
   "title": {
     "en": "Additional heat changed",
     "nl": "Extra verwarming gewijzigd",
@@ -7,7 +7,7 @@
   },
   "tokens": [
     {
-      "name": "additional_heat_changed",
+      "name": "measure_additional_heater_power_changed",
       "type": "number",
       "title": {
         "en": "Power",
