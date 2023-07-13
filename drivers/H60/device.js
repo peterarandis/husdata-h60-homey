@@ -11,7 +11,7 @@ const cap30 = [
   ['measure_temperature'],         ['0008'],
   ['target_temperature'],          ['0203'],
   ['measure_temperature.outdoor'], ['0007'],
-  ['WARM_WATER_TEMP'],             ['0009'],
+  ['measure_warm_water_temp'],     ['0009'],
   ['RADIATOR_RETURN_TEMP'],        ['0001'],
   ['RADIATOR_FORWARD_TEMP'],       ['0002'],
   ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
@@ -31,7 +31,7 @@ const cap00 = [
   ['measure_temperature'],         ['0008'],
   ['target_temperature'],          ['0203'],
   ['measure_temperature.outdoor'], ['0007'],
-  ['WARM_WATER_TEMP'],             ['0009'], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
+  ['measure_warm_water_temp'],     ['0009'], // Will rewrite to 000A(GT3x) if sensor missing (pos 7)
   ['RADIATOR_RETURN_TEMP'],        ['0001'],
   ['RADIATOR_FORWARD_TEMP'],       ['0002'],
   ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
@@ -51,7 +51,7 @@ const cap10 = [
   ['measure_temperature'],         ['0008'],
   ['target_temperature'],          ['0203'],
   ['measure_temperature.outdoor'], ['0007'],
-  ['WARM_WATER_TEMP'],             ['0009'],
+  ['measure_warm_water_temp'],     ['0009'],
   ['RADIATOR_FORWARD_TEMP'],       ['0002'],
   ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
   ['HEAT_CARRIER_FORWARD_TEMP'],   ['0004'],
@@ -93,7 +93,7 @@ const cap40 = [
   ['measure_temperature'],         ['0008'],
   ['target_temperature'],          ['0203'],
   ['measure_temperature.outdoor'], ['0007'],
-  ['WARM_WATER_TEMP'],             ['0009'],
+  ['measure_warm_water_temp'],     ['0009'],
   ['RADIATOR_FORWARD_TEMP'],       ['0002'],
   ['HEAT_CARRIER_RETURN_TEMP'],    ['0003'],
   ['HEAT_CARRIER_FORWARD_TEMP'],   ['0004'],
@@ -222,6 +222,11 @@ class H60Device extends Homey.Device {
         await this.removeCapability('measure_temperature.outside');
       } catch (e) {}
     }
+    if (this.hasCapability('WARM_WATER_TEMP')) {
+      try {
+        await this.removeCapability('WARM_WATER_TEMP');
+      } catch (e) {}
+    }
 
     const caps = this.getCapabilities();
     this.log(caps);
@@ -293,7 +298,7 @@ class H60Device extends Homey.Device {
           v = Math.round(v * 1000);
         }
 
-        if (capabilityName === 'WARM_WATER_TEMP' && v === -48.3) {
+        if (capabilityName === 'measure_warm_water_temp' && v === -48.3) {
           // Special for Rego600 that can have internal GT3 tank or External GT3x
           cap00[7] = '000A'; // Reset variable on position 7
           v = 0; // Not to show -48.3 at startup
@@ -332,7 +337,7 @@ class H60Device extends Homey.Device {
               this,
             );
           }
-          if (capabilityName === 'WARM_WATER_TEMP') {
+          if (capabilityName === 'measure_warm_water_temp') {
             await this.driver.triggerDeviceFlow(
               'warm_water_temp_changed',
               { warm_water_temp_changed: v },

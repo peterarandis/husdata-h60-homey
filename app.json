@@ -285,6 +285,13 @@
         "measure_temperature.outdoor"
       ],
       "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Room sensor",
+            "nl": "Kamer sensor",
+            "sv": "Innegivare"
+          }
+        },
         "measure_temperature.outdoor": {
           "title": {
             "en": "Outdoor",
@@ -591,6 +598,22 @@
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
     },
+    "measure_warm_water_temp": {
+      "type": "number",
+      "title": {
+        "en": "Warm water",
+        "nl": "Warm water",
+        "sv": "Varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
     "OUTPUT_POWER": {
       "type": "number",
       "title": {
@@ -746,22 +769,6 @@
       "min": 0,
       "max": 5,
       "step": 1,
-      "icon": "/assets/iconTemp.svg"
-    },
-    "WARM_WATER_TEMP": {
-      "type": "number",
-      "title": {
-        "en": "Warm water",
-        "nl": "Warm water",
-        "sv": "Varmvatten"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "°C"
-      },
-      "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
     }
   },

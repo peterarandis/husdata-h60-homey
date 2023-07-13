@@ -19,6 +19,13 @@
     "measure_temperature.outdoor"
   ],
   "capabilitiesOptions": {
+    "measure_temperature": {
+      "title": {
+        "en": "Room sensor",
+        "nl": "Kamer sensor",
+        "sv": "Innegivare"
+      }
+    },
     "measure_temperature.outdoor": {
       "title": {
         "en": "Outdoor",
