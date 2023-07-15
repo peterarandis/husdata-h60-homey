@@ -64,17 +64,17 @@ const cap10 = [
   ['WARM_WATER_MID_TEMP'],             ['000A'],
   ['HEATING_SETPOINT_TEMP'],           ['0107'],
   ['measure_output_power'],            ['9112'], // Ex: 4.7 kW. Used to be register 9108
-  ['COMPRESSOR_SPEED'],                ['3108'], // Ex: 53%
+  ['measure_compressor_speed'],        ['3108'], // Ex: 53%
   ['EXTRA_WARM_WATER_STATE'],          ['1231'], // 0 (off), 1 (on)
   ['WARM_WATER_PROGRAM'],              ['2213'], // Ex 0 = Eco, 1 = Normal, 2 = Komfort?
   ['EXTERNAL_CONTROL'],                ['2233'], // 0, 1
   ['EXTERNAL_CONTROL_2'],              ['2234'], // 0, 1
-  ['SUPPLIED_TOTAL_METER'],            ['5C51'], // Total energy supplied (for heating + hot water)
-  ['SUPPLIED_HEATING_METER'],          ['5C52'],
-  ['SUPPLIED_HOT_WATER_METER'],        ['5C53'],
+  ['meter_supplied_total'],            ['5C51'], // Total energy supplied (for heating + hot water)
+  ['meter_supplied_heating'],          ['5C52'],
+  ['meter_supplied_hot_water'],        ['5C53'],
   ['meter_power'],                     ['5C54'], // Total energy used (for heating + hot water including aux heating)
-  ['COMPRESSOR_HEATING_METER'],        ['5C55'],
-  ['COMPRESSOR_HOT_WATER_METER'],      ['5C56'],
+  ['meter_compressor_heating'],        ['5C55'],
+  ['meter_compressor_hot_water'],      ['5C56'],
   ['meter_aux_total'],                 ['5C57'],
   ['meter_aux_heating'],               ['5C58'],
   ['meter_aux_hot_water'],             ['5C59'],
@@ -348,8 +348,6 @@ class H60Device extends Homey.Device {
           this.log(`set:${this.H60_Cable}  ${capabilityName} = ${v}`);
 
           // Trigger sub capabilities changed event, since sub caps are not auto triggered by Homey.
-          // Trigger When cards that do not follow the recommended naming scheme for auto trigger
-          // TODO use a map between cap name and trigger name, loop over that instead?
           if (capabilityName === 'measure_temperature.outdoor') {
             await this.driver.triggerDeviceFlow(
               'measure_temperature_outdoor_changed',
@@ -357,6 +355,7 @@ class H60Device extends Homey.Device {
               this,
             );
           }
+          // Trigger cards that do not follow the recommended naming scheme for auto trigger
           if (capabilityName === 'SUM_ALARM_STATE') {
             await this.driver.triggerDeviceFlow(
               'alarm_state_changed',
