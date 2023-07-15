@@ -194,6 +194,7 @@ class H60Device extends Homey.Device {
         try {
           if (!this.hasCapability(capabilityName)) {
             await this.addCapability(capabilityName);
+            this.log(`Added capability ${capabilityName}`);
           }
         } catch (e) {
           this.log(`Could not add capability "${capabilityName}"`);
@@ -201,52 +202,39 @@ class H60Device extends Homey.Device {
       }));
     }
 
-    // Remove test capabilities and renamed capabilities
-    if (this.hasCapability('ROOM_SET_TEMP')) {
-      try {
-        await this.removeCapability('ROOM_SET_TEMP');
-      } catch (e) {}
-    }
-    if (this.hasCapability('INDOOR_TEMP')) {
-      try {
-        await this.removeCapability('INDOOR_TEMP');
-      } catch (e) {}
-    }
-    if (this.hasCapability('OUTDOOR_TEMP')) {
-      try {
-        await this.removeCapability('OUTDOOR_TEMP');
-      } catch (e) {}
-    }
-    if (this.hasCapability('measure_temperature.outside')) {
-      try {
-        await this.removeCapability('measure_temperature.outside');
-      } catch (e) {}
-    }
-    if (this.hasCapability('WARM_WATER_TEMP')) {
-      try {
-        await this.removeCapability('WARM_WATER_TEMP');
-      } catch (e) {}
-    }
-    if (this.hasCapability('ADDITIONAL_HEATER_POWER')) {
-      try {
-        await this.removeCapability('ADDITIONAL_HEATER_POWER');
-      } catch (e) {}
-    }
-    if (this.hasCapability('AUX_TOTAL_METER')) {
-      try {
-        await this.removeCapability('AUX_TOTAL_METER');
-      } catch (e) {}
-    }
-    if (this.hasCapability('AUX_HEATING_METER')) {
-      try {
-        await this.removeCapability('AUX_HEATING_METER');
-      } catch (e) {}
-    }
-    if (this.hasCapability('AUX_HOT_WATER_METER')) {
-      try {
-        await this.removeCapability('AUX_HOT_WATER_METER');
-      } catch (e) {}
-    }
+    // Remove test capabilities and renamed new capabilities (not old that users will want to keep in insights)
+    const removeList = [
+      'ROOM_SET_TEMP',
+      'INDOOR_TEMP',
+      'INDOOR_TEMP',
+      'OUTDOOR_TEMP',
+      'OUTDOOR_TEMP',
+      'measure_temperature.outside',
+      'WARM_WATER_TEMP',
+      'ADDITIONAL_HEATER_POWER',
+      'AUX_TOTAL_METER',
+      'AUX_HEATING_METER',
+      'AUX_HOT_WATER_METER',
+      'OUTPUT_POWER',
+      'COMPRESSOR_SPEED',
+      'SUPPLIED_TOTAL_METER',
+      'SUPPLIED_HEATING_METER',
+      'SUPPLIED_HOT_WATER_METER',
+      'COMPRESSOR_TOTAL_METER',
+      'COMPRESSOR_HEATING_METER',
+      'COMPRESSOR_HOT_WATER_METER',
+    ];
+    await Promise.all(removeList.map(async (capabilityName) => {
+      if (this.hasCapability(capabilityName)) {
+        try {
+          await this.removeCapability(capabilityName);
+          this.log(`Removed capability  ${capabilityName}`);
+        } catch (e) {
+          this.log(`Could not remove capability "${capabilityName}"`);
+        }
+      }
+      return true;
+    }));
 
     const caps = this.getCapabilities();
     this.log(caps);
