@@ -1,16 +1,17 @@
 {
   "type": "number",
   "title": {
-    "en": "Heat forward",
-    "nl": "warmte uit",
-    "sv": "Värme ut"
+    "en": "Output power",
+    "nl": "Uitgangsvermogen",
+    "sv": "Avgiven effekt"
   },
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "°C"
+    "en": "W"
   },
   "uiComponent": "sensor",
-  "icon": "/assets/iconTemp.svg"
+  "icon": "/assets/iconAddheat.svg"
+
 }

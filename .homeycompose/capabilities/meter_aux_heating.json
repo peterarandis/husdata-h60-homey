@@ -1,16 +1,15 @@
 {
   "type": "number",
   "title": {
-    "en": "Outdoor",
-    "nl": "Buitenshuis",
-    "sv": "Utomhus"
+    "en": "Additional heater heating",
+    "sv": "Tillskott värme"
   },
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "C"
+    "en": "kWh"
   },
   "uiComponent": "sensor",
-  "icon": "/assets/iconTemp.svg"
+  "icon": "/assets/iconPower.svg"
 }

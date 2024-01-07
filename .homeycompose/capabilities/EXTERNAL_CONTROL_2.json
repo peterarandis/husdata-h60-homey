@@ -1,0 +1,12 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "External Control 2",
+    "nl": "External Control 2",
+    "sv": "External Control 2"
+  },
+  "getable": true,
+  "setable": true,
+  "insights": true,
+  "uiComponent": "toggle"
+}

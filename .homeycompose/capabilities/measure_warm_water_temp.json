@@ -1,14 +1,15 @@
 {
   "type": "number",
   "title": {
-    "en": "Room target",
-    "nl": "ingestelde temperatuur",
-    "sv": "Inställd temp"
+    "en": "Warm water",
+    "nl": "Warm water",
+    "sv": "Varmvatten"
   },
   "getable": true,
-  "setable": true,
+  "setable": false,
+  "insights": true,
   "units": {
-    "en": "C"
+    "en": "°C"
   },
   "uiComponent": "sensor",
   "icon": "/assets/iconTemp.svg"

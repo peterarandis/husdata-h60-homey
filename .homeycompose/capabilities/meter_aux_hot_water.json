@@ -1,16 +1,15 @@
 {
   "type": "number",
   "title": {
-    "en": "Heat forward",
-    "nl": "warmte uit",
-    "sv": "Värme ut"
+    "en": "Additional heater hot water",
+    "sv": "Tillskott varmvatten"
   },
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "°C"
+    "en": "kWh"
   },
   "uiComponent": "sensor",
-  "icon": "/assets/iconTemp.svg"
+  "icon": "/assets/iconPower.svg"
 }

@@ -1,13 +1,13 @@
 {
-  "id": "additional_heat_changed",
+  "id": "measure_output_power_changed",
   "title": {
-    "en": "Additional heat changed",
-    "nl": "Extra verwarming gewijzigd",
-    "sv": "Tillskottstatus ändrad"
+    "en": "Output power changed",
+    "nl": "Uitgangsvermogen gewijzigd",
+    "sv": "Avgiven effekt ändrades"
   },
   "tokens": [
     {
-      "name": "additional_heat_changed",
+      "name": "OUTPUT_POWER_changed",
       "type": "number",
       "title": {
         "en": "Power",

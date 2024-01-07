@@ -1,0 +1,12 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Extra warm water",
+    "nl": "Extra warm water",
+    "sv": "Extra varmvatten"
+  },
+  "getable": true,
+  "setable": true,
+  "insights": true,
+  "uiComponent": "toggle"
+}

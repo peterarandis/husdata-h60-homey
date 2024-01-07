@@ -64,38 +64,6 @@
   "flow": {
     "triggers": [
       {
-        "id": "additional_heat_changed",
-        "title": {
-          "en": "Additional heat changed",
-          "nl": "Extra verwarming gewijzigd",
-          "sv": "Tillskottstatus ändrad"
-        },
-        "tokens": [
-          {
-            "name": "additional_heat_changed",
-            "type": "number",
-            "title": {
-              "en": "Power",
-              "nl": "Effect",
-              "sv": "Effekt"
-            },
-            "example": {
-              "en": "5"
-            }
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select device"
-            },
-            "filter": "driver_id=H60"
-          }
-        ]
-      },
-      {
         "id": "alarm_state_changed",
         "title": {
           "en": "Pump alarm state changed",
@@ -128,20 +96,20 @@
         ]
       },
       {
-        "id": "indoor_temp_changed",
+        "id": "measure_additional_heater_power_changed",
         "title": {
-          "en": "Indoor temperature changed",
-          "nl": "Indorrt temperatuur veranderd",
-          "sv": "Inomhustemp ändrad"
+          "en": "Additional heat changed",
+          "nl": "Extra verwarming gewijzigd",
+          "sv": "Tillskottstatus ändrad"
         },
         "tokens": [
           {
-            "name": "indoor_temp_changed",
+            "name": "measure_additional_heater_power_changed",
             "type": "number",
             "title": {
-              "en": "Temperature",
-              "nl": "Temperatuur",
-              "sv": "Temperatur"
+              "en": "Power",
+              "nl": "Effect",
+              "sv": "Effekt"
             },
             "example": {
               "en": "5"
@@ -160,15 +128,79 @@
         ]
       },
       {
-        "id": "outdoor_temp_changed",
+        "id": "measure_output_power_changed",
         "title": {
-          "en": "Outdoor temperature changed",
-          "nl": "Buitentemperatuur veranderd",
-          "sv": "Utomhustemp ändrad"
+          "en": "Output power changed",
+          "nl": "Uitgangsvermogen gewijzigd",
+          "sv": "Avgiven effekt ändrades"
         },
         "tokens": [
           {
-            "name": "outdoor_temp_changed",
+            "name": "OUTPUT_POWER_changed",
+            "type": "number",
+            "title": {
+              "en": "Power",
+              "nl": "Effect",
+              "sv": "Effekt"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "measure_temperature_outdoor_changed",
+        "title": {
+          "en": "Outdoor temperature changed",
+          "nl": "Buitentemperatuur veranderd",
+          "sv": "Utomhustemperatur ändrades"
+        },
+        "tokens": [
+          {
+            "name": "measure_temperature_outdoor_changed",
+            "type": "number",
+            "title": {
+              "en": "Outdoor temperature",
+              "nl": "Buitentemperatuur",
+              "sv": "Utomhustemperatur"
+            },
+            "example": {
+              "en": "5"
+            }
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select device"
+            },
+            "filter": "driver_id=H60"
+          }
+        ]
+      },
+      {
+        "id": "measure_warm_water_temp_changed",
+        "title": {
+          "en": "Warm water temperature changed",
+          "nl": "Warm water temperatuur veranderd",
+          "sv": "Varmvattentemp förändrad"
+        },
+        "tokens": [
+          {
+            "name": "measure_warm_water_temp_changed",
             "type": "number",
             "title": {
               "en": "Temperature",
@@ -203,10 +235,13 @@
             "name": "switch_valve_state_changed",
             "type": "number",
             "title": {
-              "en": "Switch valve state"
+              "en": "Switch valve state",
+              "sv": "Växelventil läge ändrad"
             },
             "example": {
-              "en": "5"
+              "en": "Radiators (0) / Hot water (1)",
+              "nl": "Radiatoren (0) / Warm water (1)",
+              "sv": "Radiatorer (0) / Varmvatten (1)"
             }
           }
         ],
@@ -216,42 +251,45 @@
             "type": "device",
             "placeholder": {
               "en": "Select device",
-              "nl": "Select device",
               "sv": "Välj enhet"
             },
             "filter": "driver_id=H60"
           }
         ]
-      },
+      }
+    ],
+    "actions": [
       {
-        "id": "warm_water_temp_changed",
+        "id": "set_emulated_sensor_heat_circuit_1",
         "title": {
-          "en": "Warm water temperature changed",
-          "nl": "Warm water temperatuur veranderd",
-          "sv": "Varmvattentemp förändrad"
+          "en": "Set emulated room sensor heat circuit 1",
+          "nl": "Zet geëmuleerde kamer sensor warmte circuit 1",
+          "sv": "Ställ in emulerad rumssensor värmekrets 1"
         },
-        "tokens": [
+        "args": [
           {
-            "name": "warm_water_temp_changed",
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=H60"
+          },
+          {
+            "name": "temperature",
             "type": "number",
             "title": {
               "en": "Temperature",
               "nl": "Temperatuur",
               "sv": "Temperatur"
             },
-            "example": {
-              "en": "5"
-            }
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select device"
+            "titleFormatted": {
+              "en": "Temperature",
+              "nl": "Temperatuur",
+              "sv": "Temperatur"
             },
-            "filter": "driver_id=H60"
+            "min": -60,
+            "max": 60,
+            "step": 0.1,
+            "value": 20,
+            "label": "°C"
           }
         ]
       }
@@ -276,29 +314,48 @@
         "lan"
       ],
       "capabilities": [
-        "INDOOR_TEMP",
-        "ROOM_SET_TEMP",
-        "OUTDOOR_TEMP",
-        "WARM_WATER_TEMP",
-        "SUM_ALARM_STATE",
-        "ADDITIONAL_HEATER_POWER",
-        "RADIATOR_FORWARD_TEMP",
-        "RADIATOR_RETURN_TEMP",
-        "HEAT_CARRIER_RETURN_TEMP",
-        "HEAT_CARRIER_FORWARD_TEMP",
-        "BRINE_IN_TEMP",
-        "BRINE_OUT_TEMP",
-        "COMPRESSOR_STATE",
-        "SWITCH_VALVE_STATE",
-        "target_temperature"
+        "target_temperature",
+        "measure_temperature",
+        "measure_power",
+        "meter_power",
+        "measure_temperature.outdoor",
+        "target_temperature.emulated_sensor_heat_circuit_1"
       ],
       "capabilitiesOptions": {
-        "target_temperature": {
+        "measure_temperature": {
           "title": {
-            "en": "Indoor temperature setting",
-            "nl": "Binnentemperatuur instelling",
-            "sv": "Inställd innetemp"
+            "en": "Room sensor",
+            "nl": "Kamer sensor",
+            "sv": "Innegivare"
           }
+        },
+        "measure_temperature.outdoor": {
+          "title": {
+            "en": "Outdoor",
+            "nl": "Buitenshuis",
+            "sv": "Utomhus"
+          }
+        },
+        "measure_power": {
+          "approximated": true
+        },
+        "meter_power": {
+          "title": {
+            "en": "Consumed energy total",
+            "sv": "Förbrukad energi totalt"
+          }
+        },
+        "target_temperature.emulated_sensor_heat_circuit_1": {
+          "title": {
+            "en": "Emulated room sensor heat circuit 1",
+            "nl": "Geëmuleerde kamersensor warmtecircuit 1",
+            "sv": "Emulerad rumsensor värmekrets 1"
+          },
+          "uiComponent": "thermostat",
+          "getable": true,
+          "setable": true,
+          "decimals": 1,
+          "insights": true
         }
       },
       "pair": [
@@ -349,22 +406,6 @@
     }
   ],
   "capabilities": {
-    "ADDITIONAL_HEATER_POWER": {
-      "type": "number",
-      "title": {
-        "en": "Additional heater",
-        "nl": "Extra verwarming",
-        "sv": "Tillskott"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "units": {
-        "en": "%"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconAddheat.svg"
-    },
     "BRINE_IN_TEMP": {
       "type": "number",
       "title": {
@@ -376,7 +417,7 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
@@ -392,7 +433,7 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
@@ -413,6 +454,42 @@
       "uiComponent": "sensor",
       "icon": "/assets/iconCompressor.svg"
     },
+    "EXTERNAL_CONTROL": {
+      "type": "boolean",
+      "title": {
+        "en": "External Control 1",
+        "nl": "External Control 1",
+        "sv": "External Control 1"
+      },
+      "getable": true,
+      "setable": true,
+      "insights": true,
+      "uiComponent": "toggle"
+    },
+    "EXTERNAL_CONTROL_2": {
+      "type": "boolean",
+      "title": {
+        "en": "External Control 2",
+        "nl": "External Control 2",
+        "sv": "External Control 2"
+      },
+      "getable": true,
+      "setable": true,
+      "insights": true,
+      "uiComponent": "toggle"
+    },
+    "EXTRA_WARM_WATER_STATE": {
+      "type": "boolean",
+      "title": {
+        "en": "Extra warm water",
+        "nl": "Extra warm water",
+        "sv": "Extra varmvatten"
+      },
+      "getable": true,
+      "setable": true,
+      "insights": true,
+      "uiComponent": "toggle"
+    },
     "HEAT_CARRIER_FORWARD_TEMP": {
       "type": "number",
       "title": {
@@ -424,7 +501,7 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
@@ -440,42 +517,215 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
     },
-    "INDOOR_TEMP": {
+    "HEATING_SETPOINT_TEMP": {
       "type": "number",
       "title": {
-        "en": "Indoor",
-        "nl": "Binnen",
-        "sv": "Inomhus"
+        "en": "Heating setpoint temperature",
+        "nl": "Heating setpoint temperature",
+        "sv": "Börvärde"
       },
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
     },
-    "OUTDOOR_TEMP": {
+    "measure_additional_heater_power": {
       "type": "number",
       "title": {
-        "en": "Outdoor",
-        "nl": "Buitenshuis",
-        "sv": "Utomhus"
+        "en": "Additional heater",
+        "nl": "Extra verwarming",
+        "sv": "Tillskott"
       },
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "%"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconAddheat.svg"
+    },
+    "measure_compressor_speed": {
+      "type": "number",
+      "title": {
+        "en": "Compressor speed",
+        "nl": "Compressor speed",
+        "sv": "Kompressor fart"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "%"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconAddheat.svg"
+    },
+    "measure_output_power": {
+      "type": "number",
+      "title": {
+        "en": "Output power",
+        "nl": "Uitgangsvermogen",
+        "sv": "Avgiven effekt"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "W"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconAddheat.svg"
+    },
+    "measure_warm_water_temp": {
+      "type": "number",
+      "title": {
+        "en": "Warm water",
+        "nl": "Warm water",
+        "sv": "Varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
+    },
+    "meter_aux_heating": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater heating",
+        "sv": "Tillskott värme"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_aux_hot_water": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater hot water",
+        "sv": "Tillskott varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_aux_total": {
+      "type": "number",
+      "title": {
+        "en": "Additional heater total",
+        "sv": "Tillskott totalt"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_compressor_heating": {
+      "type": "number",
+      "title": {
+        "en": "Consumed energy heating",
+        "sv": "Förbrukad energi värme"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh",
+        "sv": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_compressor_hot_water": {
+      "type": "number",
+      "title": {
+        "en": "Consumed energy hot water",
+        "sv": "Förbrukad energi varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh",
+        "sv": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_supplied_heating": {
+      "type": "number",
+      "title": {
+        "en": "Supplied energy heating",
+        "sv": "Avgiven energi värme"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh",
+        "sv": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_supplied_hot_water": {
+      "type": "number",
+      "title": {
+        "en": "Supplied energy hot water",
+        "sv": "Avgiven energi varmvatten"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh",
+        "sv": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
+    },
+    "meter_supplied_total": {
+      "type": "number",
+      "title": {
+        "en": "Supplied energy total",
+        "sv": "Avgiven energi totalt"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "units": {
+        "en": "kWh",
+        "sv": "kWh"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/iconPower.svg"
     },
     "RADIATOR_FORWARD_TEMP": {
       "type": "number",
@@ -488,7 +738,7 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
@@ -504,22 +754,7 @@
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
-      },
-      "uiComponent": "sensor",
-      "icon": "/assets/iconTemp.svg"
-    },
-    "ROOM_SET_TEMP": {
-      "type": "number",
-      "title": {
-        "en": "Room target",
-        "nl": "ingestelde temperatuur",
-        "sv": "Inställd temp"
-      },
-      "getable": true,
-      "setable": true,
-      "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
       "icon": "/assets/iconTemp.svg"
@@ -542,33 +777,47 @@
     "SWITCH_VALVE_STATE": {
       "type": "number",
       "title": {
-        "en": "Heating/Hot water",
-        "nl": "Vervamen/Warm water",
-        "sv": "Värmer/Varmvatten"
+        "en": "Radiators/Hot water",
+        "nl": "Radiatoren/Heet water",
+        "sv": "Radiatorer/Varmvatten"
       },
       "getable": true,
       "setable": false,
       "insights": true,
-      "units": {
-        "en": ""
-      },
+      "decimals": 0,
       "uiComponent": "sensor",
       "icon": "/assets/iconSwitchvalve.svg"
     },
-    "WARM_WATER_TEMP": {
+    "WARM_WATER_MID_TEMP": {
       "type": "number",
       "title": {
-        "en": "Warm water",
-        "nl": "Warm water",
-        "sv": "Varmvatten"
+        "en": "Warm water mid",
+        "nl": "Warm water mid",
+        "sv": "Varmvatten mitten"
       },
       "getable": true,
       "setable": false,
       "insights": true,
       "units": {
-        "en": "C"
+        "en": "°C"
       },
       "uiComponent": "sensor",
+      "icon": "/assets/iconTemp.svg"
+    },
+    "WARM_WATER_PROGRAM": {
+      "type": "number",
+      "title": {
+        "en": "Warm water program",
+        "nl": "Warm water program",
+        "sv": "Varmvattenprogram"
+      },
+      "getable": true,
+      "setable": true,
+      "insights": true,
+      "decimals": 0,
+      "min": 0,
+      "max": 5,
+      "step": 1,
       "icon": "/assets/iconTemp.svg"
     }
   },

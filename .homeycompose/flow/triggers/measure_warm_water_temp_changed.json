@@ -1,13 +1,13 @@
 {
-  "id": "indoor_temp_changed",
+  "id": "measure_warm_water_temp_changed",
   "title": {
-    "en": "Indoor temperature changed",
-    "nl": "Indorrt temperatuur veranderd",
-    "sv": "Inomhustemp ändrad"
+    "en": "Warm water temperature changed",
+    "nl": "Warm water temperatuur veranderd",
+    "sv": "Varmvattentemp förändrad"
   },
   "tokens": [
     {
-      "name": "indoor_temp_changed",
+      "name": "measure_warm_water_temp_changed",
       "type": "number",
       "title": {
         "en": "Temperature",

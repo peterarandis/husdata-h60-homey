@@ -1,16 +1,17 @@
 {
   "type": "number",
   "title": {
-    "en": "Heat forward",
-    "nl": "warmte uit",
-    "sv": "Värme ut"
+    "en": "Compressor speed",
+    "nl": "Compressor speed",
+    "sv": "Kompressor fart"
   },
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "°C"
+    "en": "%"
   },
   "uiComponent": "sensor",
-  "icon": "/assets/iconTemp.svg"
+  "icon": "/assets/iconAddheat.svg"
+
 }

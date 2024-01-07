@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Consumed energy hot water",
+    "sv": "Förbrukad energi varmvatten"
+  },
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "units": {
+    "en": "kWh",
+    "sv": "kWh"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/iconPower.svg"
+}

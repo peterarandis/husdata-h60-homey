@@ -1,18 +1,18 @@
 {
-  "id": "warm_water_temp_changed",
+  "id": "measure_additional_heater_power_changed",
   "title": {
-    "en": "Warm water temperature changed",
-    "nl": "Warm water temperatuur veranderd",
-    "sv": "Varmvattentemp förändrad"
+    "en": "Additional heat changed",
+    "nl": "Extra verwarming gewijzigd",
+    "sv": "Tillskottstatus ändrad"
   },
   "tokens": [
     {
-      "name": "warm_water_temp_changed",
+      "name": "measure_additional_heater_power_changed",
       "type": "number",
       "title": {
-        "en": "Temperature",
-        "nl": "Temperatuur",
-        "sv": "Temperatur"
+        "en": "Power",
+        "nl": "Effect",
+        "sv": "Effekt"
       },
       "example": {
         "en": "5"

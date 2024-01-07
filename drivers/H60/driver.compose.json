@@ -12,29 +12,48 @@
   "platforms": ["local"],
   "connectivity":["lan"],
   "capabilities": [
-    "INDOOR_TEMP",
-    "ROOM_SET_TEMP",
-    "OUTDOOR_TEMP",
-    "WARM_WATER_TEMP",
-    "SUM_ALARM_STATE",
-    "ADDITIONAL_HEATER_POWER",
-    "RADIATOR_FORWARD_TEMP",
-    "RADIATOR_RETURN_TEMP",
-    "HEAT_CARRIER_RETURN_TEMP",
-    "HEAT_CARRIER_FORWARD_TEMP",
-    "BRINE_IN_TEMP",
-    "BRINE_OUT_TEMP",
-    "COMPRESSOR_STATE",
-    "SWITCH_VALVE_STATE",
-    "target_temperature"
+    "target_temperature",
+    "measure_temperature",
+    "measure_power",
+    "meter_power",
+    "measure_temperature.outdoor",
+    "target_temperature.emulated_sensor_heat_circuit_1"
   ],
   "capabilitiesOptions": {
-    "target_temperature": {
+    "measure_temperature": {
       "title": {
-        "en": "Indoor temperature setting",
-        "nl": "Binnentemperatuur instelling",
-        "sv": "Inställd innetemp"
+        "en": "Room sensor",
+        "nl": "Kamer sensor",
+        "sv": "Innegivare"
       }
+    },
+    "measure_temperature.outdoor": {
+      "title": {
+        "en": "Outdoor",
+        "nl": "Buitenshuis",
+        "sv": "Utomhus"
+      }
+    },
+    "measure_power": {
+      "approximated": true
+    },
+    "meter_power": {
+      "title": {
+        "en": "Consumed energy total",
+        "sv": "Förbrukad energi totalt"
+      }
+    },
+    "target_temperature.emulated_sensor_heat_circuit_1": {
+      "title": {
+        "en": "Emulated room sensor heat circuit 1",
+        "nl": "Geëmuleerde kamersensor warmtecircuit 1",
+        "sv": "Emulerad rumsensor värmekrets 1"
+      },
+      "uiComponent": "thermostat",
+      "getable": true,
+      "setable": true,
+      "decimals": 1,
+      "insights": true
     }
   },
   "pair": [

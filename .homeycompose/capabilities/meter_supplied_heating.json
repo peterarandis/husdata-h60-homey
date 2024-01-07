@@ -1,17 +1,16 @@
 {
   "type": "number",
   "title": {
-    "en": "Indoor",
-    "nl": "Binnen",
-    "sv": "Inomhus"
+    "en": "Supplied energy heating",
+    "sv": "Avgiven energi värme"
   },
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "C"
+    "en": "kWh",
+    "sv": "kWh"
   },
   "uiComponent": "sensor",
-  "icon": "/assets/iconTemp.svg"
-
+  "icon": "/assets/iconPower.svg"
 }

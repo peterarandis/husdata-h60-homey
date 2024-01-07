@@ -1,9 +1,9 @@
 {
   "type": "number",
   "title": {
-    "en": "Heat forward",
-    "nl": "warmte uit",
-    "sv": "Värme ut"
+    "en": "Warm water mid",
+    "nl": "Warm water mid",
+    "sv": "Varmvatten mitten"
   },
   "getable": true,
   "setable": false,

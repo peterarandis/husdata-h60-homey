@@ -9,7 +9,7 @@
   "setable": false,
   "insights": true,
   "units": {
-    "en": "C"
+    "en": "°C"
   },
   "uiComponent": "sensor",
   "icon": "/assets/iconTemp.svg"

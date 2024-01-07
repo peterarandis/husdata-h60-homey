@@ -1,9 +1,9 @@
 {
   "type": "number",
   "title": {
-    "en": "Heat forward",
-    "nl": "warmte uit",
-    "sv": "Värme ut"
+    "en": "Heating setpoint temperature",
+    "nl": "Heating setpoint temperature",
+    "sv": "Börvärde"
   },
   "getable": true,
   "setable": false,
@@ -13,4 +13,5 @@
   },
   "uiComponent": "sensor",
   "icon": "/assets/iconTemp.svg"
+
 }

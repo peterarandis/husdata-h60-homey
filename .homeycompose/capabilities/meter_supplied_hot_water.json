@@ -1,16 +1,16 @@
 {
   "type": "number",
   "title": {
-    "en": "Heat forward",
-    "nl": "warmte uit",
-    "sv": "Värme ut"
+    "en": "Supplied energy hot water",
+    "sv": "Avgiven energi varmvatten"
   },
   "getable": true,
   "setable": false,
   "insights": true,
   "units": {
-    "en": "°C"
+    "en": "kWh",
+    "sv": "kWh"
   },
   "uiComponent": "sensor",
-  "icon": "/assets/iconTemp.svg"
+  "icon": "/assets/iconPower.svg"
 }

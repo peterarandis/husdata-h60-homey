@@ -10,10 +10,13 @@
       "name": "switch_valve_state_changed",
       "type": "number",
       "title": {
-        "en": "Switch valve state"
+        "en": "Switch valve state",
+        "sv": "Växelventil läge ändrad"
       },
       "example": {
-        "en": "5"
+        "en": "Radiators (0) / Hot water (1)",
+        "nl" :"Radiatoren (0) / Warm water (1)",
+        "sv" :"Radiatorer (0) / Varmvatten (1)"
       }
     }
   ],
@@ -23,7 +26,6 @@
       "type": "device",
       "placeholder": {
         "en": "Select device",
-        "nl": "Select device",
         "sv": "Välj enhet"
       },
       "filter": "driver_id=H60"
