@@ -1,0 +1,33 @@
+{
+  "actions": [
+    {
+      "id": "set_emulated_sensor_heat_circuit_1",
+      "title": {
+        "en": "Set emulated room sensor heat circuit 1",
+        "nl": "Zet geëmuleerde kamer sensor warmte circuit 1",
+        "sv": "Ställ in emulerad rumssensor värmekrets 1"
+      },
+      "args": [
+        {
+          "name": "temperature",
+          "type": "number",
+          "title": {
+            "en": "Temperature",
+            "nl": "Temperatuur",
+            "sv": "Temperatur"
+          },
+          "titleFormatted": {
+            "en": "Temperature",
+            "nl": "Temperatuur",
+            "sv": "Temperatur"
+          },
+          "min": -60,
+          "max": 60,
+          "step": 0.1,
+          "value": 20,
+          "label": "°C"
+        }
+      ]
+    }
+  ]
+}

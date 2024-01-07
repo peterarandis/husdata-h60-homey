@@ -50,6 +50,7 @@ const cap10 = [
   /* eslint-disable no-multi-spaces */
   ['measure_temperature'],             ['0008'],
   ['target_temperature'],              ['0203'],
+  ['target_temperature.emulated_sensor_heat_circuit_1'], ['02F1'],
   ['measure_temperature.outdoor'],     ['0007'],
   ['measure_warm_water_temp'],         ['0009'],
   ['RADIATOR_FORWARD_TEMP'],           ['0002'],
@@ -151,13 +152,24 @@ class H60Device extends Homey.Device {
 
     // Register capabilities setting
     this.registerMultipleCapabilityListener(
-      ['target_temperature', 'EXTERNAL_CONTROL', 'EXTERNAL_CONTROL_2', 'EXTRA_WARM_WATER_STATE', 'WARM_WATER_PROGRAM'],
+      [
+        'target_temperature',
+        'target_temperature.emulated_sensor_heat_circuit_1',
+        'EXTERNAL_CONTROL',
+        'EXTERNAL_CONTROL_2',
+        'EXTRA_WARM_WATER_STATE',
+        'WARM_WATER_PROGRAM',
+      ],
       (capabilityValues, capabilityOptions) => {
         Object.keys(capabilityValues).forEach(async (capabilityName) => {
           const value = capabilityValues[capabilityName];
           switch (capabilityName) {
             case 'target_temperature': {
               await this.onSetRegister('target_temperature', value * 10);
+              break;
+            }
+            case 'target_temperature.emulated_sensor_heat_circuit_1': {
+              await this.onSetRegister('target_temperature.emulated_sensor_heat_circuit_1', value * 10);
               break;
             }
             case 'EXTERNAL_CONTROL': {
@@ -325,9 +337,16 @@ class H60Device extends Homey.Device {
         // Convert number to string for enums
         // No enum capabilities at this time
 
-        // If indoor temperature is 0, assume there is no sensor and set the value to null
+        // If indoor temperature is 0 and emulated room sensor is enabled - display the emulated value
+        if (
+          capabilityName === 'measure_temperature'
+          && v === 0
+          && statusResult.config.ROOM_CTRL
+        ) {
+          v = this.getCapabilityValue('target_temperature.emulated_sensor_heat_circuit_1');
+        // If indoor temperature is 0 and emulated room sensor is disabled - assume there is no sensor and set the value to null
         // so that Homey doesn't think it's actually 0 degrees inside.
-        if (capabilityName === 'measure_temperature' && v === 0) {
+        } else if (capabilityName === 'measure_temperature' && v === 0) {
           v = null;
         }
 

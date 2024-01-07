@@ -17,6 +17,12 @@ class H60Driver extends Homey.Driver {
     this.flowCards.measure_temperature_outdoor_changed = this.homey.flow.getDeviceTriggerCard('measure_temperature_outdoor_changed');
     this.flowCards.alarm_state_changed = this.homey.flow.getDeviceTriggerCard('alarm_state_changed');
     this.flowCards.switch_valve_state_changed = this.homey.flow.getDeviceTriggerCard('switch_valve_state_changed');
+
+    this.homey.flow
+      .getActionCard('set_emulated_sensor_heat_circuit_1')
+      .registerRunListener(async ({ device, temperature }) => {
+        return device.onSetRegister('target_temperature.emulated_sensor_heat_circuit_1', temperature * 10);
+      });
   }
 
   async onPair(session) {

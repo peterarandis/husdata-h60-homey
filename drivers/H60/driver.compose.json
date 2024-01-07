@@ -16,7 +16,8 @@
     "measure_temperature",
     "measure_power",
     "meter_power",
-    "measure_temperature.outdoor"
+    "measure_temperature.outdoor",
+    "target_temperature.emulated_sensor_heat_circuit_1"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {
@@ -41,6 +42,18 @@
         "en": "Consumed energy total",
         "sv": "Förbrukad energi totalt"
       }
+    },
+    "target_temperature.emulated_sensor_heat_circuit_1": {
+      "title": {
+        "en": "Emulated room sensor heat circuit 1",
+        "nl": "Geëmuleerde kamersensor warmtecircuit 1",
+        "sv": "Emulerad rumsensor värmekrets 1"
+      },
+      "uiComponent": "thermostat",
+      "getable": true,
+      "setable": true,
+      "decimals": 1,
+      "insights": true
     }
   },
   "pair": [

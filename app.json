@@ -257,6 +257,42 @@
           }
         ]
       }
+    ],
+    "actions": [
+      {
+        "id": "set_emulated_sensor_heat_circuit_1",
+        "title": {
+          "en": "Set emulated room sensor heat circuit 1",
+          "nl": "Zet geëmuleerde kamer sensor warmte circuit 1",
+          "sv": "Ställ in emulerad rumssensor värmekrets 1"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=H60"
+          },
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur",
+              "sv": "Temperatur"
+            },
+            "titleFormatted": {
+              "en": "Temperature",
+              "nl": "Temperatuur",
+              "sv": "Temperatur"
+            },
+            "min": -60,
+            "max": 60,
+            "step": 0.1,
+            "value": 20,
+            "label": "°C"
+          }
+        ]
+      }
     ]
   },
   "drivers": [
@@ -282,7 +318,8 @@
         "measure_temperature",
         "measure_power",
         "meter_power",
-        "measure_temperature.outdoor"
+        "measure_temperature.outdoor",
+        "target_temperature.emulated_sensor_heat_circuit_1"
       ],
       "capabilitiesOptions": {
         "measure_temperature": {
@@ -307,6 +344,18 @@
             "en": "Consumed energy total",
             "sv": "Förbrukad energi totalt"
           }
+        },
+        "target_temperature.emulated_sensor_heat_circuit_1": {
+          "title": {
+            "en": "Emulated room sensor heat circuit 1",
+            "nl": "Geëmuleerde kamersensor warmtecircuit 1",
+            "sv": "Emulerad rumsensor värmekrets 1"
+          },
+          "uiComponent": "thermostat",
+          "getable": true,
+          "setable": true,
+          "decimals": 1,
+          "insights": true
         }
       },
       "pair": [
